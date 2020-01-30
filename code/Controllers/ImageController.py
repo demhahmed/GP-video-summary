@@ -1,7 +1,7 @@
 import cv2
 import pytesseract as ocr
-from Message import Message
-from ScoreboardTypes import ScoreboardTypes
+from Controllers.Message import Message
+from Controllers.ScoreboardTypes import ScoreboardTypes
 
 
 class ImageController:
