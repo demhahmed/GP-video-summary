@@ -14,3 +14,13 @@
 
 # vscode
 **/.vscode
+
+# mp4 files
+**/*.mp4
+
+# image files
+**/*.png
+**/*.jpg
+**/*.jpeg
+
+

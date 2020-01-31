@@ -24,7 +24,7 @@ class ImageController:
     @staticmethod
     def extract_scoreboard_results(image):
         [home, away] = ImageController.__strategy.extract_results(image)
-        Message.info(f"Home: {home}, Away: {away}")
+        Message.success(f"Home: {home}, Away: {away}")
 
     @staticmethod
     def read_video_to_memory(video_path):
