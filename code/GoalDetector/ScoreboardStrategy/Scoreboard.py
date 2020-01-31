@@ -1,6 +1,5 @@
 from pytesseract import image_to_string
 import cv2
-import random
 
 
 class PLScoreboard:
