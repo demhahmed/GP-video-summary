@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-
 from GoalDetector.ScoreboardStrategy.Strategy import Strategy
 from Controllers.Message import Message
 
@@ -30,7 +29,11 @@ class GoalDetector:
                 self.__home_repeated = home
                 self.__away_repeated = away
 
-    def execute(self, gray_images):
+    def save_output(self, start_time, end_time):
+        with open("goals.txt", mode='a') as file:
+            file.write(f"Goal: {str(start_time)}/t {str(end_time)}\n")
+
+    def execute(self, gray_images, fps):
         Message.info("Beginning goal detection algorithm")
         frames = []
         goals = []
@@ -52,16 +55,9 @@ class GoalDetector:
                 self.__current_frame = cnt
                 is_goal = self.extract_scoreboard_results(avg_image)
                 if is_goal:
-                    goals.append(gray_images[cnt-35*30:cnt+35*30])
+                    start_time = float(max(cnt - 200 * 30, 0)) / fps
+                    end_time = float(min(cnt + 200 * 30, len(gray_images) - 1)) / fps
+                    self.save_output(start_time, end_time)
                 frames.clear()
-
             cnt += 1
-        height, width = gray_images[0].shape
-        print(len(goals))
-        for idx, goal_frames in enumerate(goals):
-            out = cv2.VideoWriter(
-                f"goal_{idx + 1}.avi", cv2.VideoWriter_fourcc(*'DIVX'), 15, (width, height))
-            for frame in goal_frames:
-                out.write(frame)
-                out.release()
         Message.success("Goal detection algorithm finished")

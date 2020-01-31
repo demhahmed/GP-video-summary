@@ -2,6 +2,7 @@ import cv2
 
 from Controllers.Message import Message
 
+
 class ImageController:
 
     @staticmethod
@@ -14,6 +15,7 @@ class ImageController:
     def read_video_to_memory(video_path):
         Message.info("Reading Video: in-progress")
         cap = cv2.VideoCapture(video_path)  # Capture video from file
+        fps = cap.get(cv2.CAP_PROP_FPS)
         total_bgr_frames = []
         total_gray_frames = []
         while True:
@@ -26,4 +28,13 @@ class ImageController:
                 Message.success("Reading Video: done")
                 break
         cap.release()
-        return total_bgr_frames, total_gray_frames
+        return total_bgr_frames, total_gray_frames, fps
+
+    @staticmethod
+    def generate_video(video_name, frames):
+        height, width, _layers = frames[0].shape
+        video = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc(*'XVID'), 30, (width, height))
+        for frame in frames:
+            video.write(frame)
+        cv2.destroyAllWindows()
+        video.release()
