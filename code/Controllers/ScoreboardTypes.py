@@ -8,4 +8,3 @@ class ScoreboardTypes(enum.Enum):
     SERIA_A = 3
     CHAMPIONS_LEAGUE_2019 = 4
     CHAMPIONS_LEAGUE_2018 = 5
-    CHAMPIONS_LEAGUE_2017 = 6
