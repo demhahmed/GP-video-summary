@@ -1,4 +1,5 @@
 from colorama import Fore, Style
+import sys
 
 
 class Message:
@@ -25,8 +26,10 @@ class Message:
         print(Style.RESET_ALL, end='')
 
     @staticmethod
-    def progress(completed: int) -> None:
+    def progress(value, end_value, bar_length=20) -> None:
         """ Prints progress bar """
-        print(Fore.GREEN + completed * "#", end='')
-        print(Fore.RED + (100 - completed) * "#")
-        print(Style.RESET_ALL, end='')
+        percent = float(value) / end_value
+        arrow = '-' * int(round(percent * bar_length)-1) + '>'
+        spaces = ' ' * (bar_length - len(arrow))
+        sys.stdout.write(f"\rPercent: [{arrow + spaces}] {int(round(percent * 100))}%")
+        sys.stdout.flush()

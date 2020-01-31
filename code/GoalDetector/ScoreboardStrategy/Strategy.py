@@ -1,5 +1,5 @@
 from Controllers.ScoreboardTypes import ScoreboardTypes
-from ScoreboardStrategy.Scoreboard import PLScoreboard, LaLigaScoreboard, SeriaAScoreboar, UCL2019, UCL2018
+from GoalDetector.ScoreboardStrategy.Scoreboard import PLScoreboard, LaLigaScoreboard, SeriaAScoreboar, UCL2019, UCL2018
 
 
 class Strategy:
