@@ -13,6 +13,7 @@ class ImageController:
 
     @staticmethod
     def read_video_to_memory(video_path):
+        """ works only if size is small, otherwise memory will not suffice and the program will be terminated """
         Message.info("Reading Video: in-progress")
         cap = cv2.VideoCapture(video_path)  # Capture video from file
         fps = cap.get(cv2.CAP_PROP_FPS)
