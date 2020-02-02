@@ -5,11 +5,9 @@ from FrameBlocks import getFrameBlocks
 from FrameBlocks import getDominantColorRatio
 
 frame1 = cv2.imread(
-    'C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\ShotBoundary\\frame_test\\frame2240.jpg')
+    'C:/Users\\medo\\Desktop\\frame_test\\frame850.jpg')
 frame2 = cv2.imread(
-    'C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\ShotBoundary\\frame_test\\frame2260.jpg')
-frame3 = cv2.imread(
-    'C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\ShotBoundary\\frame_test\\frame1740.jpg')
+    'C:/Users\\medo\\Desktop\\frame_test\\frame855.jpg')
 
 
 frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2RGB)
@@ -18,12 +16,12 @@ frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2RGB)
 # extract a 3D RGB color histogram from the image,
 # using 8 bins per channel, normalize, and update
 # the index
-hist1 = cv2.calcHist([frame1], [0, 1, 2], None, [50, 50, 50],
+hist1 = cv2.calcHist([frame1], [0, 1, 2], None, [64, 64, 64],
                      [0, 256, 0, 256, 0, 256])
 hist1 = cv2.normalize(hist1, hist1).flatten()
 
 
-hist2 = cv2.calcHist([frame2], [0, 1, 2], None, [50, 50, 50],
+hist2 = cv2.calcHist([frame2], [0, 1, 2], None, [64, 64, 64],
                      [0, 256, 0, 256, 0, 256])
 hist2 = cv2.normalize(hist2, hist2).flatten()
 

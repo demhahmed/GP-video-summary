@@ -21,7 +21,7 @@ def FrameCapture(path, step):
         if ret == True:
             if count % step == 0:
                 # cv2.imwrite(
-                    # "C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\ShotBoundary\\frames\\frame%d.jpg" % count, image)
+                    # "C:/Users\\medo\\Desktop\\frames\\frame%d.jpg" % count, image)
                 list.append(image)
             count += 1
         else:
@@ -30,3 +30,6 @@ def FrameCapture(path, step):
     cap.release()
     cv2.destroyAllWindows()
     return list
+
+
+FrameCapture("C:/Users\\medo\\Desktop\\test4.mp4", 5)
