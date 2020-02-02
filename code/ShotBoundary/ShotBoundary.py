@@ -21,23 +21,24 @@ for i in range(len(frames)-1):
     frame1 = frames[i]
     frame2 = frames[i+1]
 
-    frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2HLS)
-    frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2HLS)
+    frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2RGB)
+    frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2RGB)
 
-    frame1_blocks = getFrameBlocks(frame1, height, width)
-    frame2_blocks = getFrameBlocks(frame2, height, width)
-    '''
-    cv2.imshow("frame1", cv2.absdiff(frame1_blocks[6], frame2_blocks[6]))
+    # extract a 3D RGB color histogram from the image,
+    # using 8 bins per channel, normalize, and update
+    # the index
+    hist1 = cv2.calcHist([frame1], [0, 1, 2], None, [50, 50, 50],
+                         [0, 256, 0, 256, 0, 256])
+    hist1 = cv2.normalize(hist1, hist1).flatten()
 
-    while True:
-        if cv2.waitKey(25) == ord('q'):
-            break
-    '''
-    block_change = [cv2.absdiff(x, y)
-                    for x, y in zip(frame1_blocks, frame2_blocks)]
+    hist2 = cv2.calcHist([frame2], [0, 1, 2], None, [50, 50, 50],
+                         [0, 256, 0, 256, 0, 256])
+    hist2 = cv2.normalize(hist2, hist2).flatten()
 
-    block_change_average = [np.mean(x) for x in block_change]
+    metric_val1 = cv2.compareHist(hist1, hist2, cv2.HISTCMP_INTERSECT)
+    metric_val2 = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CHISQR)
 
-    print(np.mean(block_change_average))
+    print(i*10, metric_val1, metric_val2)
 
-    break
+    if i == 240:
+        break

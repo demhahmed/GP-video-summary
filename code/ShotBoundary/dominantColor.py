@@ -33,6 +33,25 @@ def getDominantColor(frame):
     return frame
 
 
+def getDominantColorRatio(frame):
+    # converting the middle pannel into HSI
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HLS)
+
+    hue = frame[:, :, 0]/255
+    intensity = frame[:, :, 1]/255
+    saturation = frame[:, :, 2]/255
+
+    green = (hue > HUE_LOWER) & (hue < HUE_UPPER) & (intensity > INTENSITY_LOWER) & (intensity <
+                                                                                     INTENSITY_UPPER) & (saturation > SATURATION_LOWER) & (saturation < SATURATION_UPPER)
+    frame[(green)] = 255
+    frame[~((hue > HUE_LOWER) & (hue < HUE_UPPER) & (intensity > INTENSITY_LOWER) & (
+        intensity < INTENSITY_UPPER) & (saturation > SATURATION_LOWER) & (saturation < SATURATION_UPPER))] = 0
+
+    percentage = sum(x.count(255) for x in frame) / \
+        (frame.shape[0]*frame.shape[1])
+    return percentage
+
+
 # reading a video
 cap = cv2.VideoCapture(
     'C://Users\medo\Desktop\GP REPO\GP-video-summary\code\ShotBoundary\\test3.mp4')
