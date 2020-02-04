@@ -8,15 +8,6 @@ SATURATION_LOWER = 0.1
 SATURATION_UPPER = 1
 
 
-def equalizeHistColor(frame):
-    # equalize the histogram of color image
-    img = cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)  # convert to HSV
-    # equalize the histogram of the V channel
-    img[:, :, 2] = cv2.equalizeHist(img[:, :, 2])
-    # convert the HSV image back to RGB format
-    return cv2.cvtColor(img, cv2.COLOR_HSV2RGB)
-
-
 def getDominantColor(frame):
     # converting the middle pannel into HSI
     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HLS)
@@ -44,11 +35,16 @@ def getDominantColorRatio(frame):
     green = (hue > HUE_LOWER) & (hue < HUE_UPPER) & (intensity > INTENSITY_LOWER) & (intensity <
                                                                                      INTENSITY_UPPER) & (saturation > SATURATION_LOWER) & (saturation < SATURATION_UPPER)
     frame[(green)] = 255
-    frame[~((hue > HUE_LOWER) & (hue < HUE_UPPER) & (intensity > INTENSITY_LOWER) & (
-        intensity < INTENSITY_UPPER) & (saturation > SATURATION_LOWER) & (saturation < SATURATION_UPPER))] = 0
+    frame[~(green)] = 0
 
-    percentage = sum(x.count(255) for x in frame) / \
+    frame = cv2.cvtColor(frame, cv2.COLOR_HLS2BGR)   # RGB color to HLS
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # RGB color to gray level
+
+    print(frame.shape)
+
+    percentage = np.sum(frame == 255) / \
         (frame.shape[0]*frame.shape[1])
+
     return percentage
 
 
@@ -64,22 +60,12 @@ width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 FPS = int(cap.get(cv2.CAP_PROP_FPS))
 
-print(height, width)
-# initializing a video writer object
-out = cv2.VideoWriter('outpy.mp4', cv2.VideoWriter_fourcc(
-    'm', 'p', '4', 'v'), 25, (width, height))
-if out.isOpened() == False:
-    print('err open video to write')
-
-
+'''
 while cap.isOpened():
     # reading a frame
     ret, frame = cap.read()
 
     frame = getDominantColor(frame)
-
-    # writing the output video frame by frame
-    out.write(frame)
 
     # displaying the video frame by frame
     if ret == True:
@@ -91,6 +77,8 @@ while cap.isOpened():
     else:
         break
 
+
+'''
 # closing all windows
 cap.release()
 out.release()

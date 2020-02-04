@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from FrameSkipping import FrameCapture
 from FrameBlocks import getFrameBlocks
+from HistogramCompare import *
 
 
 path = 'C://Users\medo\Desktop\\test4.mp4'
@@ -21,6 +22,7 @@ for i in range(len(frames)-1):
     frame1 = frames[i]
     frame2 = frames[i+1]
 
+    '''
     frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2RGB)
     frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2RGB)
 
@@ -39,8 +41,9 @@ for i in range(len(frames)-1):
     metric_val2 = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CHISQR)
     metric_val3 = cv2.compareHist(hist1, hist2, cv2.HISTCMP_BHATTACHARYYA)
     metric_val4 = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL)
+    '''
 
-    print(i*5, "inter=", metric_val1, "corr=", metric_val4*10)
+    print(i*5, HistogramCompare(frame1, frame2))
 
     if i == 1000:
         break
