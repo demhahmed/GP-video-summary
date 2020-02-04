@@ -43,7 +43,7 @@ for i in range(len(frames)-1):
     metric_val4 = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL)
     '''
 
-    print(i*5, HistogramCompare(frame1, frame2))
+    print(i*5, HistogramCompare(frame1, frame2, option=1))
 
     if i == 1000:
         break

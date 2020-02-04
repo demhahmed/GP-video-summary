@@ -1,7 +1,7 @@
 import cv2
 
 
-def ExtractFramesToDisk(path, step):
+def ExtractFramesToDisk(path, step, option):
     # Path to video file
     cap = cv2.VideoCapture(path)
     if cap.isOpened() == False:
@@ -11,16 +11,13 @@ def ExtractFramesToDisk(path, step):
     # checks whether frames were extracted
 
     while cap.isOpened():
+        .
 
-        # vidObj object calls read
-        # function extract frames
-        ret, image = cap.read()
+       ret, image = cap.read()
 
-        if ret == True:
-            if count % step == 0:
-                cv2.imwrite(
-                    "C:/Users\\medo\\Desktop\\frames\\frame%d.jpg" % count, image)
-
+        if ret == True and count % step == 0:
+            cv2.imwrite(
+                "C:/Users\\medo\\Desktop\\frames\\frame%d.jpg" % count, image)
             count += 1
         else:
             break
@@ -47,9 +44,8 @@ def ExtractFrames(path, step):
         # function extract frames
         ret, image = cap.read()
 
-        if ret == True:
-            if count % step == 0:
-                list.append(image)
+        if ret == True and count % step == 0:
+            list.append(image)
             count += 1
         else:
             break
