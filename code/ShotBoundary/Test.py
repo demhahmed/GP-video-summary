@@ -4,13 +4,17 @@ from FrameSkipping import *
 from FrameBlocks import *
 
 from HistogramCompare import *
+from dominantColor import *
 
-'''
+
 frame1 = cv2.imread(
-    'C:/Users\\medo\\Desktop\\frame_test\\frame10165.jpg')
+    'C:/Users\\medo\\Desktop\\frame_test\\frame8060.jpg')
 frame2 = cv2.imread(
-    'C:/Users\\medo\\Desktop\\frame_test\\frame10170.jpg')
-'''
+    'C:/Users\\medo\\Desktop\\frame_test\\frame8065.jpg')
 
 
-ExtractFramesToDisk('C:/Users\\medo\\Desktop\\test3.mp4', 5)
+print(HistogramCompare(frame1, frame2))
+
+
+print(getDominantColorRatio(frame1))
+print(getDominantColorRatio(frame2))

@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 # defining channels boundries
 HUE_LOWER = 0.15
 HUE_UPPER = 0.4
@@ -81,5 +82,5 @@ while cap.isOpened():
 '''
 # closing all windows
 cap.release()
-out.release()
+
 cv2.destroyAllWindows()
