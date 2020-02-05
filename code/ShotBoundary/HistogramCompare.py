@@ -1,8 +1,7 @@
 import cv2
 import numpy as np
-from FrameSkipping import FrameCapture
+from FrameSkipping import *
 from FrameBlocks import getFrameBlocks
-from FrameBlocks import getDominantColorRatio
 
 
 OPENCV_METHODS = (
@@ -15,7 +14,8 @@ OPENCV_METHODS = (
 # option =1  for intersection and correlation
 # option =2  for all metrics
 
-def HistogramCompare(frame1, frame2, option):
+def HistogramCompare(frame1, frame2):
+
     frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2RGB)
     frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2RGB)
 
@@ -31,19 +31,8 @@ def HistogramCompare(frame1, frame2, option):
     hist2 = cv2.normalize(hist2, hist2).flatten()
 
     metrics = []
-    if (option == 2)
-    {
 
-        metrics.append(cv2.compareHist(hist1, hist2, cv2.HISTCMP_INTERSECT))
-        metrics.append(cv2.compareHist(hist1, hist2, cv2.HISTCMP_CHISQR))
-        metrics.append(cv2.compareHist(
-            hist1, hist2, cv2.HISTCMP_BHATTACHARYYA))
-        metrics.append(cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL))
-    }
-    else if (option == 1)
-    {
-        metrics.append(cv2.compareHist(hist1, hist2, cv2.HISTCMP_INTERSECT))
-        metrics.append(cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL))
+    metrics.append(cv2.compareHist(hist1, hist2, cv2.HISTCMP_INTERSECT))
+    metrics.append(10*cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL))
 
-    }
     return metrics
