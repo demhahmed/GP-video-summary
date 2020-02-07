@@ -17,7 +17,7 @@ def ExtractFramesToDisk(path, step):
         if ret == True:
             if count % step == 0:
                 cv2.imwrite(
-                    "C:/Users\\medo\\Desktop\\frames\\frame%d.jpg" % count, image)
+                    "C:/Users\\salama\\Desktop\\frames\\frame%d.jpg" % count, image)
             count += 1
         else:
             break
@@ -54,3 +54,6 @@ def ExtractFrames(path, step):
     cap.release()
     cv2.destroyAllWindows()
     return list
+
+
+ExtractFramesToDisk('C:/Users\\salama\\Desktop\\test.mp4',6)

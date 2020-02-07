@@ -8,13 +8,14 @@ from dominantColor import *
 
 
 frame1 = cv2.imread(
-    'C:/Users\\medo\\Desktop\\frame_test\\frame8060.jpg')
+    'frame3795.jpg')
 frame2 = cv2.imread(
-    'C:/Users\\medo\\Desktop\\frame_test\\frame8065.jpg')
+    'frame3800.jpg')
 
+cv2.imwrite('fram1binary.jpg',getDominantColor(frame1))
+cv2.imwrite('fram2binary.jpg',getDominantColor(frame2))
 
 print(HistogramCompare(frame1, frame2))
 
 
-print(getDominantColorRatio(frame1))
-print(getDominantColorRatio(frame2))
+print((getDominantColorRatio(frame1),getDominantColorRatio(frame2)))
