@@ -1,7 +1,5 @@
 import cv2
 import numpy as np
-from FrameSkipping import *
-from FrameBlocks import getFrameBlocks
 
 
 OPENCV_METHODS = (
@@ -14,7 +12,7 @@ OPENCV_METHODS = (
 # option =1  for intersection and correlation
 # option =2  for all metrics
 
-def HistogramCompare(frame1, frame2):
+def histogramCompare(frame1, frame2):
 
     frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2RGB)
     frame2 = cv2.cvtColor(frame2, cv2.COLOR_BGR2RGB)
