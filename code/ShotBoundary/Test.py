@@ -12,6 +12,8 @@ frame1 = cv2.imread(
 frame2 = cv2.imread(
     'C:/Users\\medo\\Desktop\\frame_test\\frame75.jpg')
 
+cv2.imwrite('fram1binary.jpg', getDominantColor(frame1))
+cv2.imwrite('fram2binary.jpg', getDominantColor(frame2))
 
 width = 1024
 height = 574
