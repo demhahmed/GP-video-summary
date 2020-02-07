@@ -9,9 +9,6 @@ OPENCV_METHODS = (
     ("Hellinger", cv2.HISTCMP_BHATTACHARYYA))
 
 
-# option =1  for intersection and correlation
-# option =2  for all metrics
-
 def histogramCompare(frame1, frame2):
 
     frame1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2RGB)

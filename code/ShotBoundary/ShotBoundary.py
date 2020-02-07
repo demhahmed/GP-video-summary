@@ -2,9 +2,10 @@ import cv2
 import numpy as np
 import FrameSkipping as ExtractFrames
 from HistogramCompare import *
+from func import printProgressBar
 
 
-path = 'C://Users\medo\Desktop\\test.mp4'
+path = 'C://Users\medo\Desktop\\test3.mp4'
 cap = cv2.VideoCapture(path)
 
 if cap.isOpened() == False:
