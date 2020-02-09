@@ -20,7 +20,7 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
 
 
 print("reading video")
-path = 'C://Users\medo\Desktop\\test4.mp4'
+path = 'C://Users\medo\Desktop\\test6.mp4'
 cap = cv2.VideoCapture(path)
 
 if cap.isOpened() == False:
@@ -66,7 +66,7 @@ for i in range(len(frames)-1):
         last_frame = (frame_number, "hard cut")
 
 
-print("----------------------")
+print("----------------------", '/n')
 print(len(cuts), "cuts")
 print("----------------------")
 for Item in cuts:
