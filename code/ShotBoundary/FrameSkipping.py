@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 from dominantColor import getDominantColor
+
+
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
 
     percent = ("{0:." + str(decimals) + "f}").format(100 *
@@ -14,14 +16,11 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
 
 
 def ExtractFramesToDisk(path, step):
-    # Path to video file
     cap = cv2.VideoCapture(path)
     if cap.isOpened() == False:
         print('err reading video')
-    # Used as counter variable
-    count = 0
-    # checks whether frames were extracted
 
+    count = 0
     while cap.isOpened():
 
         ret, image = cap.read()
@@ -29,12 +28,7 @@ def ExtractFramesToDisk(path, step):
         if ret == True:
             if count % step == 0:
                 cv2.imwrite(
-<<<<<<< HEAD
-                        "C:/Users\\salama\\Desktop\\frames\\frame%d.jpg" % count, image)
-
-=======
                     "C://Users\medo\Desktop\\frames\\frame%d.jpg" % count, image)
->>>>>>> d889001571ba67743dcd4ad0f6f8326cb00a3fd4
             count += 1
         else:
             break
@@ -47,19 +41,18 @@ def ExtractFramesToDisk(path, step):
 def ExtractFrames(path, step):
 
     list = []
-    # Path to video file
+
     cap = cv2.VideoCapture(path)
     if cap.isOpened() == False:
         print('err reading video')
-    # Used as counter variable
+
     count = 0
-    # checks whether frames were extracted
+
     total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     while cap.isOpened():
 
         printProgressBar(count, total)
-        # vidObj object calls read
-        # function extract frames
+
         ret, image = cap.read()
 
         if ret == True:
@@ -72,5 +65,3 @@ def ExtractFrames(path, step):
     cap.release()
     cv2.destroyAllWindows()
     return list
-
-
