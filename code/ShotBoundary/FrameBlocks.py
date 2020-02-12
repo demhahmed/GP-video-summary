@@ -20,7 +20,7 @@ def blockChange(block1, block2):
         return True, True
     elif intersect > 4 and corr < 4:
         return (False, True)
-    elif intersect > 4 and corr > 4:
+    elif intersect < 4 and corr > 4:
         return (True, False)
     else:
         return (False, False)

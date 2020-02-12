@@ -11,7 +11,7 @@ frame1 = cv2.imread(
     'frame250.jpg')
 '''
 frame2 = cv2.imread(
-    'C:/Users\\medo\\Desktop\\frame_test\\frame75.jpg')
+    'C:/Users\\medo\\Desktop\\frame_test\\frame10890.jpg')
 
 cv2.imwrite('fram1binary.jpg', getDominantColor(frame1))
 cv2.imwrite('fram2binary.jpg', getDominantColor(frame2))
