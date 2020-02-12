@@ -1,6 +1,6 @@
 import cv2
-
-
+import numpy as np
+from dominantColor import getDominantColor
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
 
     percent = ("{0:." + str(decimals) + "f}").format(100 *
@@ -29,7 +29,8 @@ def ExtractFramesToDisk(path, step):
         if ret == True:
             if count % step == 0:
                 cv2.imwrite(
-                    "C:/Users\\salama\\Desktop\\frames\\frame%d.jpg" % count, image)
+                        "C:/Users\\salama\\Desktop\\frames\\frame%d.jpg" % count, image)
+
             count += 1
         else:
             break
@@ -69,4 +70,3 @@ def ExtractFrames(path, step):
     return list
 
 
-ExtractFramesToDisk('C:/Users\\salama\\Desktop\\test.mp4',6)
