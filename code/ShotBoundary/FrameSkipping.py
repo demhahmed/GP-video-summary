@@ -29,12 +29,7 @@ def ExtractFramesToDisk(path, step):
         if ret == True:
             if count % step == 0:
                 cv2.imwrite(
-<<<<<<< HEAD
                         "C:/Users\\salama\\Desktop\\frames\\frame%d.jpg" % count, image)
-
-=======
-                    "C://Users\medo\Desktop\\frames\\frame%d.jpg" % count, image)
->>>>>>> d889001571ba67743dcd4ad0f6f8326cb00a3fd4
             count += 1
         else:
             break
