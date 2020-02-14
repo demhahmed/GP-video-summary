@@ -9,7 +9,7 @@ def getFrameBlocks(frame, height, width):
         for c in range(0, width, 150):
             window = frame[r:r+150, c:c+150]
             frameBlocks.append(window)
-            #cv2.imwrite('C:/Users\\medo\\Desktop\\test\\w.jpg', window)
+
     return frameBlocks
 
 

@@ -5,28 +5,40 @@ from FrameBlocks import *
 
 from HistogramCompare import *
 from dominantColor import *
+from ShotClassification import *
 
 
-frame1 = cv2.imread(
-    'frame250.jpg')
-'''
-frame2 = cv2.imread(
-    'C:/Users\\medo\\Desktop\\frame_test\\frame10890.jpg')
+path = 'C://Users\\salama\\Desktop\\test4.mp4'
+cap = cv2.VideoCapture(path)
 
-cv2.imwrite('fram1binary.jpg', getDominantColor(frame1))
-cv2.imwrite('fram2binary.jpg', getDominantColor(frame2))
-
-width = 1024
-height = 574
-intersect, corr = histogramCompare(frame1, frame2)
-'''
-dominant1 = getDominantColorRatio(frame1)
-#dominant2 = getDominantColorRatio(frame2)
+if cap.isOpened() == False:
+    print('err reading video')
 
 
-print(dominant1)
-#print(intersect, corr)
+# getting video width, height and FPS
+width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+FPS = int(cap.get(cv2.CAP_PROP_FPS))
 
-#frame_blocks_1 = getFrameBlocks(frame1, height, width)
-#frame_blocks_2 = getFrameBlocks(frame2, height, width)
+f = open("ntayg.txt", "w")
 
+print("extracting frames...")
+frames = ExtractFrames(path, step=5)
+
+
+for i, frame in enumerate(frames):
+    type = ''
+    print(i)
+    grassRatio = getDominantColorRatio(frame)
+    
+    if grassRatio < 0.2:
+        type = 'out'
+    else:
+        faces = faceDetect(frame)
+        if grassRatio > 0.65 and faces == 0:
+            type = 'long'
+        elif grassRatio > 0.4 and faces != 0:
+            type = 'close'
+    result1 = str(i*5) + ' ' + str(round(grassRatio, 2))+" " + \
+        str(faces) + " " + type + "\n"
+    f.write(result1)

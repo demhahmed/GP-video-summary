@@ -3,7 +3,8 @@ import numpy as np
 
 
 
-def getDominantColor(frame):
+def getDominantColor(img):
+    frame = np.array(img)
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
     mask = cv2.inRange(hsv, (36, 25, 25), (70, 255,255))
     ## slice the green
