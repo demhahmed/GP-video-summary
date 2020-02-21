@@ -8,7 +8,7 @@ from dominantColor import *
 from ShotClassification import *
 
 
-path = 'C://Users\\salama\\Desktop\\test4.mp4'
+path = 'C:/Users\\medo\\Desktop\\test2.mp4'
 cap = cv2.VideoCapture(path)
 
 if cap.isOpened() == False:
@@ -19,6 +19,7 @@ if cap.isOpened() == False:
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 FPS = int(cap.get(cv2.CAP_PROP_FPS))
+print(FPS)
 
 f = open("ntayg.txt", "w")
 
@@ -30,7 +31,7 @@ for i, frame in enumerate(frames):
     type = ''
     print(i)
     grassRatio = getDominantColorRatio(frame)
-    
+
     if grassRatio < 0.2:
         type = 'out'
     else:

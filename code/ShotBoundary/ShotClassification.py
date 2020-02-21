@@ -46,14 +46,18 @@ def frameClassification(frame):
 
 def shotClassification(frames):
     frame_class = []
-    for i, frame in enumerate(frames):
-        grassRatio = getDominantColorRatio(frame)
+    n = len(frames)
+    print(n)
+    for i in range(0, len(frames), int(n/10)+1):
+        grassRatio = getDominantColorRatio(frames[i])
         if grassRatio < 0.2:
             frame_class.append('out')
         else:
-            faces = faceDetect(frame)
+            faces = faceDetect(frames[i])
             if grassRatio > 0.65 and faces == 0:
                 frame_class.append('long')
             elif grassRatio > 0.4 and faces != 0:
                 frame_class.append('close')
+            else:
+                frame_class.append('other')
     return max(set(frame_class), key=frame_class.count)

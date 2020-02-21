@@ -6,7 +6,17 @@ from FrameBlocks import *
 from HistogramCompare import *
 from dominantColor import *
 
-from ShotClassification import *
+from audio import *
+from moviepy.editor import VideoFileClip, concatenate
+import bisect
+
+
+def find_gt(a, x):
+    'Find leftmost value greater than x'
+    i = bisect.bisect_right(a, x)
+    if i != len(a):
+        return i-1
+    raise ValueError
 
 
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
@@ -23,7 +33,11 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
 
 print("reading video")
 
-path = 'C://Users\\salama\\Desktop\\test4.mp4'
+path = 'C://Users\\medo\\Desktop\\test1.mp4'
+
+
+peak_times = getPeakTimes(path)
+
 cap = cv2.VideoCapture(path)
 
 if cap.isOpened() == False:
@@ -42,7 +56,7 @@ frames = ExtractFrames(path, step=5)
 step = 5
 cuts = []
 cutOffset = 50
-last_frame = (0, "")
+last_frame = 0
 No_frames = int(len(frames))
 
 print(No_frames, "frames")
@@ -66,10 +80,9 @@ for i in range(len(frames)-1):
     frame_blocks_1 = getFrameBlocks(frame1, height, width)
     frame_blocks_2 = getFrameBlocks(frame2, height, width)
 
-    if blockChangePercentage(frame_blocks_1, frame_blocks_2) >= 30 and abs(last_frame[0] - frame_number) >= 15:
-        typeClass = shotClassification(frames[int(last_frame[0]/5):i])
-        cuts.append((frame_number, "hard cut", typeClass))
-        last_frame = (frame_number, "hard cut")
+    if blockChangePercentage(frame_blocks_1, frame_blocks_2) >= 30 and abs(last_frame - frame_number) >= 20:
+        cuts.append((frame_number/FPS))
+        last_frame = frame_number
 
 
 print("----------------------", '/n')
@@ -77,3 +90,22 @@ print(len(cuts), "cuts")
 print("----------------------")
 for Item in cuts:
     print(Item, sep='/n')
+
+print(peak_times)
+
+
+final_times = []
+for peak in peak_times:
+    index = find_gt(cuts, peak)
+    if cuts[index] < peak:
+        final_times.append((cuts[index], cuts[index+1]))
+    else:
+        final_times.append((cuts[index-1], cuts[index+1]))
+
+final_times = [t for t in (set(tuple(i) for i in final_times))]
+print(final_times)
+
+clip = VideoFileClip(path)
+final = concatenate([clip.subclip(max(int(t[0]), 0), min(int(t[1]), clip.duration))
+                     for t in final_times])
+final.to_videofile('soccer_cuts.mp4')  # low quality is the default
