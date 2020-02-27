@@ -1,6 +1,6 @@
 import cv2
 import numpy as np
-from dominantColor import getDominantColor
+from DominantColor import getDominantColor
 
 
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):

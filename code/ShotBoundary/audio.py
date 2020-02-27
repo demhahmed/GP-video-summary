@@ -14,6 +14,7 @@ def getPeakTimes(path):
     fps = clip.audio.fps
     volumes = [volume(cut(i, clip, fps))
                for i in range(0, int(clip.audio.duration-2))]
+
     averaged_volumes = np.array([sum(volumes[i:i+10])/10
                                  for i in range(len(volumes)-10)])
 

@@ -1,16 +1,32 @@
+from matplotlib import pyplot as plt
+from mtcnn.mtcnn import MTCNN
+from matplotlib.patches import Rectangle
+import cv2
 
-from cv2 import rectangle
-from cv2 import CascadeClassifier
-from cv2 import destroyAllWindows
-from cv2 import waitKey
-from cv2 import imshow
-from cv2 import imread
-
-cascPath = 'C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\ShotBoundary\\haarcascade_frontalface_default.xml'
+detector = MTCNN()
 
 
-def faceDetection(pixels):
-    classifier = CascadeClassifier(cascPath)
-    bboxes = classifier.detectMultiScale(pixels)
-    if len(bboxes) > 0:
-        return True
+def highlight_faces(image, faces):
+    # display image
+
+    plt.imshow(image)
+    ax = plt.gca()
+    # for each face, draw a rectangle based on coordinates
+    if len(faces) > 0:
+        x, y, width, height = faces[0]['box']
+        face_border = Rectangle((x, y), width, height, fill=False, color='red')
+        ax.add_patch(face_border)
+        plt.show()
+
+
+def faceDetect(frame):
+
+    img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # RGB color to gray level
+
+    faces = detector.detect_faces(img)
+    if len(faces) > 0:
+        x, y, width, height = faces[0]['box']
+        if width*height > 2000:
+            #highlight_faces(img, faces)
+            return len(faces)
+    return 0

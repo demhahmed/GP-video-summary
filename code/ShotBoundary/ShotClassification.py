@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
-from dominantColor import getDominantColorRatio
-from face import *
+from DominantColor import getDominantColorRatio
+from FaceDetection import *
 
 
 def InOut(GrassRatio):
