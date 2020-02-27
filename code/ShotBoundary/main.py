@@ -86,4 +86,4 @@ final = concatenate([clip.subclip(max(int(t[0]), 0), min(int(t[1]), clip.duratio
                      for t in final_times])
 
 enablePrint()
-final.to_videofile('soccer_cuts.mp4')  # low quality is the default
+final.to_videofile('soccer_cuts.mp4', fps=24)  # low quality is the default
