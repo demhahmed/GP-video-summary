@@ -15,3 +15,5 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, width)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, height)
 
 resize(ret, ret, Size(800, 600), 0, 0, INTER_CUBIC)
+
+######################################

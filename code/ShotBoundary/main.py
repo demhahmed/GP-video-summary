@@ -29,6 +29,9 @@ height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 FPS = int(cap.get(cv2.CAP_PROP_FPS))
 
 
+print(height, width)
+
+
 ############################## extracting frames ##################################
 print("extracting frames...")
 frames = ExtractFrames(VIDEO_PATH, step=STEP)

@@ -57,7 +57,8 @@ def ExtractFrames(path, step):
 
         if ret == True:
             if count % step == 0:
-                list.append(image)
+                list.append(cv2.resize(image, (800, 600), fx=0,
+                                       fy=0, interpolation=cv2.INTER_CUBIC))
             count += 1
         else:
             break
