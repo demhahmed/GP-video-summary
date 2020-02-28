@@ -45,10 +45,16 @@ class GoalDetector:
 
     def execute(self, frames):
         scale = 2
-        begin_frame = cv2.resize(frames[0], None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
-        end_frame = cv2.resize(frames[1], None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+
+        begin_frame = cv2.cvtColor(frames[0], cv2.COLOR_BGR2GRAY)
+        end_frame = cv2.cvtColor(frames[1], cv2.COLOR_BGR2GRAY)
+
+        begin_frame = cv2.resize(begin_frame, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+        end_frame = cv2.resize(end_frame, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
+
         _, begin_frame = cv2.threshold(begin_frame, 127, 255, cv2.THRESH_BINARY)
         _, end_frame = cv2.threshold(begin_frame, 127, 255, cv2.THRESH_BINARY)
+
         is_goal = self.__extract_scoreboard_results(begin_frame)
         is_goal = self.__extract_scoreboard_results(end_frame)
         if is_goal:

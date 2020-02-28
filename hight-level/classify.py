@@ -11,10 +11,10 @@ class ShotClassifier:
         self.__classes = ['logo', 'medium', 'close-out', 'close', 'wide']
         if model_type == 1:
             self.__model = load_model(
-                join(dirname(realpath(__file__))), 'moamen.model')
+                join(dirname(realpath(__file__)), 'moamen.model'))
         else:
             self.__model = load_model(
-                join(dirname(realpath(__file__))), 'maher.model')
+                join(dirname(realpath(__file__)), 'maher.model'))
 
     def __get_image_class(self, img):
         """ expected rgb image """
@@ -38,6 +38,7 @@ class ShotClassifier:
         # special case
         if (histogram['logo'] / len(frames)) * 100 >= 10:
             # majority is logo.
+            print("major is logo")
             return 'logo'
         max_type = ''
         max_type_freq = 0
