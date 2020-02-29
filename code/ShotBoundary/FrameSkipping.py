@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from DominantColor import getDominantColor
 
 
 def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
@@ -57,8 +56,7 @@ def ExtractFrames(path, step):
 
         if ret == True:
             if count % step == 0:
-                list.append(cv2.resize(image, (800, 600), fx=0,
-                                       fy=0, interpolation=cv2.INTER_CUBIC))
+                list.append(image)
             count += 1
         else:
             break
@@ -68,4 +66,5 @@ def ExtractFrames(path, step):
     return list
 
 
-path = 'C://Users\\medo\\Desktop\\test1.mp4'
+path = 'C://Users\\medo\\Desktop\\small_test.mp4'
+#ExtractFramesToDisk(path, 5)

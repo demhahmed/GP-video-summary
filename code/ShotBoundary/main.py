@@ -1,14 +1,14 @@
 import cv2
 import numpy as np
-from FrameSkipping import *
-from FrameBlocks import *
-from HistogramCompare import *
-from DominantColor import *
-from Audio import *
+from FrameSkipping import ExtractFrames
+from Audio import getPeakTimes
 from moviepy.editor import VideoFileClip, concatenate
 import bisect
 from ShotBoundary import cutDetector
-from Utill import *
+from Utill import blockPrint, enablePrint, printProgressBar, find_gt
+from goal_detector import GoalDetector
+from classify import ShotClassifier
+from os.path import dirname, realpath, join
 
 
 ############################## constants ##################################
@@ -17,39 +17,49 @@ STEP = 5
 ############################## reading video ##################################
 print("reading video")
 
-VIDEO_PATH = 'C://Users\\medo\\Desktop\\test1.mp4'
+VIDEO_PATH = 'C://Users\\medo\\Desktop\\small_test.mp4'
 
 cap = cv2.VideoCapture(VIDEO_PATH)
 if cap.isOpened() == False:
     print('err reading video')
 
 ############################## video info ##################################
+FPS = int(cap.get(cv2.CAP_PROP_FPS))
+'''
 width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
 height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-FPS = int(cap.get(cv2.CAP_PROP_FPS))
+
 
 
 print(height, width)
-
+'''
 
 ############################## extracting frames ##################################
 print("extracting frames...")
 frames = ExtractFrames(VIDEO_PATH, step=STEP)
 
-
-############################## shot boundary ##################################
 print("shot boundary detection...")
+shots = []
 cuts = []
+goals = []
+types = []
 last_cut = 0
 No_frames = int(len(frames))
 for i in range(len(frames)-1):
     frame_number = i*STEP
-    printProgressBar(i, No_frames)
+    #printProgressBar(i, No_frames)
     frame1 = frames[i]
     frame2 = frames[i+1]
 
     if cutDetector(frame1, frame2) and abs(last_cut - frame_number) >= 20:
+
+        # shots.append((frame_number/FPS), GoalDetector().execute([frames[i-1], frames[i]]), ShotClassifier(model_type=1).get_shot_class(
+            # frames[int(last_cut/STEP):int(frame_number/STEP)]))
         cuts.append((frame_number/FPS))
+        #goals.append(GoalDetector().execute([frames[i-1], frames[i]]))
+        types.append(ShotClassifier(model_type=1).get_shot_class(
+            frames[int(last_cut/STEP):int(frame_number/STEP)]))
+
         last_cut = frame_number
 
 
@@ -57,8 +67,8 @@ for i in range(len(frames)-1):
 print("----------------------")
 print("Found ", len(cuts), " cuts")
 print("----------------------")
-for Item in cuts:
-    print(Item, sep='/n')
+for Item, goal in zip(cuts, types):
+    print(Item*FPS, goal)
 
 
 ############################## audio processing ##################################

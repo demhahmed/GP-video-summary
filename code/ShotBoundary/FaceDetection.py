@@ -1,6 +1,5 @@
-from matplotlib import pyplot as plt
+
 from mtcnn.mtcnn import MTCNN
-from matplotlib.patches import Rectangle
 import cv2
 
 detector = MTCNN()
