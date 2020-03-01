@@ -11,10 +11,10 @@ class ShotClassifier:
         self.__classes = ['logo', 'medium', 'close-out', 'close', 'wide']
         if model_type == 1:
             self.__model = load_model(
-                join(dirname(realpath(__file__)), 'moamen.model'))
+                join(dirname(realpath(__file__)), 'models/moamen.model'))
         else:
             self.__model = load_model(
-                join(dirname(realpath(__file__)), 'maher.model'))
+                join(dirname(realpath(__file__)), 'models/maher.model'))
 
     def __get_image_class(self, img):
         """ expected rgb image """
