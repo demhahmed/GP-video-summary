@@ -18,7 +18,7 @@ class GoalDetector:
 
         # check similarity index
         score, _ = compare_ssim(scoreboard_1, scoreboard_2, full=True)
-
-        if score * 100 <= 90:
+        
+        if 40 <= score * 100 <= 90:
             print('Goal Detected')
             return True
