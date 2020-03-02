@@ -43,11 +43,9 @@ def detect(lines):
                     return True
     return False
 
-pathnames = glob.glob("test-set/*.jpg")
-k = 0
-m = 0
-for pathname in pathnames:
-    img = cv2.imread(pathname, cv2.IMREAD_COLOR)
+
+def goalpostv2(img):
+    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     #_, bw_img = cv2. threshold(gray, 127, 255, cv2.THRESH_BINARY)
     edges = cv2.Canny(gray, 50, 200)
@@ -57,15 +55,35 @@ for pathname in pathnames:
     kernel = np.ones((5,5), np.uint8) 
   
     #edges = cv2.dilate(edges, kernel, iterations=1)
-    cv2.imwrite('preprocess_'+str(m)+'.jpg', edges)
-    m += 1
     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 65, minLineLength=40, maxLineGap=10)
     if lines is None:
         print(pathname, False)
-        continue
-    a,b,c = lines.shape
-    for i in range(a):
-        cv2.line(edges, (lines[i][0][0], lines[i][0][1]), (lines[i][0][2], lines[i][0][3]), (23, 32, 42), 3, cv2.LINE_AA)
-    cv2.imwrite('houghlines_'+str(k)+'.jpg',edges)
-    k += 1
+        break
     print(pathname, detect(lines))
+
+# pathnames = glob.glob("test-set/*.jpg")
+# k = 0
+# m = 0
+# for pathname in pathnames:
+#     img = cv2.imread(pathname, cv2.IMREAD_COLOR)
+#     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#     #_, bw_img = cv2. threshold(gray, 127, 255, cv2.THRESH_BINARY)
+#     edges = cv2.Canny(gray, 50, 200)
+#     #img_goalpost = cv2.medianBlur(edges, 5)
+#     kernel = np.ones((7,7))
+#     edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
+#     kernel = np.ones((5,5), np.uint8) 
+  
+#     #edges = cv2.dilate(edges, kernel, iterations=1)
+#     cv2.imwrite('preprocess_'+str(m)+'.jpg', edges)
+#     m += 1
+#     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 65, minLineLength=40, maxLineGap=10)
+#     if lines is None:
+#         print(pathname, False)
+#         continue
+#     a,b,c = lines.shape
+#     for i in range(a):
+#         cv2.line(edges, (lines[i][0][0], lines[i][0][1]), (lines[i][0][2], lines[i][0][3]), (23, 32, 42), 3, cv2.LINE_AA)
+#     cv2.imwrite('houghlines_'+str(k)+'.jpg',edges)
+#     k += 1
+#     print(pathname, detect(lines))
