@@ -64,9 +64,17 @@ def detect_goalpost(img):
     if len(lines) == 0:
         return False
 
+    f2 = 0
     # an image has a goalpost if two perpendicular lines with 0 degrees and 90 degrees intersect
     horizontal_line = len(lines[(abs(lines[:,1]) < horizontal_threshold)]) > 0
-    vertical_line = len(lines[(abs(abs(lines[:,1]) - 90) < vertical_threshold)]) > 0
+    for line in lines:
+        if abs(abs(line[1]) - 90) < vertical_threshold:
+            f2 += 1
+    print(f2)        
+    if f2 > 0:
+        vertical_line = True
+    else:
+        vertical_line = False    
     return horizontal_line and vertical_line
 
 images = ['im_6.jpg','im_10.jpg','im_1.jpg','im_2.jpg','im_4.jpg','im_7.jpg','im_8.jpg']
