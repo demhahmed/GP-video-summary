@@ -1,17 +1,6 @@
 import cv2
 import numpy as np
-
-
-def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█', printEnd="\r"):
-
-    percent = ("{0:." + str(decimals) + "f}").format(100 *
-                                                     (iteration / float(total)))
-    filledLength = int(length * iteration // total)
-    bar = fill * filledLength + '-' * (length - filledLength)
-    print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end=printEnd)
-    # Print New Line on Complete
-    if iteration == total:
-        print()
+from Utill import printProgressBar
 
 
 def ExtractFramesToDisk(path, step):
@@ -66,5 +55,5 @@ def ExtractFrames(path, step):
     return list
 
 
-path = 'C://Users\\medo\\Desktop\\small_test.mp4'
+path = 'C://Users\\medo\\Desktop\\3_1.mp4'
 #ExtractFramesToDisk(path, 5)

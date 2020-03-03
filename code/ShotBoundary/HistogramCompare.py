@@ -25,9 +25,4 @@ def histogramCompare(frame1, frame2):
                          [0, 256, 0, 256, 0, 256])
     hist2 = cv2.normalize(hist2, hist2).flatten()
 
-    metrics = []
-
-    metrics.append(cv2.compareHist(hist1, hist2, cv2.HISTCMP_INTERSECT))
-    metrics.append(10*cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL))
-
-    return metrics
+    return cv2.compareHist(hist1, hist2, cv2.HISTCMP_INTERSECT), 10*cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL)

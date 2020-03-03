@@ -1,67 +1,105 @@
 import cv2
-import pytesseract
-
-# Setup Environment for tesseract
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+import numpy as np
+from skimage.measure import compare_ssim
 
 
 class GoalDetector:
     def __init__(self):
-        self.__home = '0'
-        self.__away = '0'
-        self.__home_repeated = ''
-        self.__away_repeated = ''
+        # loading model
+        # Initialize scoreboard Dimensions.
 
-    def __premier_league_scoreboard(self, image):
-        """ extracts the results from premier league scoreboard """
-        config = '--psm 7'
-        scale = 2
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-        temp = image[60 * scale:80 * scale, 165 * scale:185 * scale]
-        home_team_image = cv2.morphologyEx(temp, cv2.MORPH_CLOSE, kernel)
-        cv2.imwrite("home.jpg", home_team_image)
-        home_team = pytesseract.image_to_string(
-            home_team_image, lang='eng', config=config)
-        temp = image[60 * scale:80 * scale, 192 * scale:215 * scale]
-        away_team_image = cv2.morphologyEx(temp, cv2.MORPH_CLOSE, kernel)
-        cv2.imwrite("away.jpg", away_team_image)
-        away_team = pytesseract.image_to_string(
-            away_team_image, lang='eng', config=config)
-        return home_team, away_team
+        # dimensions [height_from, height_to, width_from, width_to]
+        self.__height = [64, 80]
+        self.__width = [167, 215]
+        self.__home = None
+        self.__away = None
+        self.__sepr = None
 
-    def __extract_scoreboard_results(self, image):
-        [home, away] = self.__premier_league_scoreboard(image)
-        print(f'home:{home} away:{away}')
-        if home != '' and away != '':
-            if home.isnumeric() and away.isnumeric():
-                if home == self.__home and away == self.__away:
-                    self.__away_repeated = ''
-                    self.__home_repeated = ''
-                    return
-                if self.__home_repeated == home and self.__away_repeated == away:
-                    self.__home = home
-                    self.__away = away
-                    return True
-                self.__home_repeated = home
-                self.__away_repeated = away
+    def __segment_results(self, image):
+        if self.__home is not None:
+            home = image[self.__home[0]:self.__home[1],
+                         self.__home[2]:self.__home[3]]
+            sepr = image[self.__sepr[0]:self.__sepr[1],
+                         self.__sepr[2]:self.__sepr[3]]
+            away = image[self.__away[0]:self.__away[1],
+                         self.__away[2]:self.__away[3]]
+            return home, sepr, away
+        v_hist = np.sum(image, axis=0)
+        # print(v_hist)
+        i = 0
+        numbers, dimensions = [], []
+        while i < len(v_hist):
+            if v_hist[i] != 0:
+                x, y = i, i
+                gap = 0
+                while y < len(v_hist):
+                    y += 1
+                    if v_hist[y]:
+                        gap = 0
+                    if y < len(v_hist) and v_hist[y] == 0:
+                        if gap == 2:
+                            break
+                        else:
+                            gap += 1
+                if y - x >= 10:
+                    dimensions.append([0, len(image), x, y])
+                    numbers.append(image[0:len(image), x:y])
+                i = y
+            else:
+                i += 1
+        if len(numbers) == 3:
+            self.__home, self.__sepr, self.__away = dimensions[0], dimensions[1], dimensions[2]
+        return numbers
 
-    def execute(self, frames):
-        scale = 2
+    def execute(self, frame_1, frame_2):
+        frame_1 = cv2.cvtColor(frame_1, cv2.COLOR_BGR2GRAY)
+        frame_2 = cv2.cvtColor(frame_2, cv2.COLOR_BGR2GRAY)
 
-        begin_frame = cv2.cvtColor(frames[0], cv2.COLOR_BGR2GRAY)
-        end_frame = cv2.cvtColor(frames[1], cv2.COLOR_BGR2GRAY)
+        # slicing
+        scoreboard_1 = frame_1[self.__height[0]:self.__height[1], self.__width[0]:self.__width[1]]
+        scoreboard_2 = frame_2[self.__height[0]:self.__height[1], self.__width[0]:self.__width[1]]
 
-        begin_frame = cv2.resize(
-            begin_frame, None, fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
-        end_frame = cv2.resize(end_frame, None, fx=scale,
-                               fy=scale, interpolation=cv2.INTER_CUBIC)
+        # thresholding
+        _, scoreboard_1 = cv2.threshold(
+            scoreboard_1, 127, 255, cv2.THRESH_BINARY_INV)
+        _, scoreboard_2 = cv2.threshold(
+            scoreboard_2, 127, 255, cv2.THRESH_BINARY_INV)
 
-        _, begin_frame = cv2.threshold(
-            begin_frame, 127, 255, cv2.THRESH_BINARY)
-        _, end_frame = cv2.threshold(begin_frame, 127, 255, cv2.THRESH_BINARY)
+        # resizing
+        scoreboard_1 = cv2.resize(
+            scoreboard_1, None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
+        scoreboard_2 = cv2.resize(
+            scoreboard_2, None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
 
-        is_goal = self.__extract_scoreboard_results(begin_frame)
-        is_goal = self.__extract_scoreboard_results(end_frame)
-        if is_goal:
-            print('Goal Detected')
-        return is_goal
+        # erosion
+        kernel = np.ones((3, 3), np.uint8)
+        scoreboard_1 = cv2.erode(scoreboard_1, kernel, iterations=1)
+        # scoreboard_1 = cv2.dilate(scoreboard_1, kernel, iterations=1)
+        scoreboard_2 = cv2.erode(scoreboard_2, kernel, iterations=1)
+        # scoreboard_2 = cv2.dilate(scoreboard_2, kernel, iterations=1)
+
+        first_results = self.__segment_results(scoreboard_1)
+        later_results = self.__segment_results(scoreboard_2)
+
+        '''
+        for idx, number in enumerate(first_results):
+            cv2.imwrite(f"first{idx}.jpg", number)
+
+        for idx, number in enumerate(later_results):
+            cv2.imwrite(f"second{idx}.jpg", number)
+        '''
+        if len(first_results) == len(later_results) and len(first_results) == 3:
+            home_score, _ = compare_ssim(
+                first_results[0], later_results[0], full=True)
+            away_score, _ = compare_ssim(
+                first_results[2], later_results[2], full=True)
+            #print(home_score, away_score)
+            if home_score * 100 <= 80:
+                #print("Home Score Changed")
+                return True
+            elif away_score * 100 <= 80:
+                #print("Away Score Changed")
+                return True
+            else:
+                #print("No Change")
+                return False

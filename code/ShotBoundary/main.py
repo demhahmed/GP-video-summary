@@ -17,7 +17,7 @@ STEP = 5
 ############################## reading video ##################################
 print("reading video")
 
-VIDEO_PATH = 'C://Users\\medo\\Desktop\\small_test.mp4'
+VIDEO_PATH = 'C://Users\\medo\\Desktop\\3_1.mp4'
 
 cap = cv2.VideoCapture(VIDEO_PATH)
 if cap.isOpened() == False:
@@ -47,28 +47,26 @@ last_cut = 0
 No_frames = int(len(frames))
 for i in range(len(frames)-1):
     frame_number = i*STEP
-    #printProgressBar(i, No_frames)
+    printProgressBar(i, No_frames)
     frame1 = frames[i]
     frame2 = frames[i+1]
 
     if cutDetector(frame1, frame2) and abs(last_cut - frame_number) >= 20:
 
-        # shots.append((frame_number/FPS), GoalDetector().execute([frames[i-1], frames[i]]), ShotClassifier(model_type=1).get_shot_class(
-            # frames[int(last_cut/STEP):int(frame_number/STEP)]))
+        shots.append((frame_number, (frame_number/FPS), GoalDetector().execute(frames[int(max(last_cut/5 - 2, 0))], frames[i-1]), ShotClassifier(model_type=1).get_shot_class(
+            frames[int(last_cut/STEP):int(frame_number/STEP):4])))
         cuts.append((frame_number/FPS))
-        #goals.append(GoalDetector().execute([frames[i-1], frames[i]]))
-        types.append(ShotClassifier(model_type=1).get_shot_class(
-            frames[int(last_cut/STEP):int(frame_number/STEP)]))
 
         last_cut = frame_number
 
 
 ############################## print cuts  ##################################
 print("----------------------")
-print("Found ", len(cuts), " cuts")
+print("Found ", len(shots), " shots")
 print("----------------------")
-for Item, goal in zip(cuts, types):
-    print(Item*FPS, goal)
+
+for shot in shots:
+    print(shot)
 
 
 ############################## audio processing ##################################

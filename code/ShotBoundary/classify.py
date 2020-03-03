@@ -38,7 +38,7 @@ class ShotClassifier:
         # special case
         if (histogram['logo'] / len(frames)) * 100 >= 10:
             # majority is logo.
-            print("major is logo")
+            #print("major is logo")
             return 'logo'
         max_type = ''
         max_type_freq = 0
@@ -46,5 +46,5 @@ class ShotClassifier:
             if val >= max_type_freq:
                 max_type_freq = val
                 max_type = key
-        print(f"major is {max_type}")
+        #print(f"major is {max_type}")
         return max_type

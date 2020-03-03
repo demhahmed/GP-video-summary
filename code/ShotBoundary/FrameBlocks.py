@@ -5,7 +5,6 @@ from HistogramCompare import histogramCompare
 
 def block_Change(frame1, frame2):
     count = 0
-    count2 = 0
     for r in range(0, frame1.shape[0], 150):
         for c in range(0, frame2.shape[1], 150):
             window1 = frame1[r:r+150, c:c+150]
