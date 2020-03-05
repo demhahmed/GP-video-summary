@@ -57,9 +57,9 @@ def goalpostv2(img):
     #edges = cv2.dilate(edges, kernel, iterations=1)
     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 65, minLineLength=40, maxLineGap=10)
     if lines is None:
-        print(pathname, False)
-        break
-    print(pathname, detect(lines))
+        print(False)
+        return
+    print(detect(lines))
 
 # pathnames = glob.glob("test-set/*.jpg")
 # k = 0
