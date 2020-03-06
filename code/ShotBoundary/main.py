@@ -17,7 +17,7 @@ STEP = 5
 ############################## reading video ##################################
 print("reading video")
 
-VIDEO_PATH = 'C://Users\\medo\\Desktop\\3_1.mp4'
+VIDEO_PATH = 'C://Users\\medo\\Desktop\\test5.mp4'
 
 cap = cv2.VideoCapture(VIDEO_PATH)
 if cap.isOpened() == False:

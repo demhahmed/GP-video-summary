@@ -34,7 +34,7 @@ class GoalDetector:
                 gap = 0
                 while y < len(v_hist):
                     y += 1
-                    if v_hist[y]:
+                    if y < len(v_hist) and v_hist[y]:
                         gap = 0
                     if y < len(v_hist) and v_hist[y] == 0:
                         if gap == 2:

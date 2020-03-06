@@ -36,7 +36,7 @@ class ShotClassifier:
             frame_class = self.__get_image_class(frame)
             histogram[frame_class] += 1
         # special case
-        if (histogram['logo'] / len(frames)) * 100 >= 10:
+        if (histogram['logo'] / len(frames)) * 100 >= 35:
             # majority is logo.
             #print("major is logo")
             return 'logo'

@@ -1,13 +1,16 @@
 import cv2
 import numpy as np
 
+
 def magnitude(x1, y1, x2, y2):
     return np.sqrt((x2-x1)**2.0 + (y2-y1)**2.0)
+
 
 def lineangle(line):
     x1, y1, x2, y2 = line[0]
     angle = np.arctan2(y2 - y1, x2 - x1)
     return angle % (2 * np.pi)
+
 
 def isparallel(line1, line2, tol=None):
     tol = np.pi / (180 * 60 * 60) if tol == None else tol
@@ -17,24 +20,26 @@ def isparallel(line1, line2, tol=None):
     diff = min(diff, np.pi - diff)
     return diff < tol
 
+
 def same(line1, line2):
     if line1[0][0] == line2[0][0] and line1[0][1] == line2[0][1] and line1[0][2] == line2[0][2] and line1[0][3] == line2[0][3]:
         return True
-    else: 
+    else:
         return False
-    
+
+
 def detect(lines):
     for line in lines:
         if (magnitude(*line[0]) < 200):
-            #print("YUP")
+            # print("YUP")
             continue
         pf = 0
         for lin in lines:
             if (magnitude(*lin[0]) < 200):
-                #print("YUP")
+                # print("YUP")
                 continue
-            if same(line, lin): 
-                #print("YUP")
+            if same(line, lin):
+                # print("YUP")
                 continue
             else:
                 if isparallel(line, lin):
@@ -44,18 +49,27 @@ def detect(lines):
     return False
 
 
+def goalMouth(frames):
+    res = [detect(x) for x in frames]
+    if res.count(True)/len(res) > 0.5:
+        return True
+    else:
+        return False
+
+
 def goalpostv2(img):
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     #_, bw_img = cv2. threshold(gray, 127, 255, cv2.THRESH_BINARY)
     edges = cv2.Canny(gray, 50, 200)
     #img_goalpost = cv2.medianBlur(edges, 5)
-    kernel = np.ones((7,7))
+    kernel = np.ones((7, 7))
     edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
-    kernel = np.ones((5,5), np.uint8) 
-  
+    kernel = np.ones((5, 5), np.uint8)
+
     #edges = cv2.dilate(edges, kernel, iterations=1)
-    lines = cv2.HoughLinesP(edges, 1, np.pi/180, 65, minLineLength=40, maxLineGap=10)
+    lines = cv2.HoughLinesP(edges, 1, np.pi/180, 65,
+                            minLineLength=40, maxLineGap=10)
     if lines is None:
         print(False)
         return
@@ -72,8 +86,8 @@ def goalpostv2(img):
 #     #img_goalpost = cv2.medianBlur(edges, 5)
 #     kernel = np.ones((7,7))
 #     edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
-#     kernel = np.ones((5,5), np.uint8) 
-  
+#     kernel = np.ones((5,5), np.uint8)
+
 #     #edges = cv2.dilate(edges, kernel, iterations=1)
 #     cv2.imwrite('preprocess_'+str(m)+'.jpg', edges)
 #     m += 1

@@ -55,5 +55,35 @@ def ExtractFrames(path, step):
     return list
 
 
-path = 'C://Users\\medo\\Desktop\\3_1.mp4'
+def ExtractFrames(path, step, patch):
+
+    Nframes = patch * 2000
+    list = []
+
+    cap = cv2.VideoCapture(path)
+    if cap.isOpened() == False:
+        print('err reading video')
+
+    count = 0
+
+    total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    while cap.isOpened():
+
+        printProgressBar(count, total)
+
+        ret, image = cap.read()
+
+        if ret == True:
+            if count % step == 0:
+                list.append(image)
+            count += 1
+        else:
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+    return list
+
+
+path = 'C://Users\\medo\\Desktop\\test5.mp4'
 #ExtractFramesToDisk(path, 5)
