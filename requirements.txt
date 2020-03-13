@@ -1,4 +1,0 @@
-colorama
-cv2
-pytesseract
-numpy

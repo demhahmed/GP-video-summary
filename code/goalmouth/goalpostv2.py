@@ -50,7 +50,7 @@ def detect(lines):
 
 
 def goalMouth(frames):
-    res = [detect(x) for x in frames]
+    res = [goalpostv2(x) for x in frames]
     if res.count(True)/len(res) > 0.5:
         return True
     else:
@@ -71,9 +71,9 @@ def goalpostv2(img):
     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 65,
                             minLineLength=40, maxLineGap=10)
     if lines is None:
-        print(False)
-        return
-    print(detect(lines))
+        # print(False)
+        return False
+    return detect(lines)
 
 # pathnames = glob.glob("test-set/*.jpg")
 # k = 0

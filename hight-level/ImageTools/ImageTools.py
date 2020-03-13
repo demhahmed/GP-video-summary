@@ -1,4 +1,3 @@
-import cv2
 import numpy as np
 
 
@@ -48,7 +47,7 @@ class ImageTools:
 
     @staticmethod
     def dilate(image, kernel_size):
-        """ Apply Min Filter """
+        """ Apply Max Filter """
         if kernel_size % 2 != 1:
             raise Exception('Dilate Kernel Must be odd')
         space = kernel_size // 2
@@ -57,7 +56,7 @@ class ImageTools:
             for j in range(space, len(image[0]) - space):
                 surroundings = ImageTools.surrounding_pixels(image, kernel_size, i, j)
                 copy[i, j] = np.max(surroundings)
-    
+
     @staticmethod
     def image_similarity_ratio(image_1, image_2):
         image_1 = ImageTools.threshold(image_1, 127, ImageTools.BINARY)
@@ -80,14 +79,5 @@ class ImageTools:
             for j in range(len(image)):
                 histogram[image[i, j]] += 1
         return histogram
-                 
-image_1 = cv2.imread("j.png")
-gray_1 = cv2.cvtColor(image_1, cv2.COLOR_BGR2GRAY)
-kernel = np.ones((5,5),np.uint8)
-erosion = cv2.erode(gray_1,kernel,iterations = 1)
 
-erode = ImageTools.erode(gray_1, 5)
-# _, thresholded_1 = cv2.threshold(gray_1, 127, 255, cv2.THRESH_BINARY)
-# thresholded_2 = ImageTools.threshold(gray_1, 127, ImageTools.BINARY)
-cv2.imwrite("g1.jpg", erosion)
-cv2.imwrite("g2.jpg", erode)
+       

@@ -1,47 +1,94 @@
-import numpy as np
 import cv2
-from GoalDetector.ScoreboardStrategy.Strategy import Strategy
-from Controllers.Message import Message
+import numpy as np
+from skimage.measure import compare_ssim
+from ImageTools.ImageTools import ImageTools
 
 
 class GoalDetector:
     def __init__(self, scoreboard_type):
-        self.__current_scoreboard = scoreboard_type
-        self.__strategy = Strategy(scoreboard_type)
-        self.__home = '0'
-        self.__away = '0'
-        self.__home_repeated = ''
-        self.__away_repeated = ''
-        self.__current_frame = 0
+        # loading model
+        # Initialize scoreboard Dimensions.
+        if scoreboard_type == 'premier_league':
+            # dimensions [height_from, height_to, width_from, width_to]
+            self.__height = [64, 80]
+            self.__width = [167, 215]
+            self.__home = None
+            self.__away = None
+            self.__sepr = None
+        else:
+            raise Exception("Choose a supported scoreboard")
 
-    def extract_scoreboard_results(self, image):
-        [home, away] = self.__strategy.extract_results(image)
-        Message.info(f"home:{home} away:{away}")
-        if home != "" and away != "":
-            if home.isnumeric() and away.isnumeric():
-                if home == self.__home and away == self.__away:
-                    self.__away_repeated = ''
-                    self.__home_repeated = ''
-                    return
-                if self.__home_repeated == home and self.__away_repeated == away:
-                    self.__home = home
-                    self.__away = away
-                    return True
-                self.__home_repeated = home
-                self.__away_repeated = away
+    def __segment_results(self, image):
+        if self.__home is not None:
+            home = image[self.__home[0]:self.__home[1], self.__home[2]:self.__home[3]]
+            sepr = image[self.__sepr[0]:self.__sepr[1], self.__sepr[2]:self.__sepr[3]]
+            away = image[self.__away[0]:self.__away[1], self.__away[2]:self.__away[3]]
+            return home, sepr, away
+        v_hist = np.sum(image, axis=0)
+        i = 0
+        numbers, dimensions = [], []
+        while i < len(v_hist):
+            if v_hist[i] != 0:
+                x, y = i, i
+                gap = 0
+                while y < len(v_hist):
+                    y += 1
+                    if v_hist[y]:
+                        gap = 0
+                    if y < len(v_hist) and v_hist[y] == 0:
+                        if gap == 2:
+                            break
+                        else:
+                            gap += 1
+                if y - x >= 10:
+                    dimensions.append([0, len(image), x, y])
+                    numbers.append(image[0:len(image), x:y])
+                i = y
+            else:
+                i += 1
+        if len(numbers) == 3:
+            self.__home, self.__sepr, self.__away = dimensions[0], dimensions[1], dimensions[2]
+        return numbers
 
-    def execute(self, gray_images):
-        frames = []
-        for gray in gray_images:
-            resized_gray = cv2.resize(gray, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+    def execute(self, frame_1, frame_2):
+        frame_1 = ImageTools.image_to_gray(frame_1)
+        frame_2 = ImageTools.image_to_gray(frame_2)
 
-            _, threshold = cv2.threshold(resized_gray, 127, 255, cv2.THRESH_BINARY)
-            frames.append(threshold)
-        images = np.array([np.array(im) for im in frames])
-        avg_image = np.sum(images, axis=0)
-        avg_image[avg_image >= 255] = 255
-        avg_image = avg_image.astype(np.uint8)
-        is_goal = self.extract_scoreboard_results(avg_image)
-        if is_goal:
-            Message.success("Goal Detected")
-        return is_goal
+        # slicing
+        scoreboard_1 = frame_1[self.__height[0]:self.__height[1], self.__width[0]:self.__width[1]]
+        scoreboard_2 = frame_2[self.__height[0]:self.__height[1], self.__width[0]:self.__width[1]]
+
+        # thresholding
+        scoreboard_1 = ImageTools.threshold(scoreboard_1, 127, ImageTools.INV_BINARY)
+        scoreboard_2 = ImageTools.threshold(scoreboard_2, 127, ImageTools.INV_BINARY)
+
+        # resizing
+        scoreboard_1 = cv2.resize(scoreboard_1, None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
+        scoreboard_2 = cv2.resize(scoreboard_2, None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
+
+        # erosion
+        scoreboard_1 = ImageTools.erode(scoreboard_1, 5)
+        scoreboard_2 = ImageTools.erode(scoreboard_2, 5)
+
+        first_results = self.__segment_results(scoreboard_1)
+        later_results = self.__segment_results(scoreboard_2)
+
+        for idx, number in enumerate(first_results):
+            cv2.imwrite(f'first{idx}.jpg', number)
+
+        for idx, number in enumerate(later_results):
+            cv2.imwrite(f'second{idx}.jpg', number)
+
+        if len(first_results) == len(later_results) and len(first_results) == 3:
+            home_score, _ = compare_ssim(first_results[0], later_results[0], full=True)
+            away_score, _ = compare_ssim(first_results[2], later_results[2], full=True)
+            print(home_score, away_score)
+            if home_score * 100 <= 80:
+                print('Home Score Changed')
+                return True
+            elif away_score * 100 <= 80:
+                print('Away Score Changed')
+                return True
+            else:
+                print('No Change')
+                return False

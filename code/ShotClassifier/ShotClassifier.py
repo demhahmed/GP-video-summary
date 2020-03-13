@@ -10,11 +10,9 @@ class ShotClassifier:
     def __init__(self, model_type=1):
         self.__classes = ['logo', 'medium', 'close-out', 'close', 'wide']
         if model_type == 1:
-            self.__model = load_model(
-                join(dirname(realpath(__file__)), 'moamen.model'))
+            self.__model = load_model(join(dirname(realpath(__file__)), 'moamen.model'))
         else:
-            self.__model = load_model(
-                join(dirname(realpath(__file__)), 'maher.model'))
+            self.__model = load_model(join(dirname(realpath(__file__)), 'maher.model'))
 
     def __get_image_class(self, img):
         """ expected rgb image """
@@ -28,23 +26,31 @@ class ShotClassifier:
         idx = np.argmax(self.__model.predict(image))
         return self.__classes[idx]
 
-    def get_shot_class(self, frames):
+    def __get_majority(self, frames):
         histogram = {}
         for frame_type in self.__classes:
             histogram[frame_type] = 0
         for frame in frames:
             frame_class = self.__get_image_class(frame)
             histogram[frame_class] += 1
-        # special case
-        if (histogram['logo'] / len(frames)) * 100 >= 35:
-            # majority is logo.
-            #print("major is logo")
-            return 'logo'
         max_type = ''
         max_type_freq = 0
         for key, val in histogram.items():
             if val >= max_type_freq:
                 max_type_freq = val
                 max_type = key
-        #print(f"major is {max_type}")
         return max_type
+
+    def get_shot_class(self, frames):
+        total_majority = self.__get_majority(frames)
+        if total_majority != 'logo':
+            begin_majority = self.__get_majority(frames[:10])
+            end_majority = self.__get_majority(frames[-10:])
+            if begin_majority == 'logo':
+                total_majority = f'logo+{total_majority}'
+            if end_majority == 'logo':
+                total_majority = f'{total_majority}+logo'
+            return total_majority
+        else:
+            return 'logo'
+        
