@@ -1,3 +1,0 @@
-1) pytesseract
-2) image similarity index
-3) digits cnn
