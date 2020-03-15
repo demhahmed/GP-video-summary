@@ -10,9 +10,11 @@ class ShotClassifier:
     def __init__(self, model_type=1):
         self.__classes = ['logo', 'medium', 'close-out', 'close', 'wide']
         if model_type == 1:
-            self.__model = load_model(join(dirname(realpath(__file__)), 'moamen.model'))
+            self.__model = load_model(
+                join(dirname(realpath(__file__)), 'moamen.model'))
         else:
-            self.__model = load_model(join(dirname(realpath(__file__)), 'maher.model'))
+            self.__model = load_model(
+                join(dirname(realpath(__file__)), 'maher.model'))
 
     def __get_image_class(self, img):
         """ expected rgb image """
@@ -44,8 +46,8 @@ class ShotClassifier:
     def get_shot_class(self, frames):
         total_majority = self.__get_majority(frames)
         if total_majority != 'logo':
-            begin_majority = self.__get_majority(frames[:10])
-            end_majority = self.__get_majority(frames[-10:])
+            begin_majority = self.__get_majority(frames[:5])
+            end_majority = self.__get_majority(frames[-5:])
             if begin_majority == 'logo':
                 total_majority = f'logo+{total_majority}'
             if end_majority == 'logo':
@@ -53,4 +55,3 @@ class ShotClassifier:
             return total_majority
         else:
             return 'logo'
-        

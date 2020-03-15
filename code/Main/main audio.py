@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from FrameSkipping import ExtractFrames
-from Audio import get_peak_times
+from Audio import getPeakTimes
 from moviepy.editor import VideoFileClip, concatenate
 import bisect
 from ShotBoundary import cutDetector
@@ -30,9 +30,13 @@ if cap.isOpened() == False:
 
 ############################## video info ##################################
 FPS = int(cap.get(cv2.CAP_PROP_FPS))
+############################## video info ##################################
+print("Analyzing Audio...")
+peak_times = getPeakTimes(VIDEO_PATH)
 ############################## main loop ##################################
 while 1:
     frames = []
+    times = []
 
     count = 0
 
@@ -45,6 +49,7 @@ while 1:
         if ret == True:
             if count % STEP == 0:
                 frames.append(image)
+                times.append(count/FPS)
             count += 1
         else:
             out = True
@@ -93,7 +98,7 @@ for shot in shots:
 ############################## audio processing ##################################
 '''
 print("Analyzing Audio...")
-peak_times = get_peak_times(VIDEO_PATH)
+peak_times = getPeakTimes(VIDEO_PATH)
 print(peak_times)
 '''
 
