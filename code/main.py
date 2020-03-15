@@ -1,20 +1,18 @@
+from functools import reduce
+from GoalMouth.GoalPostV2 import goalMouth
+import math
+from os.path import dirname, realpath, join
+from ShotClassifier.ShotClassifier import ShotClassifier
+from GoalDetector.GoalDetector import GoalDetector
+from Utill.Utill import *
+from ShotBoundary.ShotBoundary import cut_detector
+import bisect
+from moviepy.editor import VideoFileClip, concatenate
+from Audio.Audio import get_peak_times
+from Extraction.FrameSkipping import ExtractFrames
+from ImageTools.ImageTools import ImageTools
 import cv2
 import numpy as np
-from ImageTools.ImageTools import ImageTools
-from Extraction.FrameSkipping import ExtractFrames
-
-from Audio.Audio import get_peak_times
-from moviepy.editor import VideoFileClip, concatenate
-import bisect
-from ShotBoundary.ShotBoundary import cutDetector
-from ImageTools.ImageTools import ImageTools
-from Utill.Utill import blockPrint, enablePrint, printProgressBar, find_gt
-from GoalDetector.GoalDetector import GoalDetector
-from ShotClassifier.ShotClassifier import ShotClassifier
-from os.path import dirname, realpath, join
-import math
-from GoalMouth.GoalPostV2 import goalMouth
-from functools import reduce
 
 
 ############################## declarations ##################################
