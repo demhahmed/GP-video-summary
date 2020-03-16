@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from skimage.measure import compare_ssim
+from ImageTools.ImageTools import ImageTools
 
 
 class GoalDetector:
@@ -27,7 +28,6 @@ class GoalDetector:
                          self.__away[2]:self.__away[3]]
             return home, sepr, away
         v_hist = np.sum(image, axis=0)
-        # print(v_hist)
         i = 0
         numbers, dimensions = [], []
         while i < len(v_hist):
@@ -54,20 +54,21 @@ class GoalDetector:
         return numbers
 
     def execute(self, frame_1, frame_2):
-        frame_1 = cv2.cvtColor(frame_1, cv2.COLOR_BGR2GRAY)
-        frame_2 = cv2.cvtColor(frame_2, cv2.COLOR_BGR2GRAY)
+        frame_1 = ImageTools.image_to_gray(frame_1)
+        frame_2 = ImageTools.image_to_gray(frame_2)
 
         # slicing
-        scoreboard_1 = frame_1[self.__height[0]
-            :self.__height[1], self.__width[0]:self.__width[1]]
-        scoreboard_2 = frame_2[self.__height[0]
-            :self.__height[1], self.__width[0]:self.__width[1]]
+        scoreboard_1 = frame_1[self.__height[0]:self.__height[1], self.__width[0]:self.__width[1]]
+        scoreboard_2 = frame_2[self.__height[0]:self.__height[1], self.__width[0]:self.__width[1]]
 
         # thresholding
-        _, scoreboard_1 = cv2.threshold(
-            scoreboard_1, 127, 255, cv2.THRESH_BINARY_INV)
-        _, scoreboard_2 = cv2.threshold(
-            scoreboard_2, 127, 255, cv2.THRESH_BINARY_INV)
+        scoreboard_1 = ImageTools.threshold(
+            scoreboard_1, 127, ImageTools.INV_BINARY)
+        scoreboard_2 = ImageTools.threshold(
+            scoreboard_2, 127, ImageTools.INV_BINARY)
+
+        a, b = scoreboard_1.shape
+        print("Image", a, b)
 
         # resizing
         scoreboard_1 = cv2.resize(
@@ -76,27 +77,30 @@ class GoalDetector:
             scoreboard_2, None, fx=5, fy=5, interpolation=cv2.INTER_CUBIC)
 
         # erosion
-        kernel = np.ones((3, 3), np.uint8)
-        scoreboard_1 = cv2.erode(scoreboard_1, kernel, iterations=1)
-        # scoreboard_1 = cv2.dilate(scoreboard_1, kernel, iterations=1)
-        scoreboard_2 = cv2.erode(scoreboard_2, kernel, iterations=1)
-        # scoreboard_2 = cv2.dilate(scoreboard_2, kernel, iterations=1)
+        scoreboard_1 = ImageTools.erode(scoreboard_1, 5)
+        scoreboard_2 = ImageTools.erode(scoreboard_2, 5)
 
         first_results = self.__segment_results(scoreboard_1)
         later_results = self.__segment_results(scoreboard_2)
+
+        for idx, number in enumerate(first_results):
+            cv2.imwrite(f'first{idx}.jpg', number)
+
+        for idx, number in enumerate(later_results):
+            cv2.imwrite(f'second{idx}.jpg', number)
 
         if len(first_results) == len(later_results) and len(first_results) == 3:
             home_score, _ = compare_ssim(
                 first_results[0], later_results[0], full=True)
             away_score, _ = compare_ssim(
                 first_results[2], later_results[2], full=True)
-            #print(home_score, away_score)
-            if home_score * 100 <= 75:
-                #print("Home Score Changed")
+            print(home_score, away_score)
+            if home_score * 100 <= 80:
+                print('Home Score Changed')
                 return True
-            elif away_score * 100 <= 75:
-                #print("Away Score Changed")
+            elif away_score * 100 <= 80:
+                print('Away Score Changed')
                 return True
             else:
-                #print("No Change")
+                print('No Change')
                 return False

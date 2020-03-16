@@ -44,6 +44,7 @@ class ShotClassifier:
         return max_type
 
     def get_shot_class(self, frames):
+
         total_majority = self.__get_majority(frames)
         if total_majority != 'logo':
             begin_majority = self.__get_majority(frames[:5])

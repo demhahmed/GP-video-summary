@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from UTL.UTL import printProgressBar
 
 
 def ExtractFramesToDisk(path, step):
@@ -38,8 +37,6 @@ def ExtractFrames(path, step):
 
     total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     while cap.isOpened():
-
-        printProgressBar(count, total)
 
         ret, image = cap.read()
 
@@ -85,5 +82,5 @@ def ExtractFrames(path, step, patch):
     return list
 
 
-path = 'C://Users\\medo\\Desktop\\test5.mp4'
+path = 'C://Users\\medo\\Desktop\\test6.mp4'
 #ExtractFramesToDisk(path, 5)

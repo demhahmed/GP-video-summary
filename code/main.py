@@ -15,10 +15,9 @@ import cv2
 import numpy as np
 
 
-
 ############################## declarations ##################################
 STEP = 5                                                         # frame step
-VIDEO_PATH = 'C://Users\\medo\\Desktop\\test6.mp4'
+VIDEO_PATH = 'C://Users\\medo\\Desktop\\test1.mp4'
 frames = []                                                      # patch frames
 shots = []                                                       # shot
 # shot caontains goal mouth or not
@@ -42,6 +41,7 @@ while 1:  # main loop
     frames = []
     count = 0
 
+    print("extracting patch ", patch)
     # extracting patch of 2000 frames
     while cap.isOpened():
         ret, image = cap.read()
@@ -73,28 +73,32 @@ while 1:  # main loop
         mouth = False
         frames_to_classify = []
         types = []
+        no_shot_frames = 0
+        last = 0
+        fr = 0
 
         # detecting cut between the current 2 frames
-        if cutDetector(frame1, frame2) and abs(last_cut - frame_number) >= 20:  # there is a cut
+        if cut_detector(frame1, frame2) and abs(last_cut - frame_number) >= 20:  # there is a cut
+            last = int(last_cut/STEP)
+            fr = int(frame_number/STEP)
+            no_shot_frames = len(frames[last:fr])
+            p = patch*2000
 
             # appending the first and last 5 frames and 10 random frames inbetween
-            if No_frames > 16:
 
-                frames_to_classify.append(frames[0:5])
+            if no_shot_frames > 20:
+
+                frames_to_classify += frames[last:last+5]
 
                 skip = math.ceil(
-                    len(frames[5:No_frames-5])/10)
+                    len(frames[last+5:fr-5])/10)
 
-                frames_to_classify.append(
-                    frames[int(last_cut/STEP):int(frame_number/STEP):skip])
+                frames_to_classify += frames[last + 5: fr-5: skip]
 
-                frames_to_classify.append(frames[-5:])
+                frames_to_classify += frames[fr - 4:fr]
 
             else:
-                frames_to_classify.append(frames)
-
-            # frames_to_classify.flatten()
-            reduce(lambda x, y: x+y, frames_to_classify)
+                frames_to_classify += frames[last:fr]
 
             # getting the shot type
             type = ShotClassifier(model_type=1).get_shot_class(
@@ -104,48 +108,38 @@ while 1:  # main loop
                 types = type.split("+")
                 if types[0] == "logo":
                     shots.append(
-                        (frame_number, (frame_number/FPS), False, "logo", False))
+                        (frame_number, ((frame_number+(p*5))/FPS), False, "logo", False, False))
                     shots.append(
-                        (frame_number+5, (frame_number+5/FPS), False, types[1], False))
+                        (frame_number+5, ((frame_number+5+(p*5))/FPS), False, types[1], False, False))
+
                 else:
                     shots.append(
-                        (frame_number, (frame_number/FPS), False, types[0], False))
+                        (frame_number, ((frame_number+(p*5))/FPS), False, types[0], False, False))
                     shots.append(
-                        (frame_number+5, (frame_number+5/FPS), False, "logo", False))
+                        (frame_number+5, ((frame_number+5+(p*5))/FPS), False, "logo", False, False))
 
             else:
+
                 if type not in ['logo', 'close-out', 'close']:
-                    mouth = goalMouth(
-                        frames[int(frame_number/STEP-20):int(frame_number/STEP)])
+                    mouth = goalMouth(frames[fr-20:fr])
 
                 # appending all shot information
-                shots.append((frame_number, (frame_number/FPS), GoalDetector().execute(
-                    frames[int(max(last_cut/5 - 2, 0))], frames[i-1]), type, mouth))
-                cuts.append(frame_number/FPS)
+                shots.append((frame_number, (frame_number/FPS+p), GoalDetector().execute(
+                    frames[int(max(last_cut/5 - 2, 0))], frames[i-1]), type, mouth, False))
+
             last_cut = frame_number
     patch += 1
 
     if out:
         break
-############################## print cuts  ##################################
-print("----------------------")
-print("Found ", len(shots), " shots")
-print("----------------------")
-
-for shot in shots:
-    print(shot)
-
-
 ############################## audio processing ##################################
-'''
+
 print("Analyzing Audio...")
 peak_times = get_peak_times(VIDEO_PATH)
+
+cuts = [x[1] for x in shots]
 print(peak_times)
-'''
-
-############################## removing duplicate cuts ##################################
-
-'''
+print(cuts)
 final_times = []
 for peak in peak_times:
     index = find_gt(cuts, peak)
@@ -155,9 +149,23 @@ for peak in peak_times:
         final_times.append((cuts[index-1], cuts[index+1]))
 
 final_times = [t for t in (set(tuple(i) for i in final_times))]
-print(final_times)
-'''
 
+############################## print cuts  ##################################
+print("----------------------")
+print("Found ", len(shots), " shots")
+print("----------------------")
+
+
+for i in range(len(shots)):
+    for j in range((len(final_times))):
+        if final_times[j][0] == shots[i][1]:
+            shots[i] = (shots[i][0], shots[i][1], shots[i]
+                        [2], shots[i][3], shots[i][4], True)
+            break
+
+
+for shot in shots:
+    print(shot)
 ################################## rendering video  ######################################
 '''
 print("rendering video...")
@@ -169,16 +177,7 @@ final = concatenate([clip.subclip(max(int(t[0]), 0), min(int(t[1]), clip.duratio
 enablePrint()
 final.to_videofile('soccer_cuts.mp4', fps=24)  # low quality is the default
 '''
-############################### adding volume to shots ####################################
-'''
-audio_binary = []
-for i in range(len(shots)):
-    for j in range((len(final_times))):
-        if final_times[j][0] == shots[i][1]:
-            audio_binary.append(1)
-        else:
-            audio_binary.append(0)
-'''
+
 ############################# processing output shots #################################
 '''
 output_video_shots = []
@@ -195,6 +194,6 @@ for i in range(len(shots)):
                 break
             j-=1
             logo_count-=1
-            
+
 output_video_shots.reverse()
 '''

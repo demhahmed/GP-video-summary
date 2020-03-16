@@ -15,14 +15,14 @@ class ImageTools:
         """
         low = 0 if threshold_type == ImageTools.BINARY else 255
         high = 255 if low == 0 else 0
-        return np.where(image <= center, low, high)
+        return np.array(np.where(image <= center, low, high))
 
     @staticmethod
     def image_to_gray(image):
         """ Takes Image with channels b, g, r respectively """
         # Y = 0.2125 R + 0.7154 G + 0.0721 B
         gray_image = image.copy()
-        return 0.2125 * gray_image[:, :, 2] + 0.7154 * gray_image[:, :, 1] + 0.0721 * gray_image[:, :, 0]
+        return np.array(0.2125 * gray_image[:, :, 2] + 0.7154 * gray_image[:, :, 1] + 0.0721 * gray_image[:, :, 0])
 
     @staticmethod
     def surrounding_pixels(image, kernel_size, i, j):
@@ -45,7 +45,7 @@ class ImageTools:
                 surroundings = ImageTools.surrounding_pixels(
                     image, kernel_size, i, j)
                 copy[i, j] = np.min(surroundings)
-        return copy
+        return np.array(copy)
 
     @staticmethod
     def dilate(image, kernel_size):
@@ -59,6 +59,7 @@ class ImageTools:
                 surroundings = ImageTools.surrounding_pixels(
                     image, kernel_size, i, j)
                 copy[i, j] = np.max(surroundings)
+        return np.array(copy)
 
     @staticmethod
     def image_similarity_ratio(image_1, image_2):

@@ -38,4 +38,4 @@ def cut_detector(frame1, frame2):
     intersect, corr = histogram_compare(frame1, frame2)
     if intersect > 6 and corr > 5:
         return False
-    return block_Change(frame1, frame2) >= 30
+    return block_change(frame1, frame2) >= 30
