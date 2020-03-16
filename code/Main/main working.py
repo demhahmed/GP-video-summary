@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+
 from ImageTools.ImageTools import ImageTools
 from Extraction.FrameSkipping import ExtractFrames
 
@@ -182,7 +183,7 @@ for i in range(len(shots)):
 '''
 ############################# processing output shots #################################
 '''
-output_video_shots = []
+output_video_shots_indices = []
 logo_count = 0
 for i in range(len(shots)):
     if shots[i][5] == "logo":
@@ -190,10 +191,12 @@ for i in range(len(shots)):
 
     if logo_count == 2:
         j=i
-        while logo_count !=0 and shots[j][5] != "wide":
-            output_video_shots.append(shots[j])
+        while(1)
+            output_video_shots_indices.append(j)
+            if logo_count ==0 and shots[j][5] != "wide":
+                break
             j-=1
             logo_count-=1
-
-output_video_shots.reverse()
+            
+output_video_shots_indices.reverse()
 '''
