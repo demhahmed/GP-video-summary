@@ -83,6 +83,7 @@ while 1:  # main loop
             fr = int(frame_number/STEP)
             no_shot_frames = len(frames[last:fr])
             p = patch*2000
+            frame_time = (frame_number+(p*5))/FPS
 
             # appending the first and last 5 frames and 10 random frames inbetween
 
@@ -108,15 +109,15 @@ while 1:  # main loop
                 types = type.split("+")
                 if types[0] == "logo":
                     shots.append(
-                        (frame_number, ((frame_number+(p*5))/FPS), False, "logo", False, False))
+                        (frame_number, frame_time, False, "logo", False, False))
                     shots.append(
-                        (frame_number+5, ((frame_number+5+(p*5))/FPS), False, types[1], False, False))
+                        (frame_number+5, frame_time+5/FPS, False, types[1], False, False))
 
                 else:
                     shots.append(
-                        (frame_number, ((frame_number+(p*5))/FPS), False, types[0], False, False))
-                    shots.append(
-                        (frame_number+5, ((frame_number+5+(p*5))/FPS), False, "logo", False, False))
+                        (frame_number, frame_time, False, types[0], False, False))
+                    shots.append((frame_number+5, frame_time+(5/FPS),
+                                  False, "logo", False, False))
 
             else:
 
@@ -124,7 +125,7 @@ while 1:  # main loop
                     mouth = goalMouth(frames[fr-20:fr])
 
                 # appending all shot information
-                shots.append((frame_number, (frame_number/FPS+p), GoalDetector().execute(
+                shots.append((frame_number, frame_time, GoalDetector().execute(
                     frames[int(max(last_cut/5 - 2, 0))], frames[i-1]), type, mouth, False))
 
             last_cut = frame_number
