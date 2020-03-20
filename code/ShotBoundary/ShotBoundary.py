@@ -39,3 +39,14 @@ def cut_detector(frame1, frame2):
     if intersect > 6 and corr > 5:
         return False
     return block_change(frame1, frame2) >= 30
+
+
+'''
+img1 = cv2.imread(
+    "C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\ShotBoundary\\frame4055.jpg")
+
+
+img2 = cv2.imread(
+    "C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\ShotBoundary\\frame4060.jpg")
+print(cut_detector(img1, img2))
+'''

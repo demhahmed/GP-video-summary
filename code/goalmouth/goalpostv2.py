@@ -50,24 +50,26 @@ def detect(lines):
 
 
 def goalMouth(frames):
+
     res = [goalpostv2(x) for x in frames]
     if res.count(True)/len(res) > 0.5:
         return True
     else:
+
         return False
 
 
 def goalpostv2(img):
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    #_, bw_img = cv2. threshold(gray, 127, 255, cv2.THRESH_BINARY)
+    # _, bw_img = cv2. threshold(gray, 127, 255, cv2.THRESH_BINARY)
     edges = cv2.Canny(gray, 50, 200)
-    #img_goalpost = cv2.medianBlur(edges, 5)
+    # img_goalpost = cv2.medianBlur(edges, 5)
     kernel = np.ones((7, 7))
     edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
     kernel = np.ones((5, 5), np.uint8)
 
-    #edges = cv2.dilate(edges, kernel, iterations=1)
+    # edges = cv2.dilate(edges, kernel, iterations=1)
     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 65,
                             minLineLength=40, maxLineGap=10)
     if lines is None:
@@ -101,3 +103,16 @@ def goalpostv2(img):
 #     cv2.imwrite('houghlines_'+str(k)+'.jpg',edges)
 #     k += 1
 #     print(pathname, detect(lines))
+
+
+'''
+frames = []
+count = 0
+while(1):
+    frames.append(cv2.imread(
+        "C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\GoalMouth\\%d.jpg" % count))
+    count += 1
+    if count == 19:
+        break
+print(goalMouth(frames))
+'''

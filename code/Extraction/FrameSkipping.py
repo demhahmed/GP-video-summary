@@ -82,5 +82,7 @@ def ExtractFrames(path, step, patch):
     return list
 
 
-path = 'C://Users\\medo\\Desktop\\test6.mp4'
-#ExtractFramesToDisk(path, 5)
+'''
+path = 'C://Users\\medo\\Desktop\\test10.mp4'
+ExtractFramesToDisk(path, 5)
+'''
