@@ -1,5 +1,5 @@
 
-from GoalMouth.GoalPostV2 import goalMouth, goalpostv2
+from GoalMouth.goalpostv2 import goalMouth, goalpostv2
 import math
 from os.path import dirname, realpath, join
 from ShotClassifier.ShotClassifier import ShotClassifier
@@ -18,17 +18,12 @@ import numpy as np
 ############################## declarations ##################################
 STEP = 5                                                         # frame step
 VIDEO_PATH = 'C://Users\\medo\\Desktop\\test10.mp4'
-frames = []                                                      # patch frames
-shots = []                                                       # shot
-# shot caontains goal mouth or not
-mouth = False
-# times of cuts in sec
-cuts = []
-# skip frames in classification
-skip = 0
+
+frames, shots, frames_to_classify, types = [], [], [], []
+goal, skip, patch = 0, 0, 0
+mouth, out = False, False
 type = ''                                                       # type of shot
-patch = 0                                                    # no pf patch
-out = False                                                 # video ended
+
 cap = cv2.VideoCapture(VIDEO_PATH)
 if cap.isOpened() == False:
     print('err reading video')
@@ -38,7 +33,8 @@ FPS = int(cap.get(cv2.CAP_PROP_FPS))
 ############################## main loop ##################################
 while 1:  # main loop
 
-    frames = []
+    # append frames from after last cut
+    frames.clear()
     count = 0
 
     print("extracting patch ", patch)
@@ -65,23 +61,20 @@ while 1:  # main loop
     # loop on patch frames
     for i in range(No_frames-1):
         p = patch*2000
-        skip = 0
+        skip, start = 0, 0
         frame_number = i*STEP+(p*5)
+        no_shot_frames = 0
         printProgressBar(i, No_frames)
         frame1 = frames[i]
         frame2 = frames[i+1]
         mouth = False
-        frames_to_classify = []
-        types = []
-        no_shot_frames = 0
-        start = 0
-        fr = 0
+        frames_to_classify.clear()
+        types.clear()
 
         # detecting cut between the current 2 frames
         if cut_detector(frame1, frame2) and abs(last_cut - frame_number) >= 20:  # there is a cut
-            start = int(last_cut/STEP)
-            no_shot_frames = len(frames[start:i])
             frame_time = (frame_number)/FPS
+            no_shot_frames = len(frames[start:i])
 
             # appending the first and last 5 frames and 10 random frames inbetween
 
@@ -98,9 +91,12 @@ while 1:  # main loop
                 if type not in ['logo', 'close-out', 'close']:
                     mouth = goalMouth(frames[i-20:i])
 
-                    # appending all shot information
-                shots.append((frame_number, frame_time, GoalDetector().execute(
-                    frames[int(max(start - 2, 0))], frames[i-1]), type, mouth, False))
+                goal = GoalDetector().execute(
+                    frames[int(max(start - 2, 0))],
+                    frames[i-2])
+                # appending all shot information
+                shots.append((frame_number, frame_time,
+                              goal, type, mouth, False))
 
             else:
                 types = type.split("+")
@@ -125,6 +121,10 @@ while 1:  # main loop
 
     if out:
         break
+
+
+frames.clear()
+del frames, frames_to_classify, types, goal, skip, patch, mouth, out, type, no_shot_frames
 ############################## audio processing ##################################
 
 print("Analyzing Audio...")

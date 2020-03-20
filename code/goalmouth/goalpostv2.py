@@ -31,15 +31,15 @@ def same(line1, line2):
 def detect(lines):
     for line in lines:
         if (magnitude(*line[0]) < 200):
-            # print("YUP")
+            # print("YEP")
             continue
         pf = 0
         for lin in lines:
             if (magnitude(*lin[0]) < 200):
-                # print("YUP")
+                # print("YEP")
                 continue
             if same(line, lin):
-                # print("YUP")
+                # print("YEP")
                 continue
             else:
                 if isparallel(line, lin):
@@ -50,7 +50,8 @@ def detect(lines):
 
 
 def goalMouth(frames):
-
+    if len(frames) <= 0:
+        return False
     res = [goalpostv2(x) for x in frames]
     if res.count(True)/len(res) > 0.5:
         return True
