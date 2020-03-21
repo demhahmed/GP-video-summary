@@ -61,7 +61,7 @@ def goalMouth(frames):
 
 
 def goalpostv2(img):
-    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    #img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # _, bw_img = cv2. threshold(gray, 127, 255, cv2.THRESH_BINARY)
     edges = cv2.Canny(gray, 50, 200)
@@ -73,6 +73,7 @@ def goalpostv2(img):
     # edges = cv2.dilate(edges, kernel, iterations=1)
     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 65,
                             minLineLength=40, maxLineGap=10)
+    del img, gray, edges, kernel
     if lines is None:
         # print(False)
         return False
@@ -108,12 +109,13 @@ def goalpostv2(img):
 
 '''
 frames = []
-count = 0
+count = 2580
 while(1):
     frames.append(cv2.imread(
-        "C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\GoalMouth\\%d.jpg" % count))
-    count += 1
-    if count == 19:
+        "C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\GoalMouth\\frame%d.jpg" % count))
+    count += 5
+    if count == 2675:
         break
+
 print(goalMouth(frames))
 '''

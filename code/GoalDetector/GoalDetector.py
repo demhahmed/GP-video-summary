@@ -58,10 +58,8 @@ class GoalDetector:
         frame_2 = cv2.cvtColor(frame_2, cv2.COLOR_BGR2GRAY)
 
         # slicing
-        scoreboard_1 = frame_1[self.__height[0]
-            :self.__height[1], self.__width[0]:self.__width[1]]
-        scoreboard_2 = frame_2[self.__height[0]
-            :self.__height[1], self.__width[0]:self.__width[1]]
+        scoreboard_1 = frame_1[self.__height[0]                               :self.__height[1], self.__width[0]:self.__width[1]]
+        scoreboard_2 = frame_2[self.__height[0]                               :self.__height[1], self.__width[0]:self.__width[1]]
 
         # thresholding
         _, scoreboard_1 = cv2.threshold(
