@@ -36,7 +36,7 @@ class GoalDetector:
                 gap = 0
                 while y < len(v_hist):
                     y += 1
-                    if v_hist[y]:
+                    if y < len(v_hist) and v_hist[y]:
                         gap = 0
                     if y < len(v_hist) and v_hist[y] == 0:
                         if gap == 2:
@@ -58,10 +58,8 @@ class GoalDetector:
         frame_2 = cv2.cvtColor(frame_2, cv2.COLOR_BGR2GRAY)
 
         # slicing
-        scoreboard_1 = frame_1[self.__height[0]
-            :self.__height[1], self.__width[0]:self.__width[1]]
-        scoreboard_2 = frame_2[self.__height[0]
-            :self.__height[1], self.__width[0]:self.__width[1]]
+        scoreboard_1 = frame_1[self.__height[0]                               :self.__height[1], self.__width[0]:self.__width[1]]
+        scoreboard_2 = frame_2[self.__height[0]                               :self.__height[1], self.__width[0]:self.__width[1]]
 
         # thresholding
         _, scoreboard_1 = cv2.threshold(
@@ -90,13 +88,13 @@ class GoalDetector:
                 first_results[0], later_results[0], full=True)
             away_score, _ = compare_ssim(
                 first_results[2], later_results[2], full=True)
-            #print(home_score, away_score)
+            # print(home_score, away_score)
             if home_score * 100 <= 75:
-                #print("Home Score Changed")
+                # print("Home Score Changed")
                 return True
             elif away_score * 100 <= 75:
-                #print("Away Score Changed")
+                # print("Away Score Changed")
                 return True
             else:
-                #print("No Change")
+                # print("No Change")
                 return False

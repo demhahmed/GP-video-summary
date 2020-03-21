@@ -31,15 +31,15 @@ def same(line1, line2):
 def detect(lines):
     for line in lines:
         if (magnitude(*line[0]) < 200):
-            # print("YUP")
+            # print("YEP")
             continue
         pf = 0
         for lin in lines:
             if (magnitude(*lin[0]) < 200):
-                # print("YUP")
+                # print("YEP")
                 continue
             if same(line, lin):
-                # print("YUP")
+                # print("YEP")
                 continue
             else:
                 if isparallel(line, lin):
@@ -50,26 +50,30 @@ def detect(lines):
 
 
 def goalMouth(frames):
+    if len(frames) <= 0:
+        return False
     res = [goalpostv2(x) for x in frames]
     if res.count(True)/len(res) > 0.5:
         return True
     else:
+
         return False
 
 
 def goalpostv2(img):
-    img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+    #img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    #_, bw_img = cv2. threshold(gray, 127, 255, cv2.THRESH_BINARY)
+    # _, bw_img = cv2. threshold(gray, 127, 255, cv2.THRESH_BINARY)
     edges = cv2.Canny(gray, 50, 200)
-    #img_goalpost = cv2.medianBlur(edges, 5)
+    # img_goalpost = cv2.medianBlur(edges, 5)
     kernel = np.ones((7, 7))
     edges = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel)
     kernel = np.ones((5, 5), np.uint8)
 
-    #edges = cv2.dilate(edges, kernel, iterations=1)
+    # edges = cv2.dilate(edges, kernel, iterations=1)
     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 65,
                             minLineLength=40, maxLineGap=10)
+    del img, gray, edges, kernel
     if lines is None:
         # print(False)
         return False
@@ -101,3 +105,17 @@ def goalpostv2(img):
 #     cv2.imwrite('houghlines_'+str(k)+'.jpg',edges)
 #     k += 1
 #     print(pathname, detect(lines))
+
+
+'''
+frames = []
+count = 2580
+while(1):
+    frames.append(cv2.imread(
+        "C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\GoalMouth\\frame%d.jpg" % count))
+    count += 5
+    if count == 2675:
+        break
+
+print(goalMouth(frames))
+'''
