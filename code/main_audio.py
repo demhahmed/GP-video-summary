@@ -1,12 +1,11 @@
 from Audio.Audio import get_peak_times
-from GoalMouth.GoalPostV2 import goalMouth
 from ShotBoundary.ShotBoundary import cut_detector
 from moviepy.editor import VideoFileClip, concatenate
 import cv2
 import numpy as np
 import time
 
-VIDEO_PATH = 'C:/Users\\salama\\Desktop\\match2.mp4'
+VIDEO_PATH = 'C:/Users\\salama\\Desktop\\match3.mp4'
 clip = VideoFileClip(VIDEO_PATH)
 fps = int(clip.fps)
 print(fps)
