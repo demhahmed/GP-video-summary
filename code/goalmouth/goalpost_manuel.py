@@ -1,6 +1,7 @@
 import numpy as np
 from canny import canny_main
 import cv2
+import math
 
 def image_to_gray(image):
     """ Takes Image with channels b, g, r respectively """
@@ -9,11 +10,15 @@ def image_to_gray(image):
     return np.array(0.2125 * gray_image[:, :, 2] + 0.7154 * gray_image[:, :, 1] + 0.0721 * gray_image[:, :, 0])
 
 def magnitude(x1, y1, x2, y2):
+    print(x1, y1, x2, y2)
     return np.sqrt((x2-x1)**2.0 + (y2-y1)**2.0)
 
 
 def lineangle(line):
-    x1, y1, x2, y2 = line[0]
+    x1 = line[0]
+    y1 = line[1]
+    x2 = line[2] 
+    y2 = line[3]
     angle = np.arctan2(y2 - y1, x2 - x1)
     return angle % (2 * np.pi)
 
@@ -28,7 +33,7 @@ def isparallel(line1, line2, tol=None):
 
 
 def same(line1, line2):
-    if line1[0][0] == line2[0][0] and line1[0][1] == line2[0][1] and line1[0][2] == line2[0][2] and line1[0][3] == line2[0][3]:
+    if line1[0] == line2[0] and line1[1] == line2[1] and line1[2] == line2[2] and line1[3] == line2[3]:
         return True
     else:
         return False
@@ -36,12 +41,12 @@ def same(line1, line2):
 
 def detect(lines):
     for line in lines:
-        if (magnitude(*line[0]) < 200):
+        if (magnitude(line[0], line[1], line[2], line[3]) < 200):
             # print("YEP")
             continue
         pf = 0
         for lin in lines:
-            if (magnitude(*lin[0]) < 200):
+            if (magnitude(line[0], line[1], line[2], line[3]) < 200):
                 # print("YEP")
                 continue
             if same(line, lin):
