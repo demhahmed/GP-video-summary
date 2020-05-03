@@ -10,7 +10,7 @@ def volume(array):
     return np.sqrt(((1.0 * array) ** 2).mean())
 
 
-def get_peak_times(path):
+def get_peak_times(path , perct):
     clip = VideoFileClip(path)
     fps = clip.audio.fps
     volumes = [volume(cut(i, clip, fps)) for i in range(0, int(clip.audio.duration - 2))]
@@ -19,5 +19,5 @@ def get_peak_times(path):
     decreases = np.diff(averaged_volumes)[1:] <= 0
     peaks_times = (increases * decreases).nonzero()[0]
     peaks_vols = averaged_volumes[peaks_times]
-    peaks_times = peaks_times[peaks_vols > np.percentile(peaks_vols, 90)]
+    peaks_times = peaks_times[peaks_vols > np.percentile(peaks_vols, perct)]
     return peaks_times
