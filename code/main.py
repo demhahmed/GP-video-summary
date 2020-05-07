@@ -9,7 +9,6 @@ from ShotBoundary.ShotBoundary import cut_detector
 import bisect
 from moviepy.editor import VideoFileClip, concatenate
 from Audio.Audio import get_peak_times
-from Extraction.FrameSkipping import ExtractFrames
 from ImageTools.ImageTools import ImageTools
 import cv2
 import numpy as np
@@ -24,14 +23,15 @@ def main():
     FPS = int(cap.get(cv2.CAP_PROP_FPS))
 
     STEP = 5
-    frames, shots, frames_to_classify, types = [], [], [], []
+    frames, frame_times frame_numbers, shots, frames_to_classify, types = [], [], [], [], [], []
     skip, patch, start = 0, 0, 0
     mouth, out = False, False
     type = ''                                                       # type of shot
     ############################## main loop ##################################
     while 1:  # main loop
-        p = patch*2000
         frames.clear()
+        frame_times.clear()
+        frame_numbers.clear()
         # append frames from after last cut
         count = 0
 
@@ -46,6 +46,8 @@ def main():
             if ret == True:
                 if count % STEP == 0:
                     frames.append(image)
+                    frame_times.append(cap.get(cv2.CAP_PROP_POS_MSEC)/1000)
+                    frame_numbers.append(count+patch*2000*5)
                 count += 1
             else:
                 out = True
@@ -60,7 +62,6 @@ def main():
             printProgressBar(i, No_frames)
 
             frame1, frame2 = frames[i], frames[i+1]
-            frame_number = i*STEP
 
             # detecting cut between the current 2 frames
             if cut_detector(frame1, frame2) and abs(last_cut - frame_number) >= 20:
@@ -69,7 +70,7 @@ def main():
                 mouth = False
                 frames_to_classify.clear()
                 types.clear()
-                frame_time = (frame_number)/FPS
+
                 no_shot_frames = len(frames[start:i])
 
                 # appending the first and last 5 frames and 10 random frames inbetween
@@ -87,7 +88,7 @@ def main():
                         mouth = goalMouth(frames[i-20:i])
 
                 # appending all shot information
-                    shots.append((frame_number+(p*5), frame_time,
+                    shots.append((frame_numbers[i], frame_times[i],
                                   GoalDetector().execute(
                                       frames[int(max(start - 2, 0))],
                                       frames[i-2]), type, mouth, False))
