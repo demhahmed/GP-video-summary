@@ -21,7 +21,16 @@ export default class App extends React.Component {
             <Switch>
               <Route path="/" component={Home} exact />
               <Route path="/uploadmatch" component={UploadMatch} exact />
-              <Route path="/summary_details/:id" component={SummaryDetails} exact />
+              <Route
+                path="/summary_details/:id"
+                component={SummaryDetails}
+                exact
+              />
+              <Route
+                path="/my_uploads"
+                component={() => <Home myuploads={true} />}
+                exact
+              />
               <Route component={NotFound} />
             </Switch>
           </div>

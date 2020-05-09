@@ -17,7 +17,7 @@ export default class Summaries extends Component {
         <div className="filter-tab"></div>
         <Nav fill variant="tabs">
           <Nav.Item>
-            <Nav.Link eventKey="all" >All Leagues</Nav.Link>
+            <Nav.Link eventKey="all">All Leagues</Nav.Link>
           </Nav.Item>
           <Nav.Item>
             <Nav.Link eventKey="premierleague">
@@ -78,7 +78,9 @@ export default class Summaries extends Component {
             return (
               <Col xs={4}>
                 <div style={{ margin: "10px 0" }}>
-                  <SummaryCard />
+                  <Link style={{textDecoration: "none"}} to="/summary_details/213">
+                    <SummaryCard />
+                  </Link>
                 </div>
               </Col>
             );
