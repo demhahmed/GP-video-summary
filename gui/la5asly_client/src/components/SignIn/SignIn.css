@@ -1,0 +1,18 @@
+.my-form {
+  width: 35%;
+  margin: 50px auto;
+}
+
+strong {
+  color: #c55a11;
+}
+
+.custom-link,
+.custom-link:active {
+  text-decoration: inherit !important;
+  color: inherit;
+}
+
+.google-btn {
+  margin: 20px 0;
+}

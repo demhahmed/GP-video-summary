@@ -1,0 +1,28 @@
+.accent-hover-class:hover {
+  color: #c55a11 !important;
+}
+
+.custom-link,
+.custom-link:active {
+  text-decoration: inherit !important;
+  color: inherit;
+}
+
+.link {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 2.5;
+}
+
+.link:hover {
+  color: #c55a11 !important;
+}
+
+.navbar-brand {
+  margin-top: 1px;
+}
+
+.custom-google-icon {
+  font-size: 25px;
+}
