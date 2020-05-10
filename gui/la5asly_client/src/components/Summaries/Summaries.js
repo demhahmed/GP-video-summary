@@ -97,7 +97,7 @@ class Summaries extends Component {
 }
 
 const mapStateToProps = (store) => {
-  return { user: store.user.user };
+  return { user: store.user.user, summaries: store.summaries.summaries };
 };
 
 export default connect(mapStateToProps, {})(Summaries);

@@ -11,15 +11,15 @@ export default class SummaryCard extends Component {
   render() {
     return (
       <Card>
-        <Image thumbnail variant="top" src="https://via.placeholder.com/180" />
+        <Image thumbnail variant="top" src="http://localhost:3001/thumbnails/1.jpg" />
         <Card.Body>
           <Row>
             <Col xs={3}>
               <Image
                 width="50px"
                 height="50px"
-                rounded
-                src="https://via.placeholder.com/180"
+                roundedCircle
+                src={this.props.userImage}
               />
             </Col>
             <Col xs={9}>
@@ -28,7 +28,7 @@ export default class SummaryCard extends Component {
           </Row>
           <Row>
             <Col xs={{ offset: 3 }}>
-              <p>Moamen Hassan</p>
+              <p>{this.props.username}</p>
             </Col>
           </Row>
           <Row>

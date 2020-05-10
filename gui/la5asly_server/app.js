@@ -1,32 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const multer = require("multer");
-var path = require("path");
+const path = require("path");
 
 require("./db/mongoose.js");
 
-const Summary = require("./models/Summary.js");
+const UserRouter = require("./routers/UserRouter.js");
+const SummaryRouter = require("./routers/SummaryRouter.js");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "summaries/");
-  },
-  filename: function (req, file, cb) {
-    cb(null, path.basename(file.originalname));
-  },
-});
-
-
-
-const upload = multer({
-  storage,
-  fileFilter: function (req, file, cb) {
-    if (path.extname(file.originalname) !== ".mp4") {
-      return cb(new Error("Only Mp4 files are allowed"));
-    }
-    cb(null, true);
-  },
-});
 
 const app = express(); // configuring the server
 const port = 3001;
@@ -34,28 +14,11 @@ const port = 3001;
 app.use(cors());
 app.use(express.json());
 
-app.get("/data", async (req, res) => {
-  try {
-    const data = await Summary.fetchData();
-    res.status(200).send(data);
-  } catch (error) {
-    res.status(400).send({ error: error.message });
-  }
-});
+app.use('/summaries', express.static(path.join(__dirname, 'summaries')))
+app.use('/thumbnails', express.static(path.join(__dirname, 'thumbnails')))
 
-app.post("/summarize", upload.single("video"), async (req, res) => {
-  try {
-    // Here we run the Python Script.
-    const newSummary = new Summary({
-      userId: req.query.userId,
-      leagueType: req.query.leagueType,
-      summaryPath: req.file.filename,
-    });
-    await newSummary.save();
-    res.status(200).send(newSummary);
-  } catch (error) {
-    res.status(400).send({ error: error.message });
-  }
-});
+app.use(UserRouter);
+app.use(SummaryRouter);
+
 
 app.listen(port, () => console.log(`Server running on port ${port}`));

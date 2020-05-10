@@ -13,7 +13,7 @@ class Navigation extends Component {
         .init({
           clientId:
             "1024627819936-egebh5n0541fciddrtkrdnc8q3ju1snk.apps.googleusercontent.com",
-          scope: "email",
+          scope: 'email',
         })
         .then(() => {
           this.auth = window.gapi.auth2.getAuthInstance();

@@ -1,11 +1,12 @@
 const mongoose = require("mongoose");
 
-const summarySchema = new mongoose.Schema(
+const Schema = mongoose.Schema;
+
+
+const summarySchema = new Schema(
   {
-    userId: {
+    title: {
       type: String,
-      trim: true,
-      lowercase: true,
     },
     summaryPath: {
       type: String,
@@ -24,6 +25,13 @@ const summarySchema = new mongoose.Schema(
     length: {
       type: Number,
     },
+    thumbnail: {
+      type: String, // url host.
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }
   },
   {
     timestamps: true,
@@ -34,8 +42,8 @@ summarySchema.methods.toJSON = function () {
   return this.toObject();
 };
 
-summarySchema.statics.fetchData = async () => {
-  return Summary.find();
+summarySchema.statics.fetchSummaries = async (filterObj) => {
+  return Summary.find(filterObj).populate('user');
 };
 
 const Summary = mongoose.model("Summary", summarySchema);
