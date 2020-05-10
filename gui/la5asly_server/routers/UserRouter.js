@@ -20,4 +20,17 @@ router.post("/users/login", async (req, res) => {
   }
 });
 
+
+// fetch_users
+router.get("/users", async (req, res) => {
+  try {
+    let users = await User.find();
+    res.status(200).send(users);
+  } catch (e) {
+    res.status(400).send({ message: e.message });
+  }
+});
+
+
+
 module.exports = router;
