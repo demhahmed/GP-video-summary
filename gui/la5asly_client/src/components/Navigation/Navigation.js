@@ -81,21 +81,9 @@ class Navigation extends Component {
             {this.props.user && (
               <Nav className="mr-auto">
                 <Link
-                  className="custom-link accent-hover-class"
-                  to="/my_uploads"
-                >
-                  <div className="link" style={{ marginRight: "20px" }}>
-                    My Uploads
-                  </div>
-                </Link>
-              </Nav>
-            )}
-            {this.props.user && (
-              <Nav className="mr-auto">
-                <Link
                   onClick={this.onSignOutClick}
                   className="custom-link accent-hover-class"
-                  to="/my_uploads"
+                  to="/"
                 >
                   <div className="link" style={{ marginRight: "20px" }}>
                     Log out

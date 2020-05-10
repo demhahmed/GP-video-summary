@@ -11,6 +11,7 @@ const SummaryRouter = require("./routers/SummaryRouter.js");
 const app = express(); // configuring the server
 const port = 3001;
 
+
 app.use(cors());
 app.use(express.json());
 

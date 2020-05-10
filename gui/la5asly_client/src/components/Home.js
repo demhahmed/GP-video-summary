@@ -18,7 +18,7 @@ class Home extends Component {
     }
     return (
       <div className="bg-white">
-        <Summaries />
+        <Summaries myuploads={this.props.myuploads} />
       </div>
     );
   }

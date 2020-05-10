@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         cb(null, "summaries/");
     },
     filename: function (req, file, cb) {
-        cb(null, path.basename(file.originalname));
+        cb(null, Date.now().toString()+".mp4");
     },
 });
 
@@ -48,14 +48,15 @@ router.post("/summarize", upload.single("video"), async (req, res) => {
             goals: Math.floor(Math.random() * 10),
             chances: Math.floor(Math.random() * 10),
             length: Math.floor(Math.random() * 10),
-            thumbnail: `${no_ext_filename}.jpg`,
+            thumbnail: `thumbnail_${no_ext_filename}.jpg`,
         });
         const video_path = path.join(__dirname, `summaries/${req.file.filename}`).replace('routers/', '');
         const thumbnail_path = path.join(__dirname, `thumbnails/thumbnail_${no_ext_filename}.jpg`).replace('routers/', '');
-        exec(`ffmpeg -i ${video_path} -ss 00:00:01.000 -vframes 1 ${thumbnail_path}`);
+        exec(`ffmpeg -i ${video_path} -ss 00:00:01.000 -vframes 1 ${thumbnail_path}`, (err) => { console.log(err) });
         await newSummary.save();
         res.status(200).send(newSummary);
     } catch (error) {
+        console.log(error)
         res.status(400).send({ error: error.message });
     }
 });

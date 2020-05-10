@@ -27,11 +27,6 @@ export default class App extends React.Component {
                 component={SummaryDetails}
                 exact
               />
-              <Route
-                path="/my_uploads"
-                component={() => <Home myuploads={true} />}
-                exact
-              />
               <Route component={NotFound} />
             </Switch>
           </div>

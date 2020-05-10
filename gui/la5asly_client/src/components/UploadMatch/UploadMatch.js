@@ -6,7 +6,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import DropdownList from "react-widgets/lib/DropdownList";
 import moment from "moment";
 import momentLocaliser from "react-widgets-moment";
-import { showNotification, hideNotification } from "../../actions";
+import { showNotification, hideNotification, summarize } from "../../actions";
 
 import "react-widgets/dist/css/react-widgets.css";
 
@@ -45,6 +45,7 @@ class UploadMatch extends React.Component {
 
   handleSubmit = ({ title, leagueType }) => {
     if (this.state.file) {
+      this.props.summarize(this.props.user._id, title, leagueType, this.state.file)
     } else {
       this.setState({ error: true });
     }
@@ -144,7 +145,7 @@ const mapStateToProps = (store) => {
   return { user: store.user.user };
 };
 
-export default connect(mapStateToProps, { showNotification, hideNotification })(
+export default connect(mapStateToProps, { showNotification, hideNotification, summarize })(
   reduxForm({
     form: "uploadMatch",
     validate,
