@@ -4,7 +4,6 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import "./SignIn.css";
 import { Link } from "react-router-dom";
 import { IoLogoGoogle } from "react-icons/io";
-import GoogleLogin from "react-google-login";
 
 const renderField = ({
   input,
@@ -83,23 +82,7 @@ class SignIn extends React.Component {
           <Row>
             <Col xs={{ offset: 3 }}>
               <div className="google-btn">
-                <GoogleLogin
-                  clientId="1024627819936-egebh5n0541fciddrtkrdnc8q3ju1snk.apps.googleusercontent.com"
-                  buttonText="Login"
-                  render={(renderProps) => (
-                    <Button
-                      {...renderProps}
-                      block
-                      type="submit"
-                      variant="danger"
-                    >
-                      <IoLogoGoogle /> Sign in with google
-                    </Button>
-                  )}
-                  onSuccess={this.responseSuccessGoogle}
-                  onFailure={this.responseFailGoogle}
-                  isSignedIn={true}
-                />
+                {/** */}
               </div>
             </Col>
           </Row>

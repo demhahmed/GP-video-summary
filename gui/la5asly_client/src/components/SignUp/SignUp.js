@@ -3,7 +3,6 @@ import { Field, reduxForm } from "redux-form";
 import { Button, Form, Row, Col } from "react-bootstrap";
 
 import { IoLogoGoogle } from "react-icons/io";
-import GoogleLogin from "react-google-login";
 
 import validator from "validator";
 import "./SignUp.css";
@@ -94,18 +93,7 @@ class SignUp extends React.Component {
         <Form.Group as={Row}>
           <Col sm={{ offset: 3 }}>
             <div className="text-center">
-              <GoogleLogin
-                clientId="1024627819936-egebh5n0541fciddrtkrdnc8q3ju1snk.apps.googleusercontent.com"
-                buttonText="Login"
-                render={(renderProps) => (
-                  <Button {...renderProps} block type="submit" variant="danger">
-                    <IoLogoGoogle /> Sign up with google
-                  </Button>
-                )}
-                onSuccess={this.responseSuccessGoogle}
-                onFailure={this.responseFailGoogle}
-                isSignedIn={true}
-              />
+             
             </div>
           </Col>
         </Form.Group>

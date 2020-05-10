@@ -9,6 +9,7 @@ import Navigation from "./components/Navigation";
 import SignUp from "./components/SignUp/SignUp";
 import Summaries from "./components/Summaries";
 import UploadMatch from "./components/UploadMatch";
+import Notification from "./components/Notification";
 import SummaryDetails from "./components/SummaryDetails";
 
 export default class App extends React.Component {
@@ -35,6 +36,7 @@ export default class App extends React.Component {
             </Switch>
           </div>
         </Router>
+        <Notification />
       </div>
     );
   }

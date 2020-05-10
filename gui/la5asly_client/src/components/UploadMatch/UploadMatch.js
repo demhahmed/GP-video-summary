@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
+import { Redirect } from "react-router-dom";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import DropdownList from "react-widgets/lib/DropdownList";
 import moment from "moment";
 import momentLocaliser from "react-widgets-moment";
+import { showNotification, hideNotification } from "../../actions";
 
 import "react-widgets/dist/css/react-widgets.css";
 
@@ -61,6 +63,13 @@ class UploadMatch extends React.Component {
   };
 
   render() {
+    if (!this.props.user) {
+      this.props.showNotification("You are not logged in to upload summary!");
+      setTimeout(() => {
+        this.props.hideNotification();
+      }, 2000);
+      return <Redirect to="/" />;
+    }
     return (
       <div className="my-form">
         <Row>
@@ -131,7 +140,13 @@ const validate = (formValues) => {
   return errors;
 };
 
-export default reduxForm({
-  form: "uploadMatch",
-  validate,
-})(UploadMatch);
+const mapStateToProps = (store) => {
+  return { user: store.user.user };
+};
+
+export default connect(mapStateToProps, { showNotification, hideNotification })(
+  reduxForm({
+    form: "uploadMatch",
+    validate,
+  })(UploadMatch)
+);
