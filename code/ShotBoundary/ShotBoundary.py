@@ -40,6 +40,7 @@ def cut_detector(frame1, frame2):
         return False
     return block_change(frame1, frame2) >= 30
 
+
 '''
 img1 = cv2.imread(
     "C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\ShotBoundary\\frame4630.jpg")
@@ -49,3 +50,11 @@ img2 = cv2.imread(
     "C:/Users\\medo\\Desktop\\GP REPO\\GP-video-summary\\code\\ShotBoundary\\frame4635.jpg")
 print(cut_detector(img1, img2))
 '''
+
+
+a = cv2.imread('C:/Users\\medo\\Desktop\\frames\\frame7665.jpg')
+b = cv2.imread(
+    'C:/Users\\medo\\Desktop\\frames\\frame7670.jpg')
+
+print(histogram_compare(a, b))
+print(block_change(a, b))
