@@ -14,23 +14,21 @@ import { AiOutlineFileAdd } from "react-icons/ai";
 import "./Summaries.css";
 
 class Summaries extends Component {
-
   state = {
-    filter: null
-  }
+    filter: null,
+  };
 
   componentDidMount() {
-    this.props.fetchSummaries({})
+    this.props.fetchSummaries({});
   }
 
   handleFilter = (type) => {
     if (type == "all") {
-      this.setState({ filter: null })
+      this.setState({ filter: null });
     } else {
-      this.setState({ filter: type })
-
+      this.setState({ filter: type });
     }
-  }
+  };
 
   render() {
     return (
@@ -38,10 +36,15 @@ class Summaries extends Component {
         <div className="filter-tab"></div>
         <Nav fill variant="tabs">
           <Nav.Item>
-            <Nav.Link onClick={() => this.handleFilter("all")} eventKey="all">All Leagues</Nav.Link>
+            <Nav.Link onClick={() => this.handleFilter("all")} eventKey="all">
+              All Leagues
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link onClick={() => this.handleFilter("Premier League")} eventKey="premierleague">
+            <Nav.Link
+              onClick={() => this.handleFilter("Premier League")}
+              eventKey="premierleague"
+            >
               <Image
                 style={{ marginRight: "4px" }}
                 width="32px"
@@ -52,7 +55,10 @@ class Summaries extends Component {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link onClick={() => this.handleFilter("BundesLiga")} eventKey="bundesliga">
+            <Nav.Link
+              onClick={() => this.handleFilter("BundesLiga")}
+              eventKey="bundesliga"
+            >
               <Image
                 style={{ marginRight: "4px" }}
                 width="32px"
@@ -63,7 +69,10 @@ class Summaries extends Component {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link onClick={() => this.handleFilter("La Liga")} eventKey="la_liga">
+            <Nav.Link
+              onClick={() => this.handleFilter("La Liga")}
+              eventKey="la_liga"
+            >
               <Image
                 style={{ marginRight: "4px" }}
                 width="32px"
@@ -74,7 +83,10 @@ class Summaries extends Component {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link onClick={() => this.handleFilter("Ligue 1")} eventKey="ligue_1">
+            <Nav.Link
+              onClick={() => this.handleFilter("Ligue 1")}
+              eventKey="ligue_1"
+            >
               <Image
                 style={{ marginTop: "-3px", marginRight: "4px" }}
                 width="32px"
@@ -97,26 +109,28 @@ class Summaries extends Component {
           </Row>
         )}
         <Row>
-          {this.props.summaries.filter(element => {
-            if (this.state.filter) {
-              return element.leagueType === this.state.filter;
-            } else {
-              return true;
-            }
-          }).map((element) => {
-            return (
-              <Col xs={4}>
-                <div style={{ margin: "10px 0" }}>
-                  <Link
-                    style={{ textDecoration: "none" }}
-                    to={`/summary_details/${element._id}`}
-                  >
-                    <SummaryCard {...element} />
-                  </Link>
-                </div>
-              </Col>
-            );
-          })}
+          {this.props.summaries
+            .filter((element) => {
+              if (this.state.filter) {
+                return element.leagueType === this.state.filter;
+              } else {
+                return true;
+              }
+            })
+            .map((element) => {
+              return (
+                <Col xs={4}>
+                  <div style={{ margin: "10px 0" }}>
+                    <Link
+                      style={{ textDecoration: "none" }}
+                      to= {{pathname: `/summary_details/${element._id}`, ...element}}
+                    >
+                      <SummaryCard {...element} />
+                    </Link>
+                  </div>
+                </Col>
+              );
+            })}
         </Row>
       </div>
     );

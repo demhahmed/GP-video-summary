@@ -9,11 +9,14 @@ import la_liga from "../../images/la_liga.png";
 import moment from "moment";
 
 import "./SummaryDetails.css";
+import { Redirect } from "react-router-dom";
 
 class SummaryDetails extends Component {
   render() {
+    const { createdAt, title, user, goals, chances, length, summaryPath, leagueType } = this.props.location;
+    console.log(summaryPath)
     let srcImg;
-    switch (this.props.leagueType) {
+    switch (leagueType) {
       case "La Liga":
         srcImg = la_liga;
         break;
@@ -29,6 +32,10 @@ class SummaryDetails extends Component {
       default:
         break;
     }
+    if (!this.props.location.title) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div className="container">
         <Card style={{ marginTop: "20px" }}>
@@ -37,7 +44,7 @@ class SummaryDetails extends Component {
           </Card.Title>
           <Row>
             <Col style={{ marginTop: "8px", marginBottom: "8px" }} xs={3}>
-              <Image width="128px" src={srcImg} />
+              <Image style={{marginLeft: "20px"}} width="128px" src={srcImg} />
             </Col>
             <Col xs={9}>
               <Row>
@@ -54,20 +61,20 @@ class SummaryDetails extends Component {
               <Row>
                 <Col xs={3}>
                   <Image
-                    style={{ cursor: "pointer" }}
+                    style={{ marginBottom: "20px", cursor: "pointer" }}
                     width="75px"
                     height="75px"
                     roundedCircle
-                    src={srcImg}
+                    src={user.image}
                   />
                 </Col>
                 <Col xs={3}>
                   <p style={{ marginTop: "25px" }}>
-                    {moment(this.props.createdAt, "YYYYMMDD").fromNow()}
+                    {moment(new Date(createdAt), "YYYYMMDD").fromNow()}
                   </p>
                 </Col>
                 <Col xs={6}>
-                  <p style={{ marginTop: "25px" }}>{this.props.title}</p>
+                  <p style={{ marginTop: "25px" }}>{title}</p>
                 </Col>
               </Row>
             </Col>
@@ -77,7 +84,7 @@ class SummaryDetails extends Component {
           <Col xs={6}>
             <div>
               <ReactPlayer
-                url={`https://localhost:3001/summaries/${this.props.summaryPath}`}
+                url={`http://localhost:3001/summaries/${summaryPath}`}
                 controls
               />
             </div>
@@ -94,7 +101,7 @@ class SummaryDetails extends Component {
                       <h5>Goals</h5>
                     </Col>
                     <Col xs={4}>
-                      <p>10</p>
+                      <p>{goals}</p>
                     </Col>
                   </Row>
                 </Card.Text>
@@ -104,7 +111,7 @@ class SummaryDetails extends Component {
                       <h5>Dangerous Chances</h5>
                     </Col>
                     <Col xs={4}>
-                      <p>10</p>
+                      <p>{chances}</p>
                     </Col>
                   </Row>
                 </Card.Text>
@@ -114,7 +121,7 @@ class SummaryDetails extends Component {
                       <h5>Video Length</h5>
                     </Col>
                     <Col xs={4}>
-                      <p>10 min</p>
+                      <p>{length} min</p>
                     </Col>
                   </Row>
                 </Card.Text>
