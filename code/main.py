@@ -16,7 +16,7 @@ import numpy as np
 
 def main():
     ############################## declarations #################################
-    VIDEO_PATH = 'C:/Users\\salama\\Desktop\\test3.mp4'
+    VIDEO_PATH = 'C:/Users\\salama\\Desktop\\test4.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
         print('err reading video')
@@ -123,7 +123,7 @@ def main():
         frame_numbers = frame_numbers[-10:]
         
     #appending last shot in video 
-    shots.append((frame_numbers[-1],frame_times[-1],False, ShotClassifier(model_type=1).get_shot_class(frames),goalMouth(frames),False))
+    shots.append((frame_numbers[-1],frame_times[-1],GoalDetector().execute(frames[int(last_cut/5)],frames[-1]), ShotClassifier(model_type=1).get_shot_class(frames),goalMouth(frames),False))
     del frames_to_classify, skip, patch, mouth, out, type, no_shot_frames
     ############################### resolving double logos ###########################
     i = 0
