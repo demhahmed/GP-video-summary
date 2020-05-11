@@ -16,7 +16,7 @@ import numpy as np
 
 def main():
     ############################## declarations #################################
-    VIDEO_PATH = 'C:/Users\\salama\\Desktop\\test4.mp4'
+    VIDEO_PATH = 'C:/Users\\salama\\Desktop\\test3.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
         print('err reading video')
@@ -89,7 +89,7 @@ def main():
                         mouth = goalMouth(frames[i-20:i])
 
                 # appending all shot information
-                    shots.append((frame_numbers[i], frame_times[i],
+                    shots.append((frame_numbers[i], round((frame_times[i]/60),2),
                                   GoalDetector().execute(
                                       frames[int(max(start - 2, 0))],
                                       frames[i-2]), type, mouth, False))
@@ -98,18 +98,18 @@ def main():
                     types = type.split("+")
                     if types[0] == "logo":
                         shots.append(
-                            (last_cut+25+(p*5), (last_cut+25)/FPS, False, "logo", False, False))
+                            (last_cut+25+(p*5), round((((last_cut+25)/FPS)/60),2), False, "logo", False, False))
                         if types[1] not in ['logo', 'close-out', 'close']:
                             mouth = goalMouth(frames[i-20:i])
                         shots.append(
-                            (frame_number+(p*5), frame_time, False, types[1] , mouth, False))
+                            (frame_number+(p*5), round((frame_time/60),2), False, types[1] , mouth, False))
 
                     else:
                         if types[0] not in ['logo', 'close-out', 'close']:
                             mouth = goalMouth(frames[i-25:i-5])
                         shots.append(
-                            (frame_number-25+(p*5), frame_time-(25/FPS), False, types[0], mouth, False))
-                        shots.append((frame_number+(p*5), frame_time,
+                            (frame_number-25+(p*5), round(((frame_time-(25/FPS))/60),2), False, types[0], mouth, False))
+                        shots.append((frame_number+(p*5), round((frame_time/60),2),
                                       False, "logo", False, False))
                                       
                 last_cut = frame_number
@@ -123,7 +123,7 @@ def main():
         frame_numbers = frame_numbers[-10:]
         
     #appending last shot in video 
-    shots.append((frame_numbers[-1],frame_times[-1],GoalDetector().execute(frames[int(last_cut/5)],frames[-1]), ShotClassifier(model_type=1).get_shot_class(frames),goalMouth(frames),False))
+    shots.append((frame_numbers[-1],round((frame_times[-1]/60),2),GoalDetector().execute(frames[int(last_cut/5)],frames[-1]), ShotClassifier(model_type=1).get_shot_class(frames),goalMouth(frames),False))
     del frames_to_classify, skip, patch, mouth, out, type, no_shot_frames
     ############################### resolving double logos ###########################
     i = 0
@@ -136,8 +136,7 @@ def main():
 
     print("Analyzing Audio...")
     peak_times = get_peak_times(VIDEO_PATH,90)
-    print(peak_times)
-
+    peak_times = [x/60 for x in peak_times]
     cuts = [x[1] for x in shots]
     final_times = []
     for peak in peak_times:
@@ -150,7 +149,7 @@ def main():
 
     final_times = [t for t in (set(tuple(i) for i in final_times))]
 
-    print("final ", final_times)
+    print("final peak times ", final_times)
     ############################## print cuts  ##################################
     print("----------------------")
     print("Found ", len(shots), " shots")
