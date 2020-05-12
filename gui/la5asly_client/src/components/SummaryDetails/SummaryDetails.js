@@ -7,14 +7,48 @@ import ligue_1 from "../../images/l_1.png";
 import premierleague from "../../images/p_l.png";
 import la_liga from "../../images/la_liga.png";
 import moment from "moment";
-
+import { fetchSummaries } from "../../actions";
 import "./SummaryDetails.css";
 import { Redirect } from "react-router-dom";
 
 class SummaryDetails extends Component {
+  state = {
+    wait: true,
+  };
+
+  componentWillMount() {
+    this.setState({ wait: true }, () => {
+      this.props.fetchSummaries().then(() => {
+        this.setState({ wait: false });
+      });
+    });
+  }
   render() {
-    const { createdAt, title, user, goals, chances, length, summaryPath, leagueType } = this.props.location;
-    console.log(summaryPath)
+    if(this.state.wait) {
+      return null;
+    }
+
+    const id = this.props.match.params.id;
+    let curr_summary = this.props.summaries.filter(
+      (summary) => summary._id === id
+    );
+    if (curr_summary.length > 0) {
+      curr_summary = curr_summary[0];
+    } else {
+      return <Redirect to="/" />;
+    }
+
+    const {
+      createdAt,
+      title,
+      user,
+      goals,
+      chances,
+      length,
+      summaryPath,
+      leagueType,
+    } = curr_summary;
+
     let srcImg;
     switch (leagueType) {
       case "La Liga":
@@ -32,9 +66,6 @@ class SummaryDetails extends Component {
       default:
         break;
     }
-    if (!this.props.location.title) {
-      return <Redirect to="/" />;
-    }
 
     return (
       <div className="container">
@@ -44,7 +75,11 @@ class SummaryDetails extends Component {
           </Card.Title>
           <Row>
             <Col style={{ marginTop: "8px", marginBottom: "8px" }} xs={3}>
-              <Image style={{marginLeft: "20px"}} width="128px" src={srcImg} />
+              <Image
+                style={{ marginLeft: "20px" }}
+                width="128px"
+                src={srcImg}
+              />
             </Col>
             <Col xs={9}>
               <Row>
@@ -135,7 +170,7 @@ class SummaryDetails extends Component {
 }
 
 const mapStateToProps = (store) => {
-  return { user: store.user.user };
+  return { user: store.user.user, summaries: store.summaries.summaries };
 };
 
-export default connect(mapStateToProps, {})(SummaryDetails);
+export default connect(mapStateToProps, { fetchSummaries })(SummaryDetails);

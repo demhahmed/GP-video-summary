@@ -4,12 +4,13 @@ import { Field, reduxForm } from "redux-form";
 import { Redirect } from "react-router-dom";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import DropdownList from "react-widgets/lib/DropdownList";
+import Multiselect from "react-widgets/lib/Multiselect";
 import moment from "moment";
 import momentLocaliser from "react-widgets-moment";
 import { showNotification, hideNotification, summarize } from "../../actions";
 
 import "react-widgets/dist/css/react-widgets.css";
-
+import "./UploadMatch.css";
 momentLocaliser(moment);
 
 const renderField = ({
@@ -32,6 +33,28 @@ const renderField = ({
   );
 };
 
+const renderMultiselect = ({
+  input,
+  data,
+  valueField,
+  textField,
+  meta: { touched, error },
+}) => {
+  return (
+    <div>
+      <Multiselect
+        {...input}
+        onBlur={() => input.onBlur()}
+        value={input.value || []} // requires value to be an array
+        data={data}
+        valueField={valueField}
+        textField={textField}
+      />
+      {touched && error && <span className="text-danger">{error}</span>}
+    </div>
+  );
+};
+
 class UploadMatch extends React.Component {
   state = {
     error: null,
@@ -43,9 +66,15 @@ class UploadMatch extends React.Component {
     { league: "BundesLiga", value: "BUNDESLIGA" },
   ];
 
-  handleSubmit = ({ title, leagueType }) => {
+  handleSubmit = ({ title, leagueType, versions }) => {
     if (this.state.file) {
-      this.props.summarize(this.props.user._id, title, leagueType, this.state.file)
+      this.props.summarize(
+        this.props.user._id,
+        title,
+        leagueType,
+        this.state.file,
+        versions
+      );
     } else {
       this.setState({ error: true });
     }
@@ -60,6 +89,21 @@ class UploadMatch extends React.Component {
         textField={textField}
         onChange={input.onChange}
       />
+    );
+  };
+
+  renderCheckBox = (id, label) => {
+    return (
+      <Form.Group as={Row} controlId={id}>
+        <Form.Label column sm={3}>
+          {label}
+        </Form.Label>
+        <Col sm={9}>
+          <Form.Group controlId={id}>
+            <Form.Check type="checkbox" label={label} />
+          </Form.Group>
+        </Col>
+      </Form.Group>
     );
   };
 
@@ -86,7 +130,20 @@ class UploadMatch extends React.Component {
             placeholder="Enter title"
             component={renderField}
           />
-
+          <Row style={{ marginBottom: "15px" }}>
+            <Form.Label column sm={3}>
+              Versions
+            </Form.Label>
+            <Col sm={9}>
+              <div>
+                <Field
+                  name="versions"
+                  component={renderMultiselect}
+                  data={["Full", "Audio_85", "Audio_90", "Audio_95"]}
+                />
+              </div>
+            </Col>
+          </Row>
           <Row style={{ marginBottom: "15px" }}>
             <Form.Label column sm={3}>
               League Type
@@ -119,7 +176,12 @@ class UploadMatch extends React.Component {
           </Form.Group>
           <Form.Group as={Row}>
             <Col sm={{ offset: 3 }}>
-              <Button block variant="success" type="submit">
+              <Button
+                disabled={this.props.uploadMatchForm && this.props.uploadMatchForm.syncErrors || !this.state.file}
+                block
+                variant="success"
+                type="submit"
+              >
                 Summarize
               </Button>
             </Col>
@@ -138,14 +200,24 @@ const validate = (formValues) => {
   if (!formValues.leagueType) {
     errors.leagueType = "You must enter a leagueType";
   }
+  if (
+    !formValues.versions ||
+    (formValues.versions && formValues.versions.length === 0)
+  ) {
+    errors.versions = "You must select a verison";
+  }
   return errors;
 };
 
 const mapStateToProps = (store) => {
-  return { user: store.user.user };
+  return { user: store.user.user, uploadMatchForm: store.form.uploadMatch };
 };
 
-export default connect(mapStateToProps, { showNotification, hideNotification, summarize })(
+export default connect(mapStateToProps, {
+  showNotification,
+  hideNotification,
+  summarize,
+})(
   reduxForm({
     form: "uploadMatch",
     validate,

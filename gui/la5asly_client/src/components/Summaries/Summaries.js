@@ -97,7 +97,7 @@ class Summaries extends Component {
             </Nav.Link>
           </Nav.Item>
         </Nav>
-        {this.props.user && (
+        {this.props.user && this.props.user.type === "admin" && (
           <Row style={{ marginTop: "20px" }}>
             <Col xs={{ offset: 10 }}>
               <Link className="custom-link" to="/uploadmatch">

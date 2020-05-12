@@ -11,8 +11,11 @@ import reducers from "./reducers";
 
 const saveToLocalStorage = (state) => {
   try {
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem("state", serializedState);
+    if (state.user) {
+      const user_state = { user: state.user };
+      const serializedState = JSON.stringify(user_state);
+      localStorage.setItem("state", serializedState);
+    }
   } catch (error) {
     console.log(error);
   }

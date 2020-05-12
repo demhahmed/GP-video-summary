@@ -10,9 +10,9 @@ import {
 
 import axios from "../apis";
 
-export const signIn = (userId, username, image) => async (dispatch) => {
+export const signIn = (googleId, username, image) => async (dispatch) => {
   try {
-    let response = await axios.post("/users/login", { userId, username, image })
+    let response = await axios.post("/users/login", { googleId, username, image })
     dispatch({ type: SIGN_IN, payload: response.data });
     showPopUp(`Welcome ${username} to La5asly`, dispatch);
   } catch (error) {
@@ -41,8 +41,11 @@ export const fetchSummaries = (filterObject) => async (dispatch) => {
   }
 };
 
-export const summarize = (userId, title, leagueType, file) => async (dispatch) => {
+export const summarize = (userId, title, leagueType, file, versions) => async (dispatch) => {
   // Example of filter object { username: "Moamen", leagueType: "PREMIER_LEAGUE" }
+  let versions_str = "";
+  versions.forEach(version => versions_str += version + " ")
+  versions_str = versions_str.trim()
   try {
     const formData = new FormData();
     formData.append("video", file[0]);
@@ -54,6 +57,7 @@ export const summarize = (userId, title, leagueType, file) => async (dispatch) =
         user: userId,
         leagueType: leagueType.league,
         title,
+        versions: versions_str
       }
     });
     showPopUp(

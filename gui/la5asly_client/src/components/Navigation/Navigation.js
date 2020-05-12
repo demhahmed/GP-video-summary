@@ -12,7 +12,7 @@ class Navigation extends Component {
       window.gapi.client
         .init({
           clientId:
-            "1024627819936-egebh5n0541fciddrtkrdnc8q3ju1snk.apps.googleusercontent.com",
+            "1024627819936-qdje81scffuehjdee38m1b2astim6b7t.apps.googleusercontent.com",
           scope: 'email',
         })
         .then(() => {
@@ -26,9 +26,9 @@ class Navigation extends Component {
   onAuthChange = (isSignedIn) => {
     if (isSignedIn) {
       const username = this.auth.currentUser.get().getBasicProfile().getName();
-      const userId = this.auth.currentUser.get().getBasicProfile().getId();
+      const googleId = this.auth.currentUser.get().getBasicProfile().getId();
       const image = this.auth.currentUser.get().getBasicProfile().getImageUrl();
-      this.props.signIn(userId, username, image);
+      this.props.signIn(googleId, username, image);
     } else {
       this.props.signOut();
     }
@@ -65,6 +65,9 @@ class Navigation extends Component {
 
 
   render() {
+    if (this.props.user) {
+      console.log(this.props.user.image)
+    }
     return (
       <Navbar bg="light" variant="light">
         <div className="container my-class">
