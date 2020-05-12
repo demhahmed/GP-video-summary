@@ -1,0 +1,17 @@
+520 0.35 False wide True False
+655 0.44 False medium True False
+770 0.51 False wide True False
+790 0.53 False close False False
+820 0.55 False close False False
+840 0.56 False close-out False False
+1110 0.74 False wide False False
+1185 0.79 False close False False
+1735 1.16 False wide False True
+1800 1.2 False close-out False False
+1875 1.25 False close False False
+1895 1.26 False logo False False
+2035 1.36 False medium False False
+2055 1.37 False logo False False
+2260 1.51 False wide True False
+2360 1.57 False close False False
+2405 1.6 False wide False False

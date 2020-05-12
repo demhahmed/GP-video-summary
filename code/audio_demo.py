@@ -33,7 +33,7 @@ def main():
         next_time = ((patch+1)*6*60)
         if len(peak_times) == 0:
             break
-        included_times = [x for x in peak_times if x > current_time and x < next_time]
+        included_times = [x for x in peak_times if x >= current_time and x < next_time]
         peak_times = [x for x in peak_times if x not in included_times]
 
 
