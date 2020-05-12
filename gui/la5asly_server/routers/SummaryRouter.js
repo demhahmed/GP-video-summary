@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
         cb(null, "summaries/");
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now().toString()+".mp4");
+        cb(null, Date.now().toString() + ".mp4");
     },
 });
 
@@ -41,6 +41,8 @@ router.get("/fetch_summaries", async (req, res) => {
 router.post("/summarize", upload.single("video"), async (req, res) => {
     try {
         const no_ext_filename = req.file.filename.slice(0, req.file.filename.length - 4);
+        const versions = req.query.versions.split(' ');
+        delete req.query.versions;
         // Here we run the Python Script.
         const newSummary = new Summary({
             ...req.query,
@@ -49,10 +51,20 @@ router.post("/summarize", upload.single("video"), async (req, res) => {
             chances: Math.floor(Math.random() * 10),
             length: Math.floor(Math.random() * 10),
             thumbnail: `thumbnail_${no_ext_filename}.jpg`,
+            versions
         });
-        const video_path = path.join(__dirname, `summaries/${req.file.filename}`).replace('routers/', '');
+
+
+        const original_video_name = path.join(__dirname, `summaries/${req.file.filename}`).replace('routers/', '');
         const thumbnail_path = path.join(__dirname, `thumbnails/thumbnail_${no_ext_filename}.jpg`).replace('routers/', '');
-        exec(`ffmpeg -i ${video_path} -ss 00:00:01.000 -vframes 1 ${thumbnail_path}`, (err) => { console.log(err) });
+
+        exec(`ffmpeg -i ${original_video_name} -ss 00:00:01.000 -vframes 1 ${thumbnail_path}`, (err) => { if(err) console.log(err) });
+        versions.forEach(version => {
+            const video_path = path.join(__dirname, `summaries/${no_ext_filename}_${version}.mp4`).replace('routers/', '');
+            // Execute main.py here // Assume video_path_version.mp4 will be created
+            exec(`cp ${original_video_name} ${video_path}`)
+        });
+
         await newSummary.save();
         res.status(200).send(newSummary);
     } catch (error) {

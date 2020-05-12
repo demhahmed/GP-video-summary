@@ -2,21 +2,25 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    userId: {
+    googleId: {
       type: String,
       trim: true,
       lowercase: true,
     },
     username: {
       type: String,
+      required: true,
     },
     image: {
       type: String,
+      required: true,
     },
-  },
-  {
-    timestamps: true,
-  }
+    type: {
+      type: String,
+      lowercase: true,
+      default: "noraml",
+    },
+  }, { timestamps: true }
 );
 
 userSchema.methods.toJSON = function () {

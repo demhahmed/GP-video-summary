@@ -6,7 +6,7 @@ const router = new express.Router();
 // log in
 router.post("/users/login", async (req, res) => {
   try {
-    let user = await User.findOne({ userId: req.body.userId });
+    let user = await User.findOne({ googleId: req.body.googleId });
     if (user) {
       user.username = req.body.username;
       user.image = req.body.image;
