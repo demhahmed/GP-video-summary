@@ -34,7 +34,7 @@ class shot:
 
 def main():
     # declarations #################################
-    vidoe_name = "test3"
+    vidoe_name = "test2"
     VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
@@ -43,7 +43,7 @@ def main():
 
     STEP = 5
     frames, frame_times, frame_numbers, shots, frames_to_classify, types = [], [], [], [], [], []
-    skip, patch = 0, 0
+    skip, patch, last_cut_frame_number = 0, 0, 0
     mouth, out = False, False
     type = ''                                                       # type of shot
     # main loop ##################################
@@ -83,8 +83,12 @@ def main():
 
             frame_number = frame_numbers[i]
             frame_time = frame_times[i]
+
             # detecting cut between the current 2 frame
-            if (cut_detector(frame1, frame2) and abs(last_cut - frame_number) >= 20):
+            if (cut_detector(frame1, frame2) and abs(last_cut_frame_number- frame_number) >= 20):
+                if frame_number == 10925:
+                    print("ffffffffffffffffffffffffffffffff")
+                    
 
                 no_shot_frames = 0
                 skip = 0
@@ -92,12 +96,12 @@ def main():
                 frames_to_classify.clear()
                 types.clear()
 
-                no_shot_frames = len(frames[start:i])
+                no_shot_frames = len(frames[start+1:i+1])
 
                 # appending the first and last 5 frames and 10 random frames inbetween
-                frames_to_classify += frames[start:i] if no_shot_frames < 20 else frames[start:start+5] + \
-                    frames[start + 5: i-5: math.ceil(
-                        len(frames[start+5:i-5])/10)] + frames[i - 5:i]
+                frames_to_classify += frames[start+1:i+1] if no_shot_frames < 20 else frames[start+1:start+6] + \
+                    frames[start + 6: i-4: math.ceil(
+                        len(frames[start+6:i-4])/10)] + frames[i - 4:i+1]
 
                 # getting the shot type
                 type = ShotClassifier(model_type=1).get_shot_class(
@@ -115,6 +119,7 @@ def main():
                                     has_goal = GoalDetector().execute(frames[int(max(start - 2, 0))],frames[i-2]),
                                     has_goal_mouth =  mouth,
                                     audio = False))
+                    last_cut_frame_number = frame_numbers[i]
                 else:
                     types = type.split("+")
                     if types[0] == "logo":
@@ -124,6 +129,7 @@ def main():
                                     has_goal = False,
                                     has_goal_mouth =  False,
                                     audio = False))
+                        last_cut_frame_number = last_cut+25+(p*5)
 
                         if types[1] not in ['logo', 'close-out', 'close']:
                             mouth = goalMouth(frames[i-20:i])
@@ -133,7 +139,8 @@ def main():
                                     type = types[1],
                                     has_goal = False,
                                     has_goal_mouth =  mouth,
-                                    audio = False))                        
+                                    audio = False))   
+                        last_cut_frame_number = frame_number+(p*5)                     
 
                     else:
                         if types[0] not in ['logo', 'close-out', 'close']:
@@ -144,14 +151,16 @@ def main():
                                     type = types[0],
                                     has_goal = False,
                                     has_goal_mouth =  mouth,
-                                    audio = False))   
-
+                                    audio = False)) 
+                          
+                        last_cut_frame_number = frame_number-25+(p*5)
                         shots.append(shot(frame_number = frame_number+(p*5),
                                     shot_time = round((frame_time/60), 2),
                                     type = "logo",
                                     has_goal = False,
                                     has_goal_mouth =  False,
-                                    audio = False))   
+                                    audio = False))
+                        last_cut_frame_number = frame_number+(p*5)  
 
                 last_cut = frame_number
                 start = i
@@ -159,15 +168,15 @@ def main():
 
         if out:
             break
-        frames = frames[start:]
-        frame_times = frame_times[start:]
-        frame_numbers = frame_numbers[start:]
+        frames = frames[start+1:]
+        frame_times = frame_times[start+1:]
+        frame_numbers = frame_numbers[start+1:]
 
     # appending last shot in video
     shots.append(shot(frame_number = frame_numbers[-1],
             shot_time = round((frame_times[-1]/60), 2),
             type = ShotClassifier(model_type=1).get_shot_class(frames[::int(len(frames)/10)]),
-            has_goal = GoalDetector().execute(frames[start-2],frames[start+2]),
+            has_goal = GoalDetector().execute(frames[start-3],frames[start+3]),
             has_goal_mouth =  goalMouth(frames[::int(len(frames)/10)]),
             audio = False))   
 
@@ -247,14 +256,14 @@ def main():
 
     ################################## classifying shots #####################################
     shots_classes = []
-    goal_detected, goal_post, high_volume, logo_count = 0, 0, 0, 0 
+    goal_detected, goal_post, logo_count = 0, 0, 0 
     
     for i in range(len(output_video_shots_1)):
         if output_video_shots_1[i].has_goal == 1 and logo_count == 0:
             goal_detected = 1
-        if output_video_shots_1[i].has_goal_mouth == 1:
+        if output_video_shots_1[i].has_goal_mouth == 1 and logo_count == 0:
             goal_post = 1
-        if output_video_shots_1[i].audio == 1:
+        if output_video_shots_1[i].audio == 1 and logo_count == 0:
             high_volume = 1
         if output_video_shots_1[i].type == "logo":
             logo_count += 1
@@ -262,12 +271,12 @@ def main():
         if logo_count != 0 and logo_count % 2 == 0:
             if goal_detected == 1:
                 shots_classes.append((output_video_shots_1[i].frame_number, "GOAL")) 
-            elif goal_post == 1 or high_volume == 1:
+            elif goal_post == 1:
                 shots_classes.append((output_video_shots_1[i].frame_number, "ATTACK")) 
             else:
                 shots_classes.append((output_video_shots_1[i].frame_number, "OTHER")) 
             
-            goal_detected, goal_post, high_volume, logo_count = 0, 0, 0, 0 
+            goal_detected, goal_post, logo_count = 0, 0, 0 
 
     for i in range(len(output_video_shots_2)):
         shots_classes.append((output_video_shots_2[i].frame_number, "ATTACK"))
@@ -279,7 +288,7 @@ def main():
 
     print(str(output_video_shots))
     print(shots_classes)
-
+    return
 
     ################################## rendering video  ######################################
     '''

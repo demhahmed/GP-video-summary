@@ -1,5 +1,5 @@
 
-
+'''
 import cv2
 from ShotClassifier.ShotClassifier import ShotClassifier
 
@@ -18,4 +18,8 @@ print( ShotClassifier(model_type=1).get_shot_class(
                     frames))
 
 
+'''
 
+arr = [0,1,2,3,4,5]
+
+print(arr[0:-1])
