@@ -112,9 +112,3 @@ def goalMouth(frames, type):
     else:
 
         return False
-
-frames = []
-#frames.append(cv2.imread(r'C:\Users\Topit\Documents\notebook\set\false_2.jpg'))
-frames.append(cv2.imread(r'C:\Users\Topit\Documents\notebook\set\false_1.jpg'))
-
-print(goalMouth(frames, "wide"))
