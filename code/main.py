@@ -12,11 +12,12 @@ from Audio.audio import get_peak_times
 from ImageTools.ImageTools import ImageTools
 import cv2
 import numpy as np
-
+import operator
 
 def main():
     ############################## declarations #################################
-    VIDEO_PATH = 'C:/Users\\medo\\Desktop\\video test\\test10.mp4'
+    vidoe_name = "test4"
+    VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
         print('err reading video')
@@ -164,7 +165,7 @@ def main():
                             [2], shots[i][3], shots[i][4], True)
                 break
 
-    f = open("output.txt", "w")
+    f = open(vidoe_name+"output.txt", "w")
     for i in range(len(shots)):
         f.write(str(shots[i][0])+" "+str(shots[i][1])+" "+str(shots[i][2]) +
                 " "+str(shots[i][3])+" "+str(shots[i][4])+" "+str(shots[i][5])+'\n')
@@ -189,7 +190,8 @@ def main():
 
                 j -= 1
 
-    output_video_shots.reverse()
+    output_video_shots.sort(key = operator.itemgetter(0))
+
     print(output_video_shots)
     ################################## rendering video  ######################################
     '''
