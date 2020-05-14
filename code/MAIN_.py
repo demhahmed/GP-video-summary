@@ -34,7 +34,7 @@ class shot:
 
 def main():
     # declarations #################################
-    vidoe_name = "test2"
+    vidoe_name = "matchnew2"
     VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
@@ -86,10 +86,7 @@ def main():
 
             # detecting cut between the current 2 frame
             if (cut_detector(frame1, frame2) and abs(last_cut_frame_number- frame_number) >= 20):
-                if frame_number == 10925:
-                    print("ffffffffffffffffffffffffffffffff")
-                    
-
+        
                 no_shot_frames = 0
                 skip = 0
                 mouth = False
@@ -120,6 +117,9 @@ def main():
                                     has_goal_mouth =  mouth,
                                     audio = False))
                     last_cut_frame_number = frame_numbers[i]
+                    if frame_number == 5135:
+                        cv2.imwrite("im1.jpg", frames[int(max(start - 2, 0))])
+                        cv2.imwrite("im2.jpg", frames[i-2])
                 else:
                     types = type.split("+")
                     if types[0] == "logo":
@@ -168,7 +168,9 @@ def main():
 
         if out:
             break
-        frames = frames[start+1:]
+        frames_copy = [x.copy() for x in frames[start+1:]]
+        del frames
+        frames = frames_copy 
         frame_times = frame_times[start+1:]
         frame_numbers = frame_numbers[start+1:]
 

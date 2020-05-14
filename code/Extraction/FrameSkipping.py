@@ -82,5 +82,5 @@ def ExtractFrames(path, step, patch):
     return list
 
 
-path = 'C:/Users\\salama\\Desktop\\matchnew2.mp4'
-#ExtractFramesToDisk(path, 5)
+path = 'C:/Users\\salama\\Desktop\\matchnew4.mp4'
+ExtractFramesToDisk(path, 5)

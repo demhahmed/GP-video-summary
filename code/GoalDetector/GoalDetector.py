@@ -89,12 +89,18 @@ class GoalDetector:
             away_score, _ = compare_ssim(
                 first_results[2], later_results[2], full=True)
             # print(home_score, away_score)
-            if home_score * 100 <= 75:
+            if home_score * 100 <= 71:
                 # print("Home Score Changed")
                 return True
-            elif away_score * 100 <= 75:
+            elif away_score * 100 <= 71:
                 # print("Away Score Changed")
                 return True
             else:
                 # print("No Change")
                 return False
+
+'''
+img1 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\GoalDetector\\im1.jpg")
+img2 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\GoalDetector\\im2.jpg")
+print(GoalDetector().execute(img1,img2))
+'''
