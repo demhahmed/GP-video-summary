@@ -1,5 +1,5 @@
 
-from GoalMouth.goalpostv2 import goalMouth, goalpostv2
+from GoalMouth.goalpostv4 import goalMouth
 import math
 from os.path import dirname, realpath, join
 from ShotClassifier.ShotClassifier import ShotClassifier
@@ -28,7 +28,8 @@ class shot:
         return str(self)
 
     def __str__(self):
-        shot_info = "frame_number: "+ str(self.frame_number)+"| "+"shot_time: "+ str(self.shot_time)+"| "+"shot_type: "+ str(self.type)+"| "+"has_goal: "+ str(self.has_goal)+"| "+"has_goal_mouth: "+str(self.has_goal_mouth)+"| "+"has_high_volume: "+str(self.audio)+"\n"
+        shot_info = "frame_number: " + str(self.frame_number)+"| "+"shot_time: " + str(self.shot_time)+"| "+"shot_type: " + str(
+            self.type)+"| "+"has_goal: " + str(self.has_goal)+"| "+"has_goal_mouth: "+str(self.has_goal_mouth)+"| "+"has_high_volume: "+str(self.audio)+"\n"
         return shot_info
 
 
@@ -85,20 +86,20 @@ def main():
             frame_time = frame_times[i]
 
             # detecting cut between the current 2 frame
-            if (cut_detector(frame1, frame2) and abs(last_cut_frame_number- frame_number) >= 20):
-        
+            if (cut_detector(frame1, frame2) and abs(last_cut_frame_number - frame_number) >= 20):
+
                 no_shot_frames = 0
                 skip = 0
                 mouth = False
                 frames_to_classify.clear()
                 types.clear()
 
-                no_shot_frames = len(frames[start+1:i+1])
+                no_shot_frames = len(frames[start:i+1])
 
                 # appending the first and last 5 frames and 10 random frames inbetween
-                frames_to_classify += frames[start+1:i+1] if no_shot_frames < 20 else frames[start+1:start+6] + \
-                    frames[start + 6: i-4: math.ceil(
-                        len(frames[start+6:i-4])/10)] + frames[i - 4:i+1]
+                frames_to_classify += frames[start:i+1] if no_shot_frames < 20 else frames[start:start+5] + \
+                    frames[start + 5: i-4: math.ceil(
+                        len(frames[start+5:i-4])/10)] + frames[i - 4:i+1]
 
                 # getting the shot type
                 type = ShotClassifier(model_type=1).get_shot_class(
@@ -107,80 +108,81 @@ def main():
                 if "+" not in type:
 
                     if type not in ['logo', 'close-out', 'close']:
-                        mouth = goalMouth(frames[i-20:i])
+                        mouth = goalMouth(frames[i-20:i], type)
 
                 # appending all shot information
-                    shots.append(shot(frame_number =frame_numbers[i],
-                                    shot_time =round((frame_times[i]), 2),
-                                    type = type,
-                                    has_goal = GoalDetector().execute(frames[int(max(start - 2, 0))],frames[i-2]),
-                                    has_goal_mouth =  mouth,
-                                    audio = False))
+                    shots.append(shot(frame_number=frame_numbers[i],
+                                      shot_time=round((frame_times[i]), 2),
+                                      type=type,
+                                      has_goal=GoalDetector().execute(
+                                          frames[int(max(start - 2, 0))], frames[i-2]),
+                                      has_goal_mouth=mouth,
+                                      audio=False))
                     last_cut_frame_number = frame_numbers[i]
-                    if frame_number == 5135:
-                        cv2.imwrite("im1.jpg", frames[int(max(start - 2, 0))])
-                        cv2.imwrite("im2.jpg", frames[i-2])
+
                 else:
                     types = type.split("+")
                     if types[0] == "logo":
-                        shots.append(shot(frame_number = last_cut+25+(p*5),
-                                    shot_time = round((((last_cut+25)/FPS)), 2),
-                                    type = "logo",
-                                    has_goal = False,
-                                    has_goal_mouth =  False,
-                                    audio = False))
-                        last_cut_frame_number = last_cut+25+(p*5)
+                        shots.append(shot(frame_number=last_cut+25+(p*5),
+                                          shot_time=round(
+                                              (((last_cut+25)/FPS)), 2),
+                                          type="logo",
+                                          has_goal=False,
+                                          has_goal_mouth=False,
+                                          audio=False))
 
                         if types[1] not in ['logo', 'close-out', 'close']:
-                            mouth = goalMouth(frames[i-20:i])
-                        
-                        shots.append(shot(frame_number = frame_number+(p*5),
-                                    shot_time = round((frame_time), 2),
-                                    type = types[1],
-                                    has_goal = False,
-                                    has_goal_mouth =  mouth,
-                                    audio = False))   
-                        last_cut_frame_number = frame_number+(p*5)                     
+                            mouth = goalMouth(frames[i-20:i], types[1])
+
+                        shots.append(shot(frame_number=frame_number+(p*5),
+                                          shot_time=round((frame_time), 2),
+                                          type=types[1],
+                                          has_goal=False,
+                                          has_goal_mouth=mouth,
+                                          audio=False))
+                        last_cut_frame_number = frame_number+(p*5)
 
                     else:
                         if types[0] not in ['logo', 'close-out', 'close']:
-                            mouth = goalMouth(frames[i-25:i-5])
+                            mouth = goalMouth(frames[i-25:i-5], types[0])
 
-                        shots.append(shot(frame_number = frame_number-25+(p*5),
-                                    shot_time = round(((frame_time-(25/FPS))), 2),
-                                    type = types[0],
-                                    has_goal = False,
-                                    has_goal_mouth =  mouth,
-                                    audio = False)) 
-                          
-                        last_cut_frame_number = frame_number-25+(p*5)
-                        shots.append(shot(frame_number = frame_number+(p*5),
-                                    shot_time = round((frame_time), 2),
-                                    type = "logo",
-                                    has_goal = False,
-                                    has_goal_mouth =  False,
-                                    audio = False))
-                        last_cut_frame_number = frame_number+(p*5)  
+                        shots.append(shot(frame_number=frame_number-25+(p*5),
+                                          shot_time=round(
+                                              ((frame_time-(25/FPS))), 2),
+                                          type=types[0],
+                                          has_goal=False,
+                                          has_goal_mouth=mouth,
+                                          audio=False))
+
+                        shots.append(shot(frame_number=frame_number+(p*5),
+                                          shot_time=round((frame_time), 2),
+                                          type="logo",
+                                          has_goal=False,
+                                          has_goal_mouth=False,
+                                          audio=False))
+                        last_cut_frame_number = frame_number+(p*5)
 
                 last_cut = frame_number
-                start = i
+                start = i+1
         patch += 1
 
         if out:
             break
-        frames_copy = [x.copy() for x in frames[start+1:]]
-        del frames
-        frames = frames_copy 
-        frame_times = frame_times[start+1:]
-        frame_numbers = frame_numbers[start+1:]
 
+        frames = frames[start:]
+        frame_times = frame_times[start:]
+        frame_numbers = frame_numbers[start:]
+
+    type = ShotClassifier(model_type=1).get_shot_class(
+        frames[::int(len(frames)/10)])
     # appending last shot in video
-    shots.append(shot(frame_number = frame_numbers[-1],
-            shot_time = round((frame_times[-1]), 2),
-            type = ShotClassifier(model_type=1).get_shot_class(frames[::int(len(frames)/10)]),
-            has_goal = GoalDetector().execute(frames[start-3],frames[start+3]),
-            has_goal_mouth =  goalMouth(frames[::int(len(frames)/10)]),
-            audio = False))   
+    shots.append(shot(frame_number=frame_numbers[-1],
+                      shot_time=round((frame_times[-1]), 2),
+                      type=type,
+                      has_goal=GoalDetector().execute(
+        frames[start-3], frames[start+3]),
+        has_goal_mouth=goalMouth(frames[::int(len(frames)/10)], type),
+        audio=False))
 
     del frames_to_classify, skip, patch, mouth, out, type, no_shot_frames
     ############################### resolving double logos ###########################
@@ -215,13 +217,14 @@ def main():
     print("Found ", len(shots), " shots")
     print("----------------------")
 
-    ########################### Detecing if shot contains high volume
+    # Detecing if shot contains high volume
     for i in range(len(shots)):
         for j in range((len(final_times))):
             if final_times[j][1] == shots[i].shot_time:
-                shots[i] = shot(shots[i].frame_number, shots[i].shot_time, shots[i].type, shots[i].has_goal, shots[i].has_goal_mouth, True)
+                shots[i] = shot(shots[i].frame_number, shots[i].shot_time,
+                                shots[i].type, shots[i].has_goal, shots[i].has_goal_mouth, True)
                 break
-    
+
     ############################ print shots info into a file #############################
     f = open(vidoe_name+"output.txt", "w")
     for i in range(len(shots)):
@@ -247,7 +250,7 @@ def main():
 
                 j -= 1
     # shots with high volume but not replayed
-    for i in range (len(shots)):
+    for i in range(len(shots)):
         if shots[i].audio == True and shots[i] not in output_video_shots_1:
             output_video_shots_2.append(shots[i])
 
@@ -259,8 +262,8 @@ def main():
 
     ################################## classifying shots #####################################
     shots_classes = []
-    goal_detected, goal_post, logo_count = 0, 0, 0 
-    
+    goal_detected, goal_post, logo_count = 0, 0, 0
+
     for i in range(len(output_video_shots_1)):
         if output_video_shots_1[i].has_goal == 1 and logo_count == 0:
             goal_detected = 1
@@ -290,7 +293,7 @@ def main():
     for i in range(len(output_video_shots)):
         output_video_shots[i].shot_time = time.strftime("%H:%M:%S", time.gmtime(output_video_shots[i].shot_time))
     output_video_shots.sort(key=lambda x: x.frame_number)
-    shots_classes.sort(key = operator.itemgetter(0))
+    shots_classes.sort(key=operator.itemgetter(0))
 
     print(str(output_video_shots))
     print(shots_classes)
