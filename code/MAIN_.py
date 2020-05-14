@@ -13,7 +13,7 @@ from ImageTools.ImageTools import ImageTools
 import cv2
 import numpy as np
 import operator
-
+import time
 
 class shot:
     def __init__(self, frame_number, shot_time, type=None, has_goal=None, has_goal_mouth=None, audio=None):
@@ -34,7 +34,7 @@ class shot:
 
 def main():
     # declarations #################################
-    vidoe_name = "matchnew2"
+    vidoe_name = "test3"
     VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
@@ -111,7 +111,7 @@ def main():
 
                 # appending all shot information
                     shots.append(shot(frame_number =frame_numbers[i],
-                                    shot_time =round((frame_times[i]/60), 2),
+                                    shot_time =round((frame_times[i]), 2),
                                     type = type,
                                     has_goal = GoalDetector().execute(frames[int(max(start - 2, 0))],frames[i-2]),
                                     has_goal_mouth =  mouth,
@@ -124,7 +124,7 @@ def main():
                     types = type.split("+")
                     if types[0] == "logo":
                         shots.append(shot(frame_number = last_cut+25+(p*5),
-                                    shot_time = round((((last_cut+25)/FPS)/60), 2),
+                                    shot_time = round((((last_cut+25)/FPS)), 2),
                                     type = "logo",
                                     has_goal = False,
                                     has_goal_mouth =  False,
@@ -135,7 +135,7 @@ def main():
                             mouth = goalMouth(frames[i-20:i])
                         
                         shots.append(shot(frame_number = frame_number+(p*5),
-                                    shot_time = round((frame_time/60), 2),
+                                    shot_time = round((frame_time), 2),
                                     type = types[1],
                                     has_goal = False,
                                     has_goal_mouth =  mouth,
@@ -147,7 +147,7 @@ def main():
                             mouth = goalMouth(frames[i-25:i-5])
 
                         shots.append(shot(frame_number = frame_number-25+(p*5),
-                                    shot_time = round(((frame_time-(25/FPS))/60), 2),
+                                    shot_time = round(((frame_time-(25/FPS))), 2),
                                     type = types[0],
                                     has_goal = False,
                                     has_goal_mouth =  mouth,
@@ -155,7 +155,7 @@ def main():
                           
                         last_cut_frame_number = frame_number-25+(p*5)
                         shots.append(shot(frame_number = frame_number+(p*5),
-                                    shot_time = round((frame_time/60), 2),
+                                    shot_time = round((frame_time), 2),
                                     type = "logo",
                                     has_goal = False,
                                     has_goal_mouth =  False,
@@ -176,7 +176,7 @@ def main():
 
     # appending last shot in video
     shots.append(shot(frame_number = frame_numbers[-1],
-            shot_time = round((frame_times[-1]/60), 2),
+            shot_time = round((frame_times[-1]), 2),
             type = ShotClassifier(model_type=1).get_shot_class(frames[::int(len(frames)/10)]),
             has_goal = GoalDetector().execute(frames[start-3],frames[start+3]),
             has_goal_mouth =  goalMouth(frames[::int(len(frames)/10)]),
@@ -193,8 +193,8 @@ def main():
     ############################## audio processing ##################################
 
     print("Analyzing Audio...")
-    peak_times = get_peak_times(VIDEO_PATH, 90)
-    peak_times = [x/60 for x in peak_times]
+    peak_times = get_peak_times(VIDEO_PATH, 92)
+    peak_times = [x for x in peak_times]
 
     ############################## Extracting high volume shots #########################
     cuts = [x.shot_time for x in shots]
@@ -253,7 +253,8 @@ def main():
 
     output_video_shots_1.sort(key=lambda x: x.frame_number)
     output_video_shots_2.sort(key=lambda x: x.frame_number)
-    print(str(output_video_shots_1))
+
+
     print(str(output_video_shots_2))
 
     ################################## classifying shots #####################################
@@ -263,28 +264,31 @@ def main():
     for i in range(len(output_video_shots_1)):
         if output_video_shots_1[i].has_goal == 1 and logo_count == 0:
             goal_detected = 1
-        if output_video_shots_1[i].has_goal_mouth == 1 and logo_count == 0:
+        if output_video_shots_1[i].has_goal_mouth == 1:
             goal_post = 1
-        if output_video_shots_1[i].audio == 1 and logo_count == 0:
-            high_volume = 1
         if output_video_shots_1[i].type == "logo":
             logo_count += 1
 
         if logo_count != 0 and logo_count % 2 == 0:
             if goal_detected == 1:
-                shots_classes.append((output_video_shots_1[i].frame_number, "GOAL")) 
+                shots_classes.append((output_video_shots_1[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_time)), "GOAL"))
             elif goal_post == 1:
-                shots_classes.append((output_video_shots_1[i].frame_number, "ATTACK")) 
+                shots_classes.append((output_video_shots_1[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_time)), "ATTACK"))
             else:
-                shots_classes.append((output_video_shots_1[i].frame_number, "OTHER")) 
+                shots_classes.append((output_video_shots_1[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_time)), "OTHER"))
             
             goal_detected, goal_post, logo_count = 0, 0, 0 
 
     for i in range(len(output_video_shots_2)):
-        shots_classes.append((output_video_shots_2[i].frame_number, "ATTACK"))
+        if output_video_shots_2[i].has_goal_mouth: 
+            shots_classes.append((output_video_shots_2[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_2[i].shot_time)), "ATTACK"))
+        else:
+            shots_classes.append((output_video_shots_2[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_2[i].shot_time)), "OTHER"))
 
     output_video_shots = output_video_shots_1 + output_video_shots_2
 
+    for i in range(len(output_video_shots)):
+        output_video_shots[i].shot_time = time.strftime("%H:%M:%S", time.gmtime(output_video_shots[i].shot_time))
     output_video_shots.sort(key=lambda x: x.frame_number)
     shots_classes.sort(key = operator.itemgetter(0))
 
