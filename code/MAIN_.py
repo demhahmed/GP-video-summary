@@ -35,7 +35,7 @@ class shot:
 
 def main():
     # declarations #################################
-    vidoe_name = "test3"
+    vidoe_name = "matchnew5"
     VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
@@ -84,6 +84,7 @@ def main():
 
             frame_number = frame_numbers[i]
             frame_time = frame_times[i]
+            
 
             # detecting cut between the current 2 frame
             if (cut_detector(frame1, frame2) and abs(last_cut_frame_number - frame_number) >= 20):
@@ -100,7 +101,9 @@ def main():
                 frames_to_classify += frames[start:i+1] if no_shot_frames < 20 else frames[start:start+5] + \
                     frames[start + 5: i-4: math.ceil(
                         len(frames[start+5:i-4])/10)] + frames[i - 4:i+1]
-
+                if frame_number == 5070:
+                    print("llllllllllllllllllllll")
+        
                 # getting the shot type
                 type = ShotClassifier(model_type=1).get_shot_class(
                     frames_to_classify)
@@ -242,7 +245,7 @@ def main():
             j = i
             while(1):
                 output_video_shots_1.append(shots[j])
-                if logo_count == 0 and shots[j].type == "wide":
+                if logo_count == 0 and (shots[j].type == "wide" or j == 0):
                     break
 
                 if shots[j].type == "logo":
@@ -272,7 +275,7 @@ def main():
         if output_video_shots_1[i].type == "logo":
             logo_count += 1
 
-        if logo_count != 0 and logo_count % 2 == 0:
+        if logo_count == 2:
             if goal_detected == 1:
                 shots_classes.append((output_video_shots_1[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_time)), "GOAL"))
             elif goal_post == 1:

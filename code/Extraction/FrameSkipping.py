@@ -15,7 +15,7 @@ def ExtractFramesToDisk(path, step):
         if ret == True:
             if count % step == 0:
                 cv2.imwrite(
-                    "C:/Users\\medo\\Desktop\\frames\\frame%d.jpg" % count, image)
+                    "C:/Users\\salama\\Desktop\\frames\\frame%d.jpg" % count, image)
             count += 1
         else:
             break
@@ -82,7 +82,7 @@ def ExtractFrames(path, step, patch):
     return list
 
 
-vidoe_name = "test6"
-VIDEO_PATH = 'C:/Users\\medo\\Desktop\\video test\\'+vidoe_name+'.mp4'
+vidoe_name = "matchnew5"
+VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
 
 #ExtractFramesToDisk(VIDEO_PATH, 5)
