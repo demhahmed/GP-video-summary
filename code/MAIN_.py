@@ -35,7 +35,7 @@ class shot:
 
 def main():
     # declarations #################################
-    vidoe_name = "matchnew5"
+    vidoe_name = "match7new"
     VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
@@ -101,8 +101,6 @@ def main():
                 frames_to_classify += frames[start:i+1] if no_shot_frames < 20 else frames[start:start+5] + \
                     frames[start + 5: i-4: math.ceil(
                         len(frames[start+5:i-4])/10)] + frames[i - 4:i+1]
-                if frame_number == 5070:
-                    print("llllllllllllllllllllll")
         
                 # getting the shot type
                 type = ShotClassifier(model_type=1).get_shot_class(
@@ -245,7 +243,7 @@ def main():
             j = i
             while(1):
                 output_video_shots_1.append(shots[j])
-                if logo_count == 0 and (shots[j].type == "wide" or j == 0):
+                if logo_count == 0 and (shots[j].type == "wide" or j == 0 or shots[j].type == "logo"):
                     break
 
                 if shots[j].type == "logo":

@@ -55,6 +55,20 @@ class ShotClassifier:
                 total_majority = f'logo+{total_majority}'
             if end_majority == 'logo':
                 total_majority = f'{total_majority}+logo'
+            if begin_majority == "logo" and end_majority == "logo":
+                total_majority = total_majority[4:]
             return total_majority
         else:
             return 'logo'
+'''
+im1 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame2970.jpg")
+im2 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame2975.jpg")
+
+im3 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame2980.jpg")
+
+im4 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame2985.jpg")
+
+frames = [im1,im2,im3,im4]
+
+print(ShotClassifier(model_type=1).get_shot_class(frames))
+'''
