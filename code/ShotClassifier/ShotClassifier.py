@@ -30,21 +30,24 @@ class ShotClassifier:
 
     def __get_majority(self, frames):
         histogram = {}
-        for frame_type in self.__classes:
-            histogram[frame_type] = 0
         for frame in frames:
             frame_class = self.__get_image_class(frame)
-            histogram[frame_class] += 1
+            if histogram.get(frame_class):
+                histogram[frame_class] += 1
+            else:
+                histogram[frame_class] = 1
         max_type = ''
         max_type_freq = 0
         for key, val in histogram.items():
+            if val == max_type_freq and max_type == 'logo':
+                continue
             if val >= max_type_freq:
                 max_type_freq = val
                 max_type = key
         return max_type
 
+
     def get_shot_class(self, frames):
-        
         total_majority = self.__get_majority(frames)
         if len(frames) < 20:
             return total_majority
