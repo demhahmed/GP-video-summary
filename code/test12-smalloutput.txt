@@ -1,0 +1,17 @@
+frame_number: 315| time: 0.1| type: wide| goal: False| goal_mouth: False| high_volume: False
+frame_number: 355| time: 0.12| type: logo| goal: False| goal_mouth: False| high_volume: False
+frame_number: 1570| time: 0.52| type: wide| goal: False| goal_mouth: False| high_volume: True
+frame_number: 1655| time: 0.55| type: medium| goal: False| goal_mouth: False| high_volume: False
+frame_number: 1675| time: 0.56| type: close| goal: False| goal_mouth: False| high_volume: False
+frame_number: 1720| time: 0.57| type: close| goal: False| goal_mouth: False| high_volume: False
+frame_number: 1745| time: 0.58| type: logo| goal: False| goal_mouth: False| high_volume: False
+frame_number: 2800| time: 0.93| type: wide| goal: False| goal_mouth: True| high_volume: False
+frame_number: 2835| time: 0.95| type: logo| goal: False| goal_mouth: False| high_volume: False
+frame_number: 3225| time: 1.07| type: wide| goal: False| goal_mouth: True| high_volume: False
+frame_number: 3245| time: 1.08| type: wide| goal: False| goal_mouth: True| high_volume: False
+frame_number: 3265| time: 1.09| type: wide| goal: True| goal_mouth: True| high_volume: False
+frame_number: 3285| time: 1.09| type: wide| goal: False| goal_mouth: True| high_volume: False
+frame_number: 3305| time: 1.1| type: medium| goal: False| goal_mouth: False| high_volume: False
+frame_number: 3325| time: 1.11| type: close-out| goal: False| goal_mouth: False| high_volume: False
+frame_number: 3345| time: 1.11| type: close-out| goal: False| goal_mouth: False| high_volume: False
+frame_number: 3405| time: 1.14| type: wide| goal: False| goal_mouth: False| high_volume: False
