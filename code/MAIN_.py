@@ -1,4 +1,3 @@
-
 from GoalMouth.goalpostv4 import goalMouth
 import math
 from os.path import dirname, realpath, join
@@ -36,10 +35,12 @@ class shot:
 
 
 def main():
-    t1 = time.time()
+
     # declarations #################################
+
     vidoe_name = "Arsenal-Chelsea 1 pt2"
     VIDEO_PATH = 'C:/Users\\medo\\Desktop\\match_test\\'+vidoe_name+'.mp4'
+
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
         print('err reading video')
@@ -52,6 +53,7 @@ def main():
     mouth, out = False, False
     type = ''                                                       # type of shot
     # main loop ##################################
+    t1 = time.time()
     while(1):  # main loop
         # append frames from after last cut
         count = 0
@@ -240,10 +242,7 @@ def main():
                 break
 
     ############################ print shots info into a file #############################
-    f = open(vidoe_name+"output.txt", "w")
-    f.write("Video Shots: " + len(shots)+"\n\n")
-    for i in range(len(shots)):
-        f.write(str(shots[i]))
+
     ############################# processing output shots #################################
     # main shots depending on replay
     output_video_shots_1, output_video_shots_2 = [], []
@@ -270,9 +269,6 @@ def main():
 
     output_video_shots_1.sort(key=lambda x: x.frame_number)
     output_video_shots_2.sort(key=lambda x: x.frame_number)
-    f.write("\nno. of shots come from audio: " +
-            str(len(output_video_shots_2)) + "\n\n")
-    f.write(str(output_video_shots_2))
     output_video_shots = output_video_shots_1 + output_video_shots_2
     output_video_shots.sort(key=lambda x: x.frame_number)
     final_video = []
@@ -322,8 +318,9 @@ def main():
             "%H:%M:%S", time.gmtime(output_video_shots[i].shot_end))
     output_video_shots.sort(key=lambda x: x.frame_number)
     shots_classes.sort(key=operator.itemgetter(0))
-    f.write("\n\nImportant Events: \n\n")
-    f.write(str(output_video_shots))
+
+    t2 = time.time()
+
     GOAL_count, ATTACK_count, OTHER_count = 0, 0, 0
 
     for shot_class in shots_classes:
@@ -333,12 +330,24 @@ def main():
             ATTACK_count += 1
         if shot_class[3] == "OTHER":
             OTHER_count += 1
+
+    ################################# write outputs to file ##################################
+    f = open(vidoe_name+"output.txt", "w")
+    f.write("Video Shots: "+str(len(shots))+"\n\n")
+    for i in range(len(shots)):
+        f.write(str(shots[i]))
+
+    f.write("\nno. of shots come from audio: " +
+            str(len(output_video_shots_2)) + "\n\n")
+    f.write(str(output_video_shots_2))
+    f.write("\n\nImportant Events: \n\n")
+    f.write(str(output_video_shots))
     f.write("\n\nGOALS: "+str(GOAL_count) + "| "+"ATTACKS: " +
             str(ATTACK_count)+"| "+"OTHER: "+str(OTHER_count))
-    t2 = time.time()
+
     f.write('\n\n' + "running time: " + str(t2-t1))
     f.close()
-    return
+
     '''
     ################################## rendering video  ######################################
 

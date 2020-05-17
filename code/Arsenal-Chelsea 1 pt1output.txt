@@ -1,4 +1,4 @@
-Video Shots 88: 
+Video Shots: 88
 
 frame_number: 2405| shot_start: 0.0| shot_end: 48.2| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 2470| shot_start: 48.3| shot_end: 49.5| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
@@ -12,67 +12,67 @@ frame_number: 4645| shot_start: 92.5| shot_end: 93.0| shot_type: wide| has_goal:
 frame_number: 4980| shot_start: 93.1| shot_end: 99.7| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 5790| shot_start: 99.8| shot_end: 115.9| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
 frame_number: 5910| shot_start: 116.0| shot_end: 118.3| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 8640| shot_start: 118.4| shot_end: 172.9| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
+frame_number: 8640| shot_start: 00:01:58| shot_end: 00:02:52| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
 frame_number: 8685| shot_start: 173.0| shot_end: 173.7| shot_type: medium| has_goal: False| has_goal_mouth: True| has_high_volume: False
-frame_number: 9035| shot_start: 173.9| shot_end: 180.8| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
-frame_number: 9165| shot_start: 180.9| shot_end: 183.4| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 9340| shot_start: 183.5| shot_end: 186.9| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 9380| shot_start: 187.0| shot_end: 187.7| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 9425| shot_start: 187.8| shot_end: 188.5| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 9450| shot_start: 188.7| shot_end: 189.1| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 9495| shot_start: 189.2| shot_end: 190.0| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 9745| shot_start: 190.1| shot_end: 195.0| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 9780| shot_start: 195.1| shot_end: 195.7| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 9820| shot_start: 195.8| shot_end: 196.5| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 9035| shot_start: 00:02:53| shot_end: 00:03:00| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
+frame_number: 9165| shot_start: 00:03:00| shot_end: 00:03:03| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 9340| shot_start: 00:03:03| shot_end: 00:03:06| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 9380| shot_start: 00:03:07| shot_end: 00:03:07| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 9425| shot_start: 00:03:07| shot_end: 00:03:08| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 9450| shot_start: 00:03:08| shot_end: 00:03:09| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 9495| shot_start: 00:03:09| shot_end: 00:03:10| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 9745| shot_start: 00:03:10| shot_end: 00:03:15| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 9780| shot_start: 00:03:15| shot_end: 00:03:15| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 9820| shot_start: 00:03:15| shot_end: 00:03:16| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 9950| shot_start: 196.5| shot_end: 199.1| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 10320| shot_start: 199.2| shot_end: 206.5| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 13820| shot_start: 206.6| shot_end: 276.5| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: True
+frame_number: 13820| shot_start: 00:03:26| shot_end: 00:04:36| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: True
 frame_number: 14005| shot_start: 276.6| shot_end: 280.2| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 14110| shot_start: 280.3| shot_end: 282.3| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
 frame_number: 14435| shot_start: 282.4| shot_end: 288.8| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 14825| shot_start: 288.9| shot_end: 296.6| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 15230| shot_start: 296.7| shot_end: 304.7| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
 frame_number: 15405| shot_start: 304.8| shot_end: 308.2| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 15615| shot_start: 308.3| shot_end: 312.4| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
-frame_number: 15870| shot_start: 312.5| shot_end: 317.5| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 15910| shot_start: 317.6| shot_end: 318.3| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 16325| shot_start: 318.4| shot_end: 326.6| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 16355| shot_start: 326.7| shot_end: 327.2| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 28965| shot_start: 341.25| shot_end: 379.4| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
+frame_number: 15615| shot_start: 00:05:08| shot_end: 00:05:12| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
+frame_number: 15870| shot_start: 00:05:12| shot_end: 00:05:17| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 15910| shot_start: 00:05:17| shot_end: 00:05:18| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 16325| shot_start: 00:05:18| shot_end: 00:05:26| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 16355| shot_start: 00:05:26| shot_end: 00:05:27| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 28965| shot_start: 00:05:41| shot_end: 00:06:19| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
 frame_number: 18995| shot_start: 379.5| shot_end: 380.0| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 19070| shot_start: 380.1| shot_end: 381.5| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 20525| shot_start: 381.6| shot_end: 410.6| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
+frame_number: 20525| shot_start: 00:06:21| shot_end: 00:06:50| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
 frame_number: 20660| shot_start: 410.7| shot_end: 413.3| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 21230| shot_start: 413.4| shot_end: 424.7| shot_type: close-out| has_goal: False| has_goal_mouth: False| has_high_volume: True
-frame_number: 22550| shot_start: 424.8| shot_end: 451.1| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: True
-frame_number: 22650| shot_start: 451.2| shot_end: 453.1| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 22870| shot_start: 453.2| shot_end: 457.5| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 22910| shot_start: 457.6| shot_end: 458.3| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 23260| shot_start: 458.4| shot_end: 465.3| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 23295| shot_start: 465.4| shot_end: 466.0| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 21230| shot_start: 00:06:53| shot_end: 00:07:04| shot_type: close-out| has_goal: False| has_goal_mouth: False| has_high_volume: True
+frame_number: 22550| shot_start: 00:07:04| shot_end: 00:07:31| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: True
+frame_number: 22650| shot_start: 00:07:31| shot_end: 00:07:33| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 22870| shot_start: 00:07:33| shot_end: 00:07:37| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 22910| shot_start: 00:07:37| shot_end: 00:07:38| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 23260| shot_start: 00:07:38| shot_end: 00:07:45| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 23295| shot_start: 00:07:45| shot_end: 00:07:46| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 23530| shot_start: 466.1| shot_end: 470.7| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 23700| shot_start: 470.8| shot_end: 474.1| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
 frame_number: 23950| shot_start: 474.2| shot_end: 487.5| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 24085| shot_start: 487.6| shot_end: 490.2| shot_type: close-out| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 24105| shot_start: 490.3| shot_end: 490.6| shot_type: close-out| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 24385| shot_start: 490.7| shot_end: 496.2| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 24945| shot_start: 496.3| shot_end: 507.4| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
-frame_number: 25110| shot_start: 507.5| shot_end: 510.7| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 25150| shot_start: 510.8| shot_end: 511.5| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 25370| shot_start: 511.6| shot_end: 515.9| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 25410| shot_start: 516.0| shot_end: 516.7| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 24945| shot_start: 00:08:16| shot_end: 00:08:27| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
+frame_number: 25110| shot_start: 00:08:27| shot_end: 00:08:30| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 25150| shot_start: 00:08:30| shot_end: 00:08:31| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 25370| shot_start: 00:08:31| shot_end: 00:08:35| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 25410| shot_start: 00:08:36| shot_end: 00:08:36| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 25520| shot_start: 516.8| shot_end: 518.9| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 26345| shot_start: 519.0| shot_end: 535.4| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
 frame_number: 26875| shot_start: 535.5| shot_end: 546.0| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 28615| shot_start: 546.1| shot_end: 589.2| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 28740| shot_start: 589.3| shot_end: 591.7| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 28910| shot_start: 591.7| shot_end: 595.1| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 29190| shot_start: 595.1| shot_end: 600.7| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 29230| shot_start: 600.8| shot_end: 601.5| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 29270| shot_start: 601.6| shot_end: 602.3| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 29505| shot_start: 602.4| shot_end: 606.9| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 29820| shot_start: 607.1| shot_end: 613.3| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
-frame_number: 29860| shot_start: 613.4| shot_end: 614.1| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 28910| shot_start: 00:09:51| shot_end: 00:09:55| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 29190| shot_start: 00:09:55| shot_end: 00:10:00| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 29230| shot_start: 00:10:00| shot_end: 00:10:01| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 29270| shot_start: 00:10:01| shot_end: 00:10:02| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 29505| shot_start: 00:10:02| shot_end: 00:10:06| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 29820| shot_start: 00:10:07| shot_end: 00:10:13| shot_type: medium| has_goal: False| has_goal_mouth: False| has_high_volume: False
+frame_number: 29860| shot_start: 00:10:13| shot_end: 00:10:14| shot_type: logo| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 30235| shot_start: 614.1| shot_end: 621.6| shot_type: close| has_goal: False| has_goal_mouth: False| has_high_volume: False
 frame_number: 30390| shot_start: 621.7| shot_end: 624.7| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: False
 frame_number: 30800| shot_start: 624.8| shot_end: 632.9| shot_type: medium| has_goal: False| has_goal_mouth: True| has_high_volume: False
@@ -91,11 +91,11 @@ frame_number: 33660| shot_start: 697.5| shot_end: 698.5| shot_type: wide| has_go
 
 no. of shots come from audio: 5
 
-[frame_number: 8640| shot_start: 118.4| shot_end: 172.9| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
-, frame_number: 13820| shot_start: 206.6| shot_end: 276.5| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: True
-, frame_number: 20525| shot_start: 381.6| shot_end: 410.6| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
-, frame_number: 21230| shot_start: 413.4| shot_end: 424.7| shot_type: close-out| has_goal: False| has_goal_mouth: False| has_high_volume: True
-, frame_number: 28965| shot_start: 341.25| shot_end: 379.4| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
+[frame_number: 8640| shot_start: 00:01:58| shot_end: 00:02:52| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
+, frame_number: 13820| shot_start: 00:03:26| shot_end: 00:04:36| shot_type: wide| has_goal: False| has_goal_mouth: True| has_high_volume: True
+, frame_number: 20525| shot_start: 00:06:21| shot_end: 00:06:50| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
+, frame_number: 21230| shot_start: 00:06:53| shot_end: 00:07:04| shot_type: close-out| has_goal: False| has_goal_mouth: False| has_high_volume: True
+, frame_number: 28965| shot_start: 00:05:41| shot_end: 00:06:19| shot_type: wide| has_goal: False| has_goal_mouth: False| has_high_volume: True
 ]
 
 Important Events: 
@@ -142,4 +142,4 @@ Important Events:
 
 GOALS: 0| ATTACKS: 5| OTHER: 5
 
-running time: 724.7942750453949
+running time: 789.8455653190613
