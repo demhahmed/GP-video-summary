@@ -1,32 +1,19 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const userSchema = new mongoose.Schema(
-  {
-    googleId: {
-      type: String,
-      trim: true,
-      lowercase: true,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    image: {
-      type: String,
-      required: true,
-    },
-    type: {
-      type: String,
-      lowercase: true,
-      default: "noraml",
-    },
-  }, { timestamps: true }
-);
+const userSchema = new Schema({
+  googleId: {
+    type: String,
+  },
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
+  },
+  password: {
+    type: String,
+    minlength: 8,
+  },
+});
 
-userSchema.methods.toJSON = function () {
-  return this.toObject();
-};
-
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+mongoose.model("users", userSchema);
