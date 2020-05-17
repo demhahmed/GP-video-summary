@@ -16,7 +16,10 @@ import operator
 import time
 import objgraph
 import gc
+
+
 class shot:
+    _slots_ = ("frame_number", "shot_start", "shot_end", "type", "has_goal", "has_goal_mouth", "audio")
     def __init__(self, frame_number, shot_start, shot_end, type=None, has_goal=None, has_goal_mouth=None, audio=None):
         self.frame_number = frame_number
         self.shot_start = shot_start
@@ -30,8 +33,7 @@ class shot:
         return str(self)
 
     def __str__(self):
-        shot_info = "frame_number: " + str(self.frame_number)+"| "+"shot_start: " + str(self.shot_start)+"| "+"shot_end: " + str(self.shot_end)+"| "+"shot_type: " + str(
-            self.type)+"| "+"has_goal: " + str(self.has_goal)+"| "+"has_goal_mouth: "+str(self.has_goal_mouth)+"| "+"has_high_volume: "+str(self.audio)+"\n"
+        shot_info = “frame_number: {0} | start: {1} | end: {2} | type: {3} | goal: {4} | goal_mouth: {5} | audio: {6}”.format(self.frame_number, self.shot_start, self.shot_end, self.type, self.has_goal, self.has_goal_mouth, self.audio)
         return shot_info
 
 
@@ -39,10 +41,11 @@ def main():
     t1 = time.time()
     # declarations #################################
     vidoe_name = "matchnew12"
-    VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
+    VIDEO_PATH = “{0}{1}{2}”.format('C:/Users\\salama\\Desktop\\', vidoe_name, '.mp4')
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
         print('err reading video')
+        return
     FPS = int(cap.get(cv2.CAP_PROP_FPS))
 
     STEP = 5
@@ -88,10 +91,9 @@ def main():
             frame_number = frame_numbers[i]
             frame_time = frame_times[i]
 
-
             # detecting cut between the current 2 frame
             if (cut_detector(frame1, frame2) and abs(last_cut_frame_number - frame_number) >= 20):
-                
+
                 no_shot_frames = 0
                 skip = 0
                 mouth = False
@@ -104,7 +106,7 @@ def main():
                 frames_to_classify += frames[start:i+1] if no_shot_frames < 20 else frames[start:start+5] + \
                     frames[start + 5: i-4: math.ceil(
                         len(frames[start+5:i-4])/10)] + frames[i - 4:i+1]
-        
+
                 # getting the shot type
                 type = ShotClassifier(model_type=1).get_shot_class(
                     frames_to_classify)
@@ -116,8 +118,8 @@ def main():
 
                 # appending all shot information
                     shots.append(shot(frame_number=frame_numbers[i],
-                                      shot_start = round(frame_times[start],2),
-                                      shot_end= round((frame_times[i]), 2),
+                                      shot_start=round(frame_times[start], 2),
+                                      shot_end=round((frame_times[i]), 2),
                                       type=type,
                                       has_goal=GoalDetector().execute(
                                           frames[int(max(start - 2, 0))], frames[i-2]),
@@ -129,8 +131,10 @@ def main():
                     types = type.split("+")
                     if types[0] == "logo":
                         shots.append(shot(frame_number=last_cut+25+(p*5),
-                                          shot_start = round(frame_times[start],2),
-                                          shot_end= round((((last_cut+25)/FPS)), 2),
+                                          shot_start=round(
+                                              frame_times[start], 2),
+                                          shot_end=round(
+                                              (((last_cut+25)/FPS)), 2),
                                           type="logo",
                                           has_goal=False,
                                           has_goal_mouth=False,
@@ -140,7 +144,8 @@ def main():
                             mouth = goalMouth(frames[i-20:i], types[1])
 
                         shots.append(shot(frame_number=frame_number+(p*5),
-                                          shot_start=round(((last_cut+25)/FPS), 2),
+                                          shot_start=round(
+                                              ((last_cut+25)/FPS), 2),
                                           shot_end=round((frame_times[i]), 2),
                                           type=types[1],
                                           has_goal=False,
@@ -153,15 +158,18 @@ def main():
                             mouth = goalMouth(frames[i-25:i-5], types[0])
 
                         shots.append(shot(frame_number=frame_number-25+(p*5),
-                                          shot_start = round(frame_times[start],2),
-                                          shot_end=round(((frame_time-(25/FPS))), 2),
+                                          shot_start=round(
+                                              frame_times[start], 2),
+                                          shot_end=round(
+                                              ((frame_time-(25/FPS))), 2),
                                           type=types[0],
                                           has_goal=False,
                                           has_goal_mouth=mouth,
                                           audio=False))
 
                         shots.append(shot(frame_number=frame_number+(p*5),
-                                          shot_start=round(((frame_time-(25/FPS))), 2),
+                                          shot_start=round(
+                                              ((frame_time-(25/FPS))), 2),
                                           shot_end=round((frame_time), 2),
                                           type="logo",
                                           has_goal=False,
@@ -171,7 +179,7 @@ def main():
 
                 last_cut = frame_number
                 start = i+1
-        
+
         patch += 1
 
         if out:
@@ -182,13 +190,12 @@ def main():
         frame_numbers = frame_numbers[start:]
         gc.collect()
 
-
     type = ShotClassifier(model_type=1).get_shot_class(
         frames[::int(len(frames)/10)])
     # appending last shot in video
     shots.append(shot(frame_number=frame_numbers[-1],
-                      shot_start = round(frame_times[start],2),
-                      shot_end= round((frame_times[-1]), 2),
+                      shot_start=round(frame_times[start], 2),
+                      shot_end=round((frame_times[-1]), 2),
                       type=type,
                       has_goal=GoalDetector().execute(
         frames[start-3], frames[start+3]),
@@ -236,7 +243,6 @@ def main():
                                 shots[i].type, shots[i].has_goal, shots[i].has_goal_mouth, True)
                 break
 
-   
     ############################# processing output shots #################################
     # main shots depending on replay
     output_video_shots_1, output_video_shots_2 = [], []
@@ -253,7 +259,7 @@ def main():
                     if output_video_shots_1[-1].type == "logo":
                         output_video_shots_1.pop(-1)
                     break
-                
+
                 if shots[j].type == "logo":
                     logo_count -= 1
 
@@ -269,11 +275,9 @@ def main():
     output_video_shots.sort(key=lambda x: x.frame_number)
     final_video = []
     for i in range(len(output_video_shots)):
-        final_video.append((output_video_shots[i].shot_start,output_video_shots[i].shot_end))
+        final_video.append(
+            (output_video_shots[i].shot_start, output_video_shots[i].shot_end))
 
-
-
-    
     ################################## classifying shots Sequence #####################################
     shots_classes = []
     goal_detected, goal_post, logo_count = 0, 0, 0
@@ -289,60 +293,61 @@ def main():
         if logo_count == 2:
             if goal_detected == 1:
                 shots_classes.append((output_video_shots_1[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_start)),
-                time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_end)), "GOAL"))
+                                      time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_end)), "GOAL"))
             elif goal_post == 1:
                 shots_classes.append((output_video_shots_1[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_start)),
-                time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_end)), "ATTACK"))
+                                      time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_end)), "ATTACK"))
             else:
                 shots_classes.append((output_video_shots_1[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_start)),
-                time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_end)), "OTHER"))
-            
-            goal_detected, goal_post, logo_count = 0, 0, 0 
+                                      time.strftime("%H:%M:%S", time.gmtime(output_video_shots_1[i].shot_end)), "OTHER"))
+
+            goal_detected, goal_post, logo_count = 0, 0, 0
 
     for i in range(len(output_video_shots_2)):
-        if output_video_shots_2[i].has_goal_mouth: 
+        if output_video_shots_2[i].has_goal_mouth:
             shots_classes.append((output_video_shots_2[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_2[i].shot_start)),
-            time.strftime("%H:%M:%S", time.gmtime(output_video_shots_2[i].shot_end)), "ATTACK"))
+                                  time.strftime("%H:%M:%S", time.gmtime(output_video_shots_2[i].shot_end)), "ATTACK"))
         else:
             shots_classes.append((output_video_shots_2[i].frame_number, time.strftime("%H:%M:%S", time.gmtime(output_video_shots_2[i].shot_start)),
-            time.strftime("%H:%M:%S", time.gmtime(output_video_shots_2[i].shot_end)), "OTHER"))
+                                  time.strftime("%H:%M:%S", time.gmtime(output_video_shots_2[i].shot_end)), "OTHER"))
 
     output_video_shots = output_video_shots_1 + output_video_shots_2
 
     for i in range(len(output_video_shots)):
-        output_video_shots[i].shot_start = time.strftime("%H:%M:%S", time.gmtime(output_video_shots[i].shot_start))
-        output_video_shots[i].shot_end = time.strftime("%H:%M:%S", time.gmtime(output_video_shots[i].shot_end))
+        output_video_shots[i].shot_start = time.strftime(
+            "%H:%M:%S", time.gmtime(output_video_shots[i].shot_start))
+        output_video_shots[i].shot_end = time.strftime(
+            "%H:%M:%S", time.gmtime(output_video_shots[i].shot_end))
     output_video_shots.sort(key=lambda x: x.frame_number)
     shots_classes.sort(key=operator.itemgetter(0))
-
-
-    
     objgraph.show_most_common_types()
     t2 = time.time()
 
-    GOAL_count, ATTACK_count, OTHER_count = 0,0,0
+    GOAL_count, ATTACK_count, OTHER_count = 0, 0, 0
 
     for shot_class in shots_classes:
         if shot_class[3] == "GOAL":
-            GOAL_count +=1
+            GOAL_count += 1
         if shot_class[3] == "ATTACK":
-            ATTACK_count +=1
+            ATTACK_count += 1
         if shot_class[3] == "OTHER":
-            OTHER_count +=1
-    
+            OTHER_count += 1
+
     ################################# write outputs to file ##################################
     f = open(vidoe_name+"output.txt", "w")
     f.write("Video Shots: "+str(len(shots))+"\n\n")
     for i in range(len(shots)):
         f.write(str(shots[i]))
-    
-    f.write("\nno. of shots come from audio: "+ str(len(output_video_shots_2))+ "\n\n")
+
+    f.write("\nno. of shots come from audio: " +
+            str(len(output_video_shots_2)) + "\n\n")
     f.write(str(output_video_shots_2))
     f.write("\n\nImportant Events: \n\n")
     f.write(str(output_video_shots))
-    f.write("\n\nGOALS: "+str(GOAL_count)+ "| "+"ATTACKS: "+str(ATTACK_count)+"| "+"OTHER: "+str(OTHER_count))
-    
-    f.write('\n\n'+ "running time: "+ str(t2-t1))
+    f.write("\n\nGOALS: "+str(GOAL_count) + "| "+"ATTACKS: " +
+            str(ATTACK_count)+"| "+"OTHER: "+str(OTHER_count))
+
+    f.write('\n\n' + "running time: " + str(t2-t1))
     f.close()
 
     '''
@@ -357,5 +362,6 @@ def main():
     enablePrint()
     final.to_videofile('soccer_cuts.mp4', fps=24)  # low quality is the default
     '''
+
 
 main()
