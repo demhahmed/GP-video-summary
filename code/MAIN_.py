@@ -37,7 +37,7 @@ class shot:
 def main():
     t1 = time.time()
     # declarations #################################
-    vidoe_name = "test3"
+    vidoe_name = "matchnew11"
     VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
@@ -90,7 +90,7 @@ def main():
 
             # detecting cut between the current 2 frame
             if (cut_detector(frame1, frame2) and abs(last_cut_frame_number - frame_number) >= 20):
-
+                
                 no_shot_frames = 0
                 skip = 0
                 mouth = False
@@ -232,7 +232,6 @@ def main():
                                 shots[i].type, shots[i].has_goal, shots[i].has_goal_mouth, True)
                 break
 
-    ############################ print shots info into a file #############################
    
     ############################# processing output shots #################################
     # main shots depending on replay
@@ -247,8 +246,10 @@ def main():
             while(1):
                 output_video_shots_1.append(shots[j])
                 if logo_count == 0 and (shots[j].type == "wide" or j == 0 or shots[j].type == "logo"):
+                    if output_video_shots_1[-1].type == "logo":
+                        output_video_shots_1.pop(-1)
                     break
-
+                
                 if shots[j].type == "logo":
                     logo_count -= 1
 
@@ -309,6 +310,7 @@ def main():
         output_video_shots[i].shot_end = time.strftime("%H:%M:%S", time.gmtime(output_video_shots[i].shot_end))
     output_video_shots.sort(key=lambda x: x.frame_number)
     shots_classes.sort(key=operator.itemgetter(0))
+
 
 
     t2 = time.time()
