@@ -6,11 +6,10 @@ const router = new express.Router();
 /**
  * This route handles the google authentication using passport oauth2.0
  */
-router.get(
+router.post(
   "/auth/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
-
 
 /**
  * This route handles the google redirectaion from google oauth2.0
@@ -23,6 +22,16 @@ router.get(
   }
 );
 
+/**
+ * This route handles the local authentication.
+ */
+router.post(
+  "/auth/local",
+  passport.authenticate("local"),
+  (req, res) => {
+    res.redirect("/api/current_user");
+  }
+);
 
 /**
  * This route extracts the user from the cookie and return it back to user.
