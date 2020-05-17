@@ -264,6 +264,7 @@ def main():
     output_video_shots_1.sort(key=lambda x: x.frame_number)
     output_video_shots_2.sort(key=lambda x: x.frame_number)
     f.write("\nno. of shots come from audio: "+ str(len(output_video_shots_2))+ "\n\n")
+    f.write(str(output_video_shots_2))
     output_video_shots = output_video_shots_1 + output_video_shots_2
     output_video_shots.sort(key=lambda x: x.frame_number)
     final_video = []
@@ -313,7 +314,7 @@ def main():
         output_video_shots[i].shot_end = time.strftime("%H:%M:%S", time.gmtime(output_video_shots[i].shot_end))
     output_video_shots.sort(key=lambda x: x.frame_number)
     shots_classes.sort(key=operator.itemgetter(0))
-    f.write("Important Events: \n\n")
+    f.write("\n\nImportant Events: \n\n")
     f.write(str(output_video_shots))
     GOAL_count, ATTACK_count, OTHER_count = 0,0,0
 
