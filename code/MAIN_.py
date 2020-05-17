@@ -35,8 +35,9 @@ class shot:
 
 
 def main():
+    t1 = time.time()
     # declarations #################################
-    vidoe_name = "matchnew3"
+    vidoe_name = "matchnew8"
     VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
@@ -233,9 +234,9 @@ def main():
 
     ############################ print shots info into a file #############################
     f = open(vidoe_name+"output.txt", "w")
+    f.write("Video Shots: \n\n")
     for i in range(len(shots)):
         f.write(str(shots[i]))
-    f.close()
     ############################# processing output shots #################################
     # main shots depending on replay
     output_video_shots_1, output_video_shots_2 = [], []
@@ -262,7 +263,7 @@ def main():
 
     output_video_shots_1.sort(key=lambda x: x.frame_number)
     output_video_shots_2.sort(key=lambda x: x.frame_number)
-    print(len(output_video_shots_2))
+    f.write("\nno. of shots come from audio: "+ str(len(output_video_shots_2))+ "\n\n")
     output_video_shots = output_video_shots_1 + output_video_shots_2
     output_video_shots.sort(key=lambda x: x.frame_number)
     final_video = []
@@ -271,7 +272,7 @@ def main():
 
 
 
-    '''
+    
     ################################## classifying shots Sequence #####################################
     shots_classes = []
     goal_detected, goal_post, logo_count = 0, 0, 0
@@ -312,9 +313,21 @@ def main():
         output_video_shots[i].shot_end = time.strftime("%H:%M:%S", time.gmtime(output_video_shots[i].shot_end))
     output_video_shots.sort(key=lambda x: x.frame_number)
     shots_classes.sort(key=operator.itemgetter(0))
+    f.write("Important Events: \n\n")
+    f.write(str(output_video_shots))
+    GOAL_count, ATTACK_count, OTHER_count = 0,0,0
 
-    print(str(output_video_shots))
-    print(shots_classes)
+    for shot_class in shots_classes:
+        if shot_class[3] == "GOAL":
+            GOAL_count +=1
+        if shot_class[3] == "ATTACK":
+            ATTACK_count +=1
+        if shot_class[3] == "OTHER":
+            OTHER_count +=1
+    f.write("\n\nGOALS: "+str(GOAL_count)+ "| "+"ATTACKS: "+str(ATTACK_count)+"| "+"OTHER: "+str(OTHER_count))
+    t2 = time.time()
+    f.write('\n\n'+ "running time: "+ str(t2-t1))
+    f.close()
     return
     '''
     ################################## rendering video  ######################################
@@ -327,6 +340,6 @@ def main():
 
     enablePrint()
     final.to_videofile('soccer_cuts.mp4', fps=24)  # low quality is the default
-
+    '''
 
 main()
