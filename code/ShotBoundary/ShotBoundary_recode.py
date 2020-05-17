@@ -4,19 +4,22 @@ import numpy as np
 def compare_intersect(h1, h2):
     result = 0
     
-    if len(h1) != len(h2):
-        print(False)
-        return
+    assert len(h1) == len(h2)
     
     for j in range(len(h1)):
         result += min(h1[j], h2[j])
     return result
 
 def compare_correlation(h1, h2):
-    if len(h1) != len(h2):
-        print(False)
-        return
-    return np.corrcoef(h1, h2)[0][1]
+
+    assert len(h1) == len(h2)
+
+
+    n = len(h1)
+    cov = (sum((h1 - np.mean(h1)) * (h2 - np.mean(h2)) )) * 1/(n-1)
+    
+    #covariance(X, Y) / (stdv(X) * stdv(Y))
+    return cov / (np.std(h1) * np.std(h2))
     
 
 def histogram_compare(image_1, image_2):
@@ -27,9 +30,7 @@ def histogram_compare(image_1, image_2):
     hist1 = cv2.calcHist([frame1], [0, 1, 2], None, [
                          64, 64, 64], [0, 256, 0, 256, 0, 256])
 
-    #hist, bins = np.histogram(image_1.ravel(), 64, [0,256])
-
-
+    hist, bins = np.histogram(image_1.ravel(), 64, [0,256])
     hist1 = cv2.normalize(hist1, hist1).flatten()
 
     hist2 = cv2.calcHist([frame2], [0, 1, 2], None, [
