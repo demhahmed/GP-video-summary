@@ -14,7 +14,8 @@ import cv2
 import numpy as np
 import operator
 import time
-
+import objgraph
+import gc
 class shot:
     def __init__(self, frame_number, shot_start, shot_end, type=None, has_goal=None, has_goal_mouth=None, audio=None):
         self.frame_number = frame_number
@@ -37,7 +38,7 @@ class shot:
 def main():
     t1 = time.time()
     # declarations #################################
-    vidoe_name = "matchnew11"
+    vidoe_name = "matchnew12"
     VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
@@ -170,6 +171,7 @@ def main():
 
                 last_cut = frame_number
                 start = i+1
+        
         patch += 1
 
         if out:
@@ -178,6 +180,8 @@ def main():
         frames = frames[start:]
         frame_times = frame_times[start:]
         frame_numbers = frame_numbers[start:]
+        gc.collect()
+
 
     type = ShotClassifier(model_type=1).get_shot_class(
         frames[::int(len(frames)/10)])
@@ -312,7 +316,8 @@ def main():
     shots_classes.sort(key=operator.itemgetter(0))
 
 
-
+    
+    objgraph.show_most_common_types()
     t2 = time.time()
 
     GOAL_count, ATTACK_count, OTHER_count = 0,0,0
