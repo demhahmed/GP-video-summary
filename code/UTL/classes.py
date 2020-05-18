@@ -1,7 +1,7 @@
 
 class shot:
-    _slots_ = ("frame_number", "shot_start", "shot_end",
-               "type", "has_goal", "has_goal_mouth", "audio")
+    __slots__ = ("frame_number", "shot_start", "shot_end",
+                 "type", "has_goal", "has_goal_mouth", "audio")
 
     def __init__(self, frame_number, shot_start, shot_end, type=None, has_goal=None, has_goal_mouth=None, audio=None):
         self.frame_number = frame_number
@@ -21,6 +21,7 @@ class shot:
 
 
 class shot_types:
+    __slots__ = ('LOGO', 'WIDE', 'MEDIUM', 'CLOSE', 'CLOSE_OUT')
     def __init__(self)
     self.LOGO = 'logo'
     self.WIDE = 'wide'
@@ -30,6 +31,7 @@ class shot_types:
 
 
 class event_types:
+    __slots__ = ('GOAL', 'ATTACK', 'OTHER')
     def __init__(self)
     self.GOAL = 'goal'
     self.ATTACK = 'attack'
