@@ -114,6 +114,7 @@ def main():
                                       has_goal=goal_detector.execute(
                                           frames[int(max(start - 2, 0))], frames[i-2]),
                                       has_goal_mouth=mouth))
+
                     last_cut_frame_number = frame_numbers[i]
 
                 else:
@@ -190,10 +191,8 @@ def main():
             i -= 1
         i += 1
     # audio processing _________________________________________________
-
     print("Analyzing Audio...")
     peak_times = get_peak_times(VIDEO_PATH, 92)
-    peak_times = [x for x in peak_times]  # 3
 
     # Extracting high volume shots ____________________________________
     cuts = [x.shot_end for x in shots]
@@ -245,15 +244,6 @@ def main():
         if shots[i].audio and shots[i] not in output_video_shots_1:
             output_video_shots_2.append(shots[i])
 
-    output_video_shots_1.sort(key=lambda x: x.frame_number)
-    output_video_shots_2.sort(key=lambda x: x.frame_number)
-    output_video_shots = output_video_shots_1 + output_video_shots_2
-    output_video_shots.sort(key=lambda x: x.frame_number)
-    final_video = []
-    for i in range(len(output_video_shots)):
-        final_video.append(
-            (output_video_shots[i].shot_start, output_video_shots[i].shot_end))
-
     # classifying shots Sequence _____________________________________________
     shots_classes = []
     goal_detected, goal_post, logo_count = 0, 0, 0
@@ -288,13 +278,17 @@ def main():
                                   time.strftime("%H:%M:%S", time.gmtime(output_video_shots_2[i].shot_end)), "OTHER"))
 
     output_video_shots = output_video_shots_1 + output_video_shots_2
+    output_video_shots.sort(key=lambda x: x.frame_number)
+    final_video = []  # final video for render
+    for i in range(len(output_video_shots)):
+        final_video.append(
+            (output_video_shots[i].shot_start, output_video_shots[i].shot_end))
 
     for i in range(len(output_video_shots)):
         output_video_shots[i].shot_start = time.strftime(
             "%H:%M:%S", time.gmtime(output_video_shots[i].shot_start))
         output_video_shots[i].shot_end = time.strftime(
             "%H:%M:%S", time.gmtime(output_video_shots[i].shot_end))
-    output_video_shots.sort(key=lambda x: x.frame_number)
     shots_classes.sort(key=operator.itemgetter(0))
     objgraph.show_most_common_types()
 
