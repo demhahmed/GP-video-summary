@@ -8,6 +8,7 @@ from os.path import dirname, realpath, join
 
 
 class ShotClassifier:
+    __slots__ = ('__classes','__model')
     def __init__(self, model_type=1):
         self.__classes = ['logo', 'medium', 'close-out', 'close', 'wide']
         if model_type == 1:

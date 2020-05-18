@@ -1,0 +1,181 @@
+Video Shots: 105
+
+frame_number: 1660 | start: 00:00:00 | end: 00:00:33 | type: wide | goal: False | goal_mouth: True | audio: False 
+frame_number: 1890 | start: 00:00:33 | end: 00:00:37 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 2085 | start: 00:00:38 | end: 00:00:41 | type: wide | goal: False | goal_mouth: True | audio: False 
+frame_number: 2875 | start: 00:00:41 | end: 00:00:57 | type: wide | goal: False | goal_mouth: True | audio: False 
+frame_number: 2925 | start: 00:00:57 | end: 00:00:58 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 2990 | start: 00:00:58 | end: 00:00:59 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 3355 | start: 00:01:00 | end: 00:01:07 | type: medium | goal: True | goal_mouth: False | audio: False 
+frame_number: 3425 | start: 00:01:07 | end: 00:01:08 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 3745 | start: 00:01:08 | end: 00:01:15 | type: close-out | goal: False | goal_mouth: False | audio: False 
+frame_number: 3785 | start: 00:01:15 | end: 00:01:15 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 4525 | start: 00:01:15 | end: 00:01:30 | type: wide | goal: False | goal_mouth: False | audio: True 
+frame_number: 4795 | start: 00:01:30 | end: 00:01:36 | type: wide | goal: False | goal_mouth: True | audio: False 
+frame_number: 4855 | start: 00:01:36 | end: 00:01:37 | type: medium | goal: False | goal_mouth: False | audio: False 
+frame_number: 5250 | start: 00:01:37 | end: 00:01:45 | type: close-out | goal: False | goal_mouth: False | audio: False 
+frame_number: 5705 | start: 00:01:45 | end: 00:01:54 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 5750 | start: 00:01:54 | end: 00:01:55 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 6075 | start: 00:01:55 | end: 00:02:01 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 6265 | start: 00:02:01 | end: 00:02:05 | type: close-out | goal: False | goal_mouth: False | audio: False 
+frame_number: 8735 | start: 00:02:05 | end: 00:02:54 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 8855 | start: 00:02:54 | end: 00:02:57 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 8875 | start: 00:02:57 | end: 00:02:57 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 9045 | start: 00:02:57 | end: 00:03:01 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 9165 | start: 00:03:01 | end: 00:03:03 | type: medium | goal: False | goal_mouth: False | audio: False 
+frame_number: 9410 | start: 00:03:03 | end: 00:03:08 | type: medium | goal: False | goal_mouth: False | audio: False 
+frame_number: 9455 | start: 00:03:08 | end: 00:03:09 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 9770 | start: 00:03:09 | end: 00:03:15 | type: medium | goal: False | goal_mouth: True | audio: False 
+frame_number: 9805 | start: 00:03:15 | end: 00:03:16 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 12955 | start: 00:03:16 | end: 00:04:19 | type: wide | goal: False | goal_mouth: False | audio: True 
+frame_number: 13000 | start: 00:04:19 | end: 00:04:20 | type: medium | goal: False | goal_mouth: False | audio: False 
+frame_number: 15895 | start: 00:04:28 | end: 00:05:34 | type: wide | goal: True | goal_mouth: False | audio: True 
+frame_number: 16350 | start: 00:05:34 | end: 00:05:43 | type: wide | goal: True | goal_mouth: True | audio: False 
+frame_number: 16460 | start: 00:05:43 | end: 00:05:46 | type: close | goal: False | goal_mouth: False | audio: True 
+frame_number: 16480 | start: 00:05:46 | end: 00:05:46 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 16630 | start: 00:05:46 | end: 00:05:49 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 16660 | start: 00:05:49 | end: 00:05:50 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 16680 | start: 00:05:50 | end: 00:05:50 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 17215 | start: 00:05:50 | end: 00:06:01 | type: wide | goal: False | goal_mouth: True | audio: False 
+frame_number: 17610 | start: 00:06:01 | end: 00:06:09 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 18140 | start: 00:06:09 | end: 00:06:19 | type: medium | goal: False | goal_mouth: False | audio: False 
+frame_number: 18170 | start: 00:06:19 | end: 00:06:20 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 18560 | start: 00:06:20 | end: 00:06:28 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 18715 | start: 00:06:28 | end: 00:06:31 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 20410 | start: 00:06:31 | end: 00:07:05 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 20690 | start: 00:07:05 | end: 00:07:10 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 21735 | start: 00:07:10 | end: 00:07:31 | type: wide | goal: False | goal_mouth: False | audio: True 
+frame_number: 22520 | start: 00:07:31 | end: 00:07:47 | type: medium | goal: False | goal_mouth: True | audio: True 
+frame_number: 43015 | start: 00:07:47 | end: 00:07:57 | type: medium | goal: False | goal_mouth: False | audio: True 
+frame_number: 43040 | start: 00:07:57 | end: 00:07:57 | type: <member 'LOGO' of 'SHOT_TYPES' objects> | goal: False | goal_mouth: False | audio: False 
+frame_number: 23045 | start: 00:07:57 | end: 00:07:57 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 23475 | start: 00:07:57 | end: 00:08:06 | type: medium | goal: False | goal_mouth: False | audio: True 
+frame_number: 23515 | start: 00:08:06 | end: 00:08:07 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 23695 | start: 00:08:07 | end: 00:08:10 | type: medium | goal: False | goal_mouth: False | audio: False 
+frame_number: 44260 | start: 00:08:10 | end: 00:08:21 | type: close-out | goal: False | goal_mouth: False | audio: True 
+frame_number: 44285 | start: 00:08:21 | end: 00:08:22 | type: <member 'LOGO' of 'SHOT_TYPES' objects> | goal: False | goal_mouth: False | audio: False 
+frame_number: 25545 | start: 502.6 | end: 527.7 | type: medium | goal: False | goal_mouth: False | audio: False 
+frame_number: 25585 | start: 527.8 | end: 528.5 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 25775 | start: 528.6 | end: 532.3 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 26085 | start: 532.4 | end: 538.5 | type: close-out | goal: False | goal_mouth: False | audio: False 
+frame_number: 26505 | start: 538.6 | end: 546.9 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 26775 | start: 00:09:07 | end: 00:09:12 | type: close-out | goal: False | goal_mouth: False | audio: True 
+frame_number: 27140 | start: 552.4 | end: 559.6 | type: close-out | goal: False | goal_mouth: False | audio: False 
+frame_number: 27180 | start: 559.7 | end: 560.4 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 27315 | start: 560.5 | end: 563.1 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 27510 | start: 563.2 | end: 567.0 | type: medium | goal: False | goal_mouth: True | audio: False 
+frame_number: 29595 | start: 00:09:27 | end: 00:10:08 | type: close | goal: False | goal_mouth: False | audio: True 
+frame_number: 30115 | start: 608.8 | end: 619.1 | type: medium | goal: False | goal_mouth: False | audio: False 
+frame_number: 30955 | start: 619.2 | end: 635.9 | type: close-out | goal: False | goal_mouth: False | audio: False 
+frame_number: 31180 | start: 636.0 | end: 640.4 | type: close-out | goal: False | goal_mouth: False | audio: False 
+frame_number: 33115 | start: 640.5 | end: 679.1 | type: medium | goal: False | goal_mouth: False | audio: False 
+frame_number: 33730 | start: 679.2 | end: 691.4 | type: medium | goal: True | goal_mouth: False | audio: False 
+frame_number: 34030 | start: 00:11:31 | end: 00:11:37 | type: close | goal: True | goal_mouth: False | audio: True 
+frame_number: 34730 | start: 697.5 | end: 719.8 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 34750 | start: 719.9 | end: 720.2 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 34775 | start: 720.3 | end: 720.7 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 34795 | start: 720.8 | end: 721.1 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 34840 | start: 721.2 | end: 722.0 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 35965 | start: 722.1 | end: 744.8 | type: wide | goal: False | goal_mouth: True | audio: False 
+frame_number: 36125 | start: 744.9 | end: 748.0 | type: close-out | goal: False | goal_mouth: False | audio: False 
+frame_number: 36485 | start: 748.1 | end: 755.2 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 36955 | start: 755.3 | end: 764.6 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 37095 | start: 764.8 | end: 767.5 | type: wide | goal: False | goal_mouth: True | audio: False 
+frame_number: 37120 | start: 767.6 | end: 768.0 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 37330 | start: 768.1 | end: 772.2 | type: close | goal: False | goal_mouth: False | audio: False 
+frame_number: 37370 | start: 772.3 | end: 773.0 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 37845 | start: 00:12:53 | end: 00:13:02 | type: wide | goal: False | goal_mouth: True | audio: True 
+frame_number: 37885 | start: 782.5 | end: 783.3 | type: logo | goal: False | goal_mouth: False | audio: False 
+frame_number: 39010 | start: 783.4 | end: 805.8 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 39115 | start: 805.9 | end: 807.9 | type: medium | goal: False | goal_mouth: False | audio: False 
+frame_number: 39620 | start: 808.0 | end: 818.0 | type: close-out | goal: False | goal_mouth: False | audio: False 
+frame_number: 40120 | start: 818.1 | end: 828.0 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 40810 | start: 828.1 | end: 841.8 | type: medium | goal: False | goal_mouth: True | audio: False 
+frame_number: 41135 | start: 841.9 | end: 848.3 | type: medium | goal: False | goal_mouth: True | audio: False 
+frame_number: 41315 | start: 848.4 | end: 851.9 | type: medium | goal: False | goal_mouth: True | audio: False 
+frame_number: 41495 | start: 852.0 | end: 855.5 | type: medium | goal: False | goal_mouth: True | audio: False 
+frame_number: 41675 | start: 855.6 | end: 859.1 | type: medium | goal: False | goal_mouth: True | audio: False 
+frame_number: 41700 | start: 859.2 | end: 859.6 | type: medium | goal: False | goal_mouth: True | audio: False 
+frame_number: 42330 | start: 859.7 | end: 872.2 | type: close-out | goal: False | goal_mouth: False | audio: False 
+frame_number: 42630 | start: 872.3 | end: 878.2 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 42660 | start: 878.3 | end: 878.8 | type: wide | goal: False | goal_mouth: False | audio: False 
+frame_number: 42680 | start: 878.9 | end: 879.2 | type: wide | goal: True | goal_mouth: False | audio: False 
+frame_number: 42700 | start: 879.3 | end: 879.6 | type: medium | goal: False | goal_mouth: True | audio: False 
+frame_number: 42720 | start: 879.7 | end: 880.0 | type: medium | goal: False | goal_mouth: True | audio: False 
+frame_number: 42740 | start: 880.1 | end: 880.4 | type: close-out | goal: False | goal_mouth: True | audio: False 
+frame_number: 42760 | start: 880.5 | end: 880.8 | type: close-out | goal: False | goal_mouth: True | audio: False 
+frame_number: 42815 | start: 880.9 | end: 881.9 | type: wide | goal: False | goal_mouth: False | audio: False 
+
+no. of shots come from audio: 4 
+
+[frame_number: 26775 | start: 00:09:07 | end: 00:09:12 | type: close-out | goal: False | goal_mouth: False | audio: True 
+, frame_number: 29595 | start: 00:09:27 | end: 00:10:08 | type: close | goal: False | goal_mouth: False | audio: True 
+, frame_number: 34030 | start: 00:11:31 | end: 00:11:37 | type: close | goal: True | goal_mouth: False | audio: True 
+, frame_number: 37845 | start: 00:12:53 | end: 00:13:02 | type: wide | goal: False | goal_mouth: True | audio: True 
+]
+
+Important Events: 58
+
+[frame_number: 1660 | start: 00:00:00 | end: 00:00:33 | type: wide | goal: False | goal_mouth: True | audio: False 
+, frame_number: 1890 | start: 00:00:33 | end: 00:00:37 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 2085 | start: 00:00:38 | end: 00:00:41 | type: wide | goal: False | goal_mouth: True | audio: False 
+, frame_number: 2875 | start: 00:00:41 | end: 00:00:57 | type: wide | goal: False | goal_mouth: True | audio: False 
+, frame_number: 2925 | start: 00:00:57 | end: 00:00:58 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 2990 | start: 00:00:58 | end: 00:00:59 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 3355 | start: 00:01:00 | end: 00:01:07 | type: medium | goal: True | goal_mouth: False | audio: False 
+, frame_number: 3425 | start: 00:01:07 | end: 00:01:08 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 3745 | start: 00:01:08 | end: 00:01:15 | type: close-out | goal: False | goal_mouth: False | audio: False 
+, frame_number: 3785 | start: 00:01:15 | end: 00:01:15 | type: logo | goal: False | goal_mouth: False | audio: False 
+, frame_number: 4525 | start: 00:01:15 | end: 00:01:30 | type: wide | goal: False | goal_mouth: False | audio: True 
+, frame_number: 4795 | start: 00:01:30 | end: 00:01:36 | type: wide | goal: False | goal_mouth: True | audio: False 
+, frame_number: 4855 | start: 00:01:36 | end: 00:01:37 | type: medium | goal: False | goal_mouth: False | audio: False 
+, frame_number: 5250 | start: 00:01:37 | end: 00:01:45 | type: close-out | goal: False | goal_mouth: False | audio: False 
+, frame_number: 5705 | start: 00:01:45 | end: 00:01:54 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 5750 | start: 00:01:54 | end: 00:01:55 | type: logo | goal: False | goal_mouth: False | audio: False 
+, frame_number: 6075 | start: 00:01:55 | end: 00:02:01 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 6265 | start: 00:02:01 | end: 00:02:05 | type: close-out | goal: False | goal_mouth: False | audio: False 
+, frame_number: 8735 | start: 00:02:05 | end: 00:02:54 | type: wide | goal: False | goal_mouth: False | audio: False 
+, frame_number: 8855 | start: 00:02:54 | end: 00:02:57 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 8875 | start: 00:02:57 | end: 00:02:57 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 9045 | start: 00:02:57 | end: 00:03:01 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 9165 | start: 00:03:01 | end: 00:03:03 | type: medium | goal: False | goal_mouth: False | audio: False 
+, frame_number: 9410 | start: 00:03:03 | end: 00:03:08 | type: medium | goal: False | goal_mouth: False | audio: False 
+, frame_number: 9455 | start: 00:03:08 | end: 00:03:09 | type: logo | goal: False | goal_mouth: False | audio: False 
+, frame_number: 9770 | start: 00:03:09 | end: 00:03:15 | type: medium | goal: False | goal_mouth: True | audio: False 
+, frame_number: 9805 | start: 00:03:15 | end: 00:03:16 | type: logo | goal: False | goal_mouth: False | audio: False 
+, frame_number: 12955 | start: 00:03:16 | end: 00:04:19 | type: wide | goal: False | goal_mouth: False | audio: True 
+, frame_number: 13000 | start: 00:04:19 | end: 00:04:20 | type: medium | goal: False | goal_mouth: False | audio: False 
+, frame_number: 15895 | start: 00:04:28 | end: 00:05:34 | type: wide | goal: True | goal_mouth: False | audio: True 
+, frame_number: 16350 | start: 00:05:34 | end: 00:05:43 | type: wide | goal: True | goal_mouth: True | audio: False 
+, frame_number: 16460 | start: 00:05:43 | end: 00:05:46 | type: close | goal: False | goal_mouth: False | audio: True 
+, frame_number: 16480 | start: 00:05:46 | end: 00:05:46 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 16630 | start: 00:05:46 | end: 00:05:49 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 16660 | start: 00:05:49 | end: 00:05:50 | type: logo | goal: False | goal_mouth: False | audio: False 
+, frame_number: 16680 | start: 00:05:50 | end: 00:05:50 | type: logo | goal: False | goal_mouth: False | audio: False 
+, frame_number: 17215 | start: 00:05:50 | end: 00:06:01 | type: wide | goal: False | goal_mouth: True | audio: False 
+, frame_number: 17610 | start: 00:06:01 | end: 00:06:09 | type: wide | goal: False | goal_mouth: False | audio: False 
+, frame_number: 18140 | start: 00:06:09 | end: 00:06:19 | type: medium | goal: False | goal_mouth: False | audio: False 
+, frame_number: 18170 | start: 00:06:19 | end: 00:06:20 | type: logo | goal: False | goal_mouth: False | audio: False 
+, frame_number: 18560 | start: 00:06:20 | end: 00:06:28 | type: wide | goal: False | goal_mouth: False | audio: False 
+, frame_number: 18715 | start: 00:06:28 | end: 00:06:31 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 20410 | start: 00:06:31 | end: 00:07:05 | type: wide | goal: False | goal_mouth: False | audio: False 
+, frame_number: 20690 | start: 00:07:05 | end: 00:07:10 | type: close | goal: False | goal_mouth: False | audio: False 
+, frame_number: 21735 | start: 00:07:10 | end: 00:07:31 | type: wide | goal: False | goal_mouth: False | audio: True 
+, frame_number: 22520 | start: 00:07:31 | end: 00:07:47 | type: medium | goal: False | goal_mouth: True | audio: True 
+, frame_number: 23045 | start: 00:07:57 | end: 00:07:57 | type: logo | goal: False | goal_mouth: False | audio: False 
+, frame_number: 23475 | start: 00:07:57 | end: 00:08:06 | type: medium | goal: False | goal_mouth: False | audio: True 
+, frame_number: 23515 | start: 00:08:06 | end: 00:08:07 | type: logo | goal: False | goal_mouth: False | audio: False 
+, frame_number: 23695 | start: 00:08:07 | end: 00:08:10 | type: medium | goal: False | goal_mouth: False | audio: False 
+, frame_number: 26775 | start: 00:09:07 | end: 00:09:12 | type: close-out | goal: False | goal_mouth: False | audio: True 
+, frame_number: 29595 | start: 00:09:27 | end: 00:10:08 | type: close | goal: False | goal_mouth: False | audio: True 
+, frame_number: 34030 | start: 00:11:31 | end: 00:11:37 | type: close | goal: True | goal_mouth: False | audio: True 
+, frame_number: 37845 | start: 00:12:53 | end: 00:13:02 | type: wide | goal: False | goal_mouth: True | audio: True 
+, frame_number: 43015 | start: 00:07:47 | end: 00:07:57 | type: medium | goal: False | goal_mouth: False | audio: True 
+, frame_number: 43040 | start: 00:07:57 | end: 00:07:57 | type: <member 'LOGO' of 'SHOT_TYPES' objects> | goal: False | goal_mouth: False | audio: False 
+, frame_number: 44260 | start: 00:08:10 | end: 00:08:21 | type: close-out | goal: False | goal_mouth: False | audio: True 
+, frame_number: 44285 | start: 00:08:21 | end: 00:08:22 | type: <member 'LOGO' of 'SHOT_TYPES' objects> | goal: False | goal_mouth: False | audio: False 
+]
+
+GOALS: 1 | ATTACKS: 0 | OTHER: 0 
+
+running time: 328.9009578227997
