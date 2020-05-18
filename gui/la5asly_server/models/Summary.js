@@ -44,4 +44,4 @@ const summarySchema = new Schema(
   }
 );
 
-mongoose.model("summaries", summarySchema);
+mongoose.model("Summary", summarySchema);
