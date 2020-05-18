@@ -241,8 +241,6 @@ def main():
                                 shots[i].type, shots[i].has_goal, shots[i].has_goal_mouth, True)
                 break
 
-    ############################ print shots info into a file #############################
-
     ############################# processing output shots #################################
     # main shots depending on replay
     output_video_shots_1, output_video_shots_2 = [], []
@@ -256,6 +254,8 @@ def main():
             while(1):
                 output_video_shots_1.append(shots[j])
                 if logo_count == 0 and (shots[j].type == "wide" or j == 0 or shots[j].type == "logo"):
+                    if output_video_shots_1[-1].type == "logo":
+                        output_video_shots_1.pop(-1)
                     break
 
                 if shots[j].type == "logo":
