@@ -17,9 +17,14 @@ import time
 import objgraph
 import gc
 
+<<<<<<< HEAD
 
 class shot:
     _slots_ = ("frame_number", "shot_start", "shot_end", "type", "has_goal", "has_goal_mouth", "audio")
+=======
+class shot:
+    __slots__ = ("frame_number", "shot_start", "shot_end", "type", "has_goal", "has_goal_mouth", "audio")
+>>>>>>> c7fff0e2c1da40140275e12c7406824163a68ca7
     def __init__(self, frame_number, shot_start, shot_end, type=None, has_goal=None, has_goal_mouth=None, audio=None):
         self.frame_number = frame_number
         self.shot_start = shot_start
@@ -38,10 +43,17 @@ class shot:
 
 
 def main():
+    model = ShotClassifier(model_type=1)
+    goal_detector = GoalDetector()
     t1 = time.time()
     # declarations #################################
+<<<<<<< HEAD
     vidoe_name = "matchnew12"
     VIDEO_PATH = “{0}{1}{2}”.format('C:/Users\\salama\\Desktop\\', vidoe_name, '.mp4')
+=======
+    vidoe_name = "test3"
+    VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
+>>>>>>> c7fff0e2c1da40140275e12c7406824163a68ca7
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
         print('err reading video')
@@ -108,7 +120,8 @@ def main():
                         len(frames[start+5:i-4])/10)] + frames[i - 4:i+1]
 
                 # getting the shot type
-                type = ShotClassifier(model_type=1).get_shot_class(
+                
+                type = model.get_shot_class(
                     frames_to_classify)
 
                 if "+" not in type:
@@ -121,7 +134,7 @@ def main():
                                       shot_start=round(frame_times[start], 2),
                                       shot_end=round((frame_times[i]), 2),
                                       type=type,
-                                      has_goal=GoalDetector().execute(
+                                      has_goal=goal_detector.execute(
                                           frames[int(max(start - 2, 0))], frames[i-2]),
                                       has_goal_mouth=mouth,
                                       audio=False))
@@ -190,14 +203,19 @@ def main():
         frame_numbers = frame_numbers[start:]
         gc.collect()
 
+<<<<<<< HEAD
     type = ShotClassifier(model_type=1).get_shot_class(
+=======
+
+    type = model.get_shot_class(
+>>>>>>> c7fff0e2c1da40140275e12c7406824163a68ca7
         frames[::int(len(frames)/10)])
     # appending last shot in video
     shots.append(shot(frame_number=frame_numbers[-1],
                       shot_start=round(frame_times[start], 2),
                       shot_end=round((frame_times[-1]), 2),
                       type=type,
-                      has_goal=GoalDetector().execute(
+                      has_goal=goal_detector.execute(
         frames[start-3], frames[start+3]),
         has_goal_mouth=goalMouth(frames[::int(len(frames)/10)], type),
         audio=False))
@@ -321,6 +339,7 @@ def main():
     output_video_shots.sort(key=lambda x: x.frame_number)
     shots_classes.sort(key=operator.itemgetter(0))
     objgraph.show_most_common_types()
+
     t2 = time.time()
 
     GOAL_count, ATTACK_count, OTHER_count = 0, 0, 0
