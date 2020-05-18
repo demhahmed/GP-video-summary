@@ -1,6 +1,5 @@
 from GoalMouth.goalpostv4 import goalMouth
 import math
-from os.path import dirname, realpath, join
 from ShotClassifier.ShotClassifier import ShotClassifier
 from GoalDetector.GoalDetector import GoalDetector
 from UTL.UTL import printProgressBar, find_gt
