@@ -4,6 +4,7 @@ from skimage.measure import compare_ssim
 
 
 class GoalDetector:
+    __slots__ = ('__height', '__width', '__home', '__away', '__sepr')
     def __init__(self, scoreboard_type='premier_league'):
         # loading model
         # Initialize scoreboard Dimensions.
