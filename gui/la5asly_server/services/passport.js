@@ -4,7 +4,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const keys = require("../config/keys");
 
-const User = mongoose.model("users");
+const User = mongoose.model("User");
 
 /*
  * inserts the userId in the cookie.

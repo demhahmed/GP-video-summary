@@ -1,25 +1,49 @@
-const express = require("express");
-const cors = require("cors");
 const path = require("path");
+const express = require("express");
+const passport = require("passport");
+const cookieSession = require('cookie-session');
+const cors = require("cors");
 
-require("./db/mongoose.js");
+// secret keys
+const keys = require("./config/keys");
 
-const UserRouter = require("./routers/UserRouter.js");
-const SummaryRouter = require("./routers/SummaryRouter.js");
+// setting up mongoose
+require("./db/mongoose");
 
+// Loading the mongoose models
+require("./models/User");
+require("./models/Summary");
+require("./models/Feedback");
+
+// Binding Passport to our application.
+require("./services/passport");
+
+// Loading the routes
+const userRoute = require("./routes/userRoute");
+const summaryRoute = require("./routes/summaryRoute");
 
 const app = express(); // configuring the server
 const port = 3001;
 
+// Passport Session handlers
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey],
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(cors());
 app.use(express.json());
 
-app.use('/summaries', express.static(path.join(__dirname, 'summaries')))
-app.use('/thumbnails', express.static(path.join(__dirname, 'thumbnails')))
+// Directories contain the summaries and thumnails.
+app.use("/summaries", express.static(path.join(__dirname, "summaries")));
+app.use("/thumbnails", express.static(path.join(__dirname, "thumbnails")));
 
-app.use(UserRouter);
-app.use(SummaryRouter);
-
+// Attach routes
+app.use(userRoute);
+app.use(summaryRoute);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
