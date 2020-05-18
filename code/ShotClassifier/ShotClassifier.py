@@ -6,6 +6,7 @@ import cv2
 from os.path import dirname, realpath, join
 
 
+
 class ShotClassifier:
     def __init__(self, model_type=1):
         self.__classes = ['logo', 'medium', 'close-out', 'close', 'wide']
@@ -64,14 +65,17 @@ class ShotClassifier:
         else:
             return 'logo'
 '''
-im1 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame2970.jpg")
-im2 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame2975.jpg")
+im1 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame3555.jpg")
+im2 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame3560.jpg")
 
-im3 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame2980.jpg")
+im3 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame3565.jpg")
 
-im4 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame2985.jpg")
+im4 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame3570.jpg")
 
-frames = [im1,im2,im3,im4]
+im5 = cv2.imread("C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotClassifier\\frame3575.jpg")
+
+
+frames = [im1,im2,im3,im4,im5]
 
 print(ShotClassifier(model_type=1).get_shot_class(frames))
 '''

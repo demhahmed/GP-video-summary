@@ -41,10 +41,10 @@ def cut_detector(frame1, frame2):
     return block_change(frame1, frame2) >= 30
 '''
 img1 = cv2.imread(
-    "C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotBoundary\\im1.jpg")
+    "C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotBoundary\\frame3575.jpg")
 
  
 img2 = cv2.imread(
-    "C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotBoundary\\im2.jpg")
+    "C:/Users\\salama\\Desktop\\GP-video-summary\\code\\ShotBoundary\\frame3580.jpg")
 print(cut_detector(img1, img2))
 '''

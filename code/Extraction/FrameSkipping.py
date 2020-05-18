@@ -82,7 +82,7 @@ def ExtractFrames(path, step, patch):
     return list
 
 
-vidoe_name = "matchnew4"
+vidoe_name = "matchnew12"
 VIDEO_PATH = 'C:/Users\\salama\\Desktop\\'+vidoe_name+'.mp4'
 
 #ExtractFramesToDisk(VIDEO_PATH, 5)

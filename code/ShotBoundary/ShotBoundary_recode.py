@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import math  
 
 def compare_intersect(h1, h2):
     result = 0
@@ -11,31 +12,53 @@ def compare_intersect(h1, h2):
     return result
 
 def compare_correlation(h1, h2):
-
     assert len(h1) == len(h2)
-
-
+    #covariance(X, Y) / (stdv(X) * stdv(Y))
     n = len(h1)
     cov = (sum((h1 - np.mean(h1)) * (h2 - np.mean(h2)) )) * 1/(n-1)
-    
-    #covariance(X, Y) / (stdv(X) * stdv(Y))
+
     return cov / (np.std(h1) * np.std(h2))
-    
+  
+def calc_Hist(img):
+    # calculate histogram
+    row, col = img.shape
+    y = np.zeros((256), np.uint64)
+    for i in range(row):
+        for j in range(col):
+            y[img[i,j]] += 1
 
-def histogram_compare(image_1, image_2):
-    
-    frame1 = image_1[..., ::-1]
-    frame2 = image_2[..., ::-1]
-    
-    hist1 = cv2.calcHist([frame1], [0, 1, 2], None, [
-                         64, 64, 64], [0, 256, 0, 256, 0, 256])
+    # compress it to 64 values
+    result = []
+    f = 0
+    val = 0
+    for i in range(len(y)):
+        val += y[i]
+        f += 1
+        if f == 4:
+            f = 0
+            result.append(val)
+            val = 0
+            
+    return result
 
-    hist, bins = np.histogram(image_1.ravel(), 64, [0,256])
-    hist1 = cv2.normalize(hist1, hist1).flatten()
+def normalize(arr):
+    _sum = 0 
+    for i in range(len(arr)):
+        _sum += arr[i]**2
+    _norm = math.sqrt(_sum)
+    
+    return np.asarray(arr) / _norm  # normalized array
 
-    hist2 = cv2.calcHist([frame2], [0, 1, 2], None, [
-                         64, 64, 64], [0, 256, 0, 256, 0, 256])
-    hist2 = cv2.normalize(hist2, hist2).flatten()
+def histogram_compare(img_1, img_2):
+    frame1 = cv2.cvtColor(img_1, cv2.COLOR_BGR2GRAY)
+    frame2 = cv2.cvtColor(img_2, cv2.COLOR_BGR2GRAY)
+
+    hist1 = calc_Hist(frame1)
+    hist1 = normalize(hist1)
+
+
+    hist2 = calc_Hist(frame2)
+    hist2 = normalize(hist2)
     
     return compare_intersect(hist1, hist2), 10 * compare_correlation(hist1, hist2)
 
