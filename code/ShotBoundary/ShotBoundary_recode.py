@@ -43,8 +43,8 @@ def calc_Hist(img):
 
 def normalize(arr):
     _sum = 0 
-    for i in range(len(result)):
-        _sum += result[i]**2
+    for i in range(len(arr)):
+        _sum += arr[i]**2
     _norm = math.sqrt(_sum)
     
     return np.asarray(arr) / _norm  # normalized array
