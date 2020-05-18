@@ -18,12 +18,7 @@ import gc
 
 
 def main():
-    model = ShotClassifier(model_type=1)
-    goal_detector = GoalDetector()
-    SHOT_TYPES = shot_types()
-    EVENT_TYPES = event_types()
-
-    # declarations #################################
+    # CONSTANTS _________________________________________________________
     video_name = "Arsenal-Chelsea 1 pt1"
     VIDEO_PATH = "{0}{1}{2}".format(
         'C:/Users\\medo\\Desktop\\match_test\\', video_name, '.mp4')
@@ -31,17 +26,21 @@ def main():
     if cap.isOpened() == False:
         print('err reading video')
         return
+    model = ShotClassifier(model_type=1)
+    goal_detector = GoalDetector()
+    SHOT_TYPES = shot_types()
+    EVENT_TYPES = event_types()
     FPS = int(cap.get(cv2.CAP_PROP_FPS))
-
     STEP = 5
+    # VARIABLE DECLARATIONS _____________________________________________
     frames, frame_times, frame_numbers, shots, frames_to_classify, types = [], [], [], [], [], []
     skip, patch, last_cut_frame_number, No_frames = 0, 0, 0, 0
     mouth, out = False, False
     PATCH_FRAMES = 10000  # 2000*5
-    type = ''                                                       # type of shot
-    # main loop ##################################
+    type = ''
+    # MAIN LOOP  _______________________________________________________
     t1 = time.time()
-    while(1):  # main loop
+    while(1):
         # append frames from after last cut
         count = 0
         start = 0
@@ -56,7 +55,7 @@ def main():
                 No_frames = 2000
                 break
 
-            if ret == True:
+            if ret:
                 if count % STEP == 0:
                     frames.append(image)
                     frame_times.append(
@@ -73,7 +72,7 @@ def main():
         # loop on patch frames
         for i in range(No_frames-1):
 
-            printProgressBar(i, No_frames)
+            printProgressBar(i, No_frames-1)
 
             frame1, frame2 = frames[i], frames[i+1]
 
@@ -89,6 +88,8 @@ def main():
                 frames_to_classify.clear()
                 types.clear()
 
+                gc.collect()
+
                 no_shot_frames = len(frames[start:i+1])
 
                 # appending the first and last 5 frames and 10 random frames inbetween
@@ -98,8 +99,7 @@ def main():
 
                 # getting the shot type
 
-                type = model.get_shot_class(
-                    frames_to_classify)
+                type = model.get_shot_class(frames_to_classify)
 
                 if "+" not in type:
 
@@ -178,24 +178,24 @@ def main():
                       type=type,
                       has_goal=goal_detector.execute(
         frames[start-3], frames[start+3]),
-        has_goal_mouth=goalMouth(frames[::int(len(frames)/10)], type),
-        audio=False))
+        has_goal_mouth=goalMouth(frames[::int(len(frames)/10)], type)))
 
     del frames_to_classify, skip, patch, mouth, out, type, no_shot_frames, frames
-    ############################### resolving double logos ###########################
+    gc.collect()
+    # resolving double logos _____________________________________________
     i = 0
     while i <= len(shots)-2:
         if shots[i].type == SHOT_TYPES.LOGO and shots[i+1].type == SHOT_TYPES.LOGO:
             shots.pop(i+1)
             i -= 1
         i += 1
-    ############################## audio processing ##################################
+    # audio processing _________________________________________________
 
     print("Analyzing Audio...")
     peak_times = get_peak_times(VIDEO_PATH, 92)
-    peak_times = [x for x in peak_times]
+    peak_times = [x for x in peak_times]  # 3
 
-    ############################## Extracting high volume shots #########################
+    # Extracting high volume shots ____________________________________
     cuts = [x.shot_end for x in shots]
     final_times = []
     for peak in peak_times:
@@ -207,21 +207,19 @@ def main():
                 final_times.append((cuts[index-1], cuts[index]))
 
     final_times = [t for t in (set(tuple(i) for i in final_times))]
-
-    print("final peak times ", final_times)
-    ############################## print cuts  ##################################
+    # print cuts  _____________________________________________________
     print("----------------------")
     print("Found ", len(shots), " shots")
     print("----------------------")
 
-    # Detecing if shot contains high volume
+    # Detecing if shot contains high volume ____________________________
     for i in range(len(shots)):
         for j in range((len(final_times))):
             if final_times[j][1] == shots[i].shot_end:
                 shots[i].audio = True
                 break
 
-    ############################# processing output shots #################################
+    # processing output shots __________________________________________________
     # main shots depending on replay
     output_video_shots_1, output_video_shots_2 = [], []
     logo_count = 0
@@ -244,7 +242,7 @@ def main():
                 j -= 1
     # shots with high volume but not replayed
     for i in range(len(shots)):
-        if shots[i].audio == True and shots[i] not in output_video_shots_1:
+        if shots[i].audio and shots[i] not in output_video_shots_1:
             output_video_shots_2.append(shots[i])
 
     output_video_shots_1.sort(key=lambda x: x.frame_number)
@@ -256,14 +254,14 @@ def main():
         final_video.append(
             (output_video_shots[i].shot_start, output_video_shots[i].shot_end))
 
-    ################################## classifying shots Sequence #####################################
+    # classifying shots Sequence _____________________________________________
     shots_classes = []
     goal_detected, goal_post, logo_count = 0, 0, 0
 
     for i in range(len(output_video_shots_1)):
-        if output_video_shots_1[i].has_goal == 1 and logo_count == 0:
+        if output_video_shots_1[i].has_goal and logo_count == 0:
             goal_detected = 1
-        if output_video_shots_1[i].has_goal_mouth == 1:
+        if output_video_shots_1[i].has_goal_mouth:
             goal_post = 1
         if output_video_shots_1[i].type == SHOT_TYPES.LOGO:
             logo_count += 1
@@ -312,25 +310,25 @@ def main():
         if shot_class[3] == EVENT_TYPES.OTHER:
             OTHER_count += 1
 
-    ################################# write outputs to file ##################################
+    # write outputs to file ________________________________________________
     f = open("{0}.txt".format(video_name), "w")
     f.write("Video Shots: {0}".format(str(len(shots)))+"\n\n")
     for i in range(len(shots)):
         f.write(str(shots[i]))
 
-    f.write("\nno. of shots come from audio: {0}" .format(
-            str(len(output_video_shots_2))) + "\n\n")
+    f.write("\nno. of shots come from audio: {0} \n\n" .format(
+            str(len(output_video_shots_2))))
     f.write(str(output_video_shots_2))
-    f.write("\n\nImportant Events: \n\n")
+    f.write("\n\nImportant Events: {0}\n\n".format(len(output_video_shots)))
     f.write(str(output_video_shots))
     f.write("\n\nGOALS: {0} | ATTACKS: {1} | OTHER: {2} ".format(str(GOAL_count),
                                                                  str(ATTACK_count), str(OTHER_count)))
 
-    f.write('\n\n' + "running time: {0}".format(str(t2-t1)))
+    f.write("\n\nrunning time: {0}".format(str(t2-t1)))
     f.close()
 
     '''
-    ################################## rendering video  ######################################
+    # rendering video  _______________________________________________________
 
     print("rendering video...")
     blockPrint()
