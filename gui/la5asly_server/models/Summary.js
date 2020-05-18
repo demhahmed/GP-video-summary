@@ -2,9 +2,10 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+const SummaryVersion = require("./SummaryVersion");
+
 const summarySchema = new Schema(
   {
-
     title: {
       type: String,
       required: true,
@@ -19,16 +20,12 @@ const summarySchema = new Schema(
       type: String,
       required: true,
     },
-    goals: {
-      type: Number,
+    homeTeam: {
+      type: String,
       required: true,
     },
-    chances: {
-      type: Number,
-      required: true,
-    },
-    length: {
-      type: Number,
+    awayTeam: {
+      type: String,
       required: true,
     },
     thumbnail: {
@@ -38,23 +35,13 @@ const summarySchema = new Schema(
     user: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: 'User'
+      ref: "User",
     },
-    versions: [{type: String}],
+    versions: [SummaryVersion],
   },
   {
     timestamps: true,
   }
 );
 
-summarySchema.methods.toJSON = function () {
-  return this.toObject();
-};
-
-summarySchema.statics.fetchSummaries = async (filterObj) => {
-  return Summary.find(filterObj).populate("user");
-};
-
-const Summary = mongoose.model("Summary", summarySchema);
-
-module.exports = Summary;
+mongoose.model("summaries", summarySchema);
