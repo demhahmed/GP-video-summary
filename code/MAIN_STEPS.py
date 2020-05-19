@@ -2,15 +2,15 @@
 import time
 from UTL.classes import shot_types, event_types
 from ProcessingSteps.Processing_Steps import (STEP_1_shots_processing, STEP_2_resolving_double_logos, STEP_3_audio_processing, STEP_4_processing_output_shots,
-                                              STEP_5_classifying_shot_sequence, STEP_6_processing_final_output, STEP_7_file_output, STEP_8_rendering_video)
+STEP_5_classifying_shot_sequence, STEP_6_processing_final_output, STEP_7_file_output, STEP_8_rendering_video)
 import cv2
 
 
 def main():
     # CONSTANTS _________________________________________________________
-    video_name = "Arsenal-Chelsea 1 pt2"
+    video_name = "test3"
     VIDEO_PATH = "{0}{1}{2}".format(
-        'C:/Users\\medo\\Desktop\\match_test\\', video_name, '.mp4')
+        'C:/Users\\salama\\Desktop\\', video_name, '.mp4')
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
         print('err reading video')

@@ -2,7 +2,7 @@ from Audio.audio import get_peak_times
 from UTL.UTL import find_gt, blockPrint, enablePrint,  printProgressBar
 import time
 import operator
-from UTL.classes import shot_types as SHOT_TYPES, event_types as EVENT_TYPES
+from UTL.classes import shot_types, event_types
 from moviepy.editor import VideoFileClip, concatenate
 from ShotClassifier.ShotClassifier import ShotClassifier
 from GoalDetector.GoalDetector import GoalDetector
@@ -17,6 +17,9 @@ import numpy as np
 import gc
 from UTL.classes import shot
 
+
+SHOT_TYPES = shot_types()
+EVENT_TYPES = event_types()
 
 def shots_processing(cap):
     model = ShotClassifier(model_type=1)
@@ -305,7 +308,14 @@ def output_to_file(shots_classes, video_name, shots, output_video_shots, output_
     f = open("{0}.txt".format(video_name), "w")
     f.write("Video Shots: {0}".format(str(len(shots)))+"\n\n")
     for i in range(len(shots)):
-        f.write(str(shots[i]))
+        try:
+            shots[i].shot_start = time.strftime(
+                "%H:%M:%S", time.gmtime(shots[i].shot_start))
+            shots[i].shot_end = time.strftime(
+                "%H:%M:%S", time.gmtime(shots[i].shot_end))
+            f.write(str(shots[i]))
+        except:
+            f.write(str(shots[i]))
 
     f.write("\nno. of shots come from audio: {0} \n\n" .format(
             str(len(output_video_shots_2))))

@@ -1,13 +1,13 @@
 import time
-from Processing.Processing import *
+from Processing.Processing import (shots_processing,audio_processing,output_shots_processing,classifying_shot_sequence,final_output_processing,output_to_file,rendering_sumary)
 import cv2
 
 
 def main():
     # CONSTANTS
-    video_name = "Arsenal-Chelsea 1 pt2"
+    video_name = "test3"
     VIDEO_PATH = "{0}{1}{2}".format(
-        'C:/Users\\medo\\Desktop\\match_test\\', video_name, '.mp4')
+        'C:/Users\\salama\\Desktop\\', video_name, '.mp4')
 
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:

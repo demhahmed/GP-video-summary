@@ -305,8 +305,16 @@ def STEP_7_file_output(shots_classes,EVENT_TYPES,video_name,shots,output_video_s
 
     f = open("{0}.txt".format(video_name), "w")
     f.write("Video Shots: {0}".format(str(len(shots)))+"\n\n")
+
     for i in range(len(shots)):
-        f.write(str(shots[i]))
+        try:
+            shots[i].shot_start = time.strftime(
+                "%H:%M:%S", time.gmtime(shots[i].shot_start))
+            shots[i].shot_end = time.strftime(
+                "%H:%M:%S", time.gmtime(shots[i].shot_end))
+            f.write(str(shots[i]))
+        except:
+            f.write(str(shots[i]))
 
     f.write("\nno. of shots come from audio: {0} \n\n" .format(
             str(len(output_video_shots_2))))
