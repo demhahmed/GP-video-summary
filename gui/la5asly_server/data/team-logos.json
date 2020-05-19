@@ -1,0 +1,322 @@
+[
+  {
+    "leagueType": "Premier League",
+    "logo": "https://lh3.googleusercontent.com/proxy/9jO3W5fRp6HDNVjyOUk9ikDOWC_XIT0_Hr65GBJz76sIxBzHenARvnq2zNx6cINBPY05LgiWLFkLx08q5OVREX2OQcJsfB5Tj9HLSk3zWdonzNl6MnDRpS9UT5hZULTHAeck6OIOeag",
+    "teams": [
+      {
+        "teamName": "Machester United",
+        "logo": "https://footballia.net/uploads/team/logo/10/medium_592px-Manchester_United_FC.svg.png"
+      },
+      {
+        "teamName": "Machester City",
+        "logo": "https://footballia.net/uploads/team/logo/52/medium_Manchester_City_2016.png"
+      },
+      {
+        "teamName": "Aston Villa",
+        "logo": "https://footballia.net/uploads/team/logo/9/medium_143px-Aston_Villa.svg.png"
+      },
+      {
+        "teamName": "Leicester City",
+        "logo": "https://footballia.net/uploads/team/logo/28/medium_Leicester02.png"
+      },
+      {
+        "teamName": "Tottenham Hotspur",
+        "logo": "https://footballia.net/uploads/team/logo/87/medium_304px-Tottenham_Hotspur.svg.png"
+      },
+      {
+        "teamName": "Fulham FC",
+        "logo": "https://footballia.net/uploads/team/logo/113/medium_340px-Fulham_FC.svg.png"
+      },
+
+      {
+        "teamName": "Sheffield United",
+        "logo": "https://footballia.net/uploads/team/logo/478/medium_402px-Sheffield_United_FC_logo.svg.png"
+      },
+      {
+        "teamName": "Crystal Palace",
+        "logo": "https://footballia.net/uploads/team/logo/268/medium_800px-Crystal_Palace_FC_logo.svg.png"
+      },
+      {
+        "teamName": "Wolverhampton Wanderers",
+        "logo": "https://footballia.net/uploads/team/logo/283/medium_570px-Wolverhampton_Wanderers.svg.png"
+      },
+      {
+        "teamName": "Arsenal FC",
+        "logo": "https://footballia.net/uploads/team/logo/70/medium_323px-Arsenal_FC.svg.png"
+      },
+      {
+        "teamName": "Burnley FC",
+        "logo": "https://footballia.net/uploads/team/logo/359/medium_Burnley_FC_badge.png"
+      },
+      {
+        "teamName": "Newcastle United",
+        "logo": "https://footballia.net/uploads/team/logo/74/medium_595px-Newcastle_United_Logo.svg.png"
+      },
+      {
+        "teamName": "Chelsea FC",
+        "logo": "https://footballia.net/uploads/team/logo/58/medium_209px-Chelsea_FC.svg.png"
+      },
+      {
+        "teamName": "Liverpool FC",
+        "logo": "https://footballia.net/uploads/team/logo/32/medium_370px-Liverpool_FC.svg.png"
+      },
+      {
+        "teamName": "Watford FC",
+        "logo": "https://footballia.net/uploads/team/logo/355/medium_431px-Watford.svg.png"
+      },
+      {
+        "teamName": "West Ham United",
+        "logo": "https://footballia.net/uploads/team/logo/85/medium_West_Ham_United_FC_logo.svg.png"
+      },
+      {
+        "teamName": "Brighton & Hove Albion",
+        "logo": "https://footballia.net/uploads/team/logo/90/medium_200px-Brighton___Hove_Albion_logo.svg.png"
+      },
+      {
+        "teamName": "Norwich City",
+        "logo": "https://footballia.net/uploads/team/logo/329/medium_800px-Norwich_City.svg.png"
+      }
+    ]
+  },
+  {
+    "leagueType": "Seria A",
+    "logo": "https://upload.wikimedia.org/wikipedia/it/f/f5/Logo_Serie_A_TIM_2019.png",
+    "teams": [
+      {
+        "teamName": "AC Milan",
+        "logo": "https://footballia.net/uploads/team/logo/26/medium_171px-AC_Milan.svg.png"
+      },
+      {
+        "teamName": "Genoa CFC",
+        "logo": "https://footballia.net/uploads/team/logo/457/medium_Genoa_cfc.png"
+      },
+      {
+        "teamName": "Juventus FC",
+        "logo": "https://footballia.net/uploads/team/logo/23/medium_800px-Juventus_FC_2017_logo.svg.png"
+      },
+      {
+        "teamName": "FC Internazionale",
+        "logo": "https://footballia.net/uploads/team/logo/31/medium_Inter_Milan__1_.png"
+      },
+      {
+        "teamName": "US Lecce",
+        "logo": "https://footballia.net/uploads/team/logo/667/medium_200px-Us_lecce.png"
+      },
+      {
+        "teamName": "Cagliari Calcio",
+        "logo": "https://footballia.net/uploads/team/logo/282/medium_Cagliari_Calcio_1920.png"
+      },
+      {
+        "teamName": "AS Roma",
+        "logo": "https://footballia.net/uploads/team/logo/153/medium_800px-AS_Roma_Logo_2017.svg.png"
+      },
+      {
+        "teamName": "SS Lazio",
+        "logo": "https://footballia.net/uploads/team/logo/152/medium_570px-Lazio_Rom.svg.png"
+      },
+      {
+        "teamName": "SSC Napoli",
+        "logo": "https://footballia.net/uploads/team/logo/100/medium_566px-SSC_Neapel.svg.png"
+      },
+      {
+        "teamName": "UC Sampdoria",
+        "logo": "https://footballia.net/uploads/team/logo/112/medium_Sampdoria_badge.png"
+      },
+      {
+        "teamName": "Torino FC",
+        "logo": "https://footballia.net/uploads/team/logo/126/medium_500px-Torino_FC_Logo.svg.png"
+      },
+      {
+        "teamName": "Atalanta BC",
+        "logo": "https://footballia.net/uploads/team/logo/557/medium_Logo_Atalanta_Bergamo.svg.png"
+      },
+      {
+        "teamName": "Udinese",
+        "logo": "https://footballia.net/uploads/team/logo/229/medium_Udinese_calcio.png"
+      },
+      {
+        "teamName": "Bologna FC",
+        "logo": "https://footballia.net/uploads/team/logo/310/medium_Bolognafc.svg.png"
+      },
+      {
+        "teamName": "ACF Fiorentina",
+        "logo": "https://footballia.net/uploads/team/logo/158/medium_335px-ACF_Fiorentina_2.svg.png"
+      },
+      {
+        "teamName": "US Sassuolo",
+        "logo": "https://footballia.net/uploads/team/logo/507/medium_US_Sassuolo_Calcio_logo.svg.png"
+      },
+      {
+        "teamName": "Parma Calcio",
+        "logo": "https://footballia.net/uploads/team/logo/199/medium_Logo_Parma_Calcio_1913__adozione_2016_.png"
+      },
+      {
+        "teamName": "Brescia Calcio",
+        "logo": "https://footballia.net/uploads/team/logo/316/medium_800px-Brescia_Calcio_-_Logo_2017.svg.png"
+      }
+    ]
+  },
+  {
+    "leagueType": "Bundesliga",
+    "teams": [
+      {
+        "teamName": "Bayern Munich",
+        "logo": "https://footballia.net/uploads/team/logo/1/medium_Bayern-M_nchen_2.-old-logo.png"
+      },
+      {
+        "teamName": "Borussia Dortmund",
+        "logo": "https://footballia.net/uploads/team/logo/33/medium_600px-Borussia_Dortmund_logo.svg.png"
+      },
+      {
+        "teamName": "Mainz 05",
+        "logo": "https://footballia.net/uploads/team/logo/501/medium_FSV_Mainz_05.png"
+      },
+      {
+        "teamName": "Bayer Leverkusen",
+        "logo": "https://footballia.net/uploads/team/logo/136/medium_786px-Bayer_04_Leverkusen_logo.svg.png"
+      },
+      {
+        "teamName": "Werder Bremen",
+        "logo": "https://footballia.net/uploads/team/logo/132/medium_130px-SV-Werder-Bremen-Logo.svg.png"
+      },
+      {
+        "teamName": "Schalke 04",
+        "logo": "https://footballia.net/uploads/team/logo/96/medium_400px-FC_Schalke_04_Logo.svg.png"
+      },
+      {
+        "teamName": "Hoffenheim",
+        "logo": "https://footballia.net/uploads/team/logo/502/medium_510px-TSG_1899_Hoffenheim_logo.svg.png"
+      },
+
+      {
+        "teamName": "Paderborn",
+        "logo": "https://footballia.net/uploads/team/logo/963/medium_Sc_paderborn_07.png"
+      },
+      {
+        "teamName": "Eintracht Frankfurt",
+        "logo": "https://footballia.net/uploads/team/logo/17/medium_466px-Eintracht_Frankfurt_Logo.svg.png"
+      },
+      {
+        "teamName": "RB Leipzig",
+        "logo": "https://footballia.net/uploads/team/logo/496/medium_RB_Leipzig_2014_logo.svg.png"
+      },
+      {
+        "teamName": "Augsburg",
+        "logo": "https://footballia.net/uploads/team/logo/987/medium_230px-FC_Augsburg_logo.svg.png"
+      },
+      {
+        "teamName": "Koln",
+        "logo": "https://footballia.net/uploads/team/logo/98/medium_Fc_cologne.png"
+      },
+      {
+        "teamName": "Fortuna Dusseldorf",
+        "logo": "https://footballia.net/uploads/team/logo/81/medium_600px-Fortuna_D_sseldorf.svg.png"
+      },
+      {
+        "teamName": "Wolfsburg",
+        "logo": "https://footballia.net/uploads/team/logo/233/medium_420px-VfL_Wolfsburg_Logo_wei_.svg.png"
+      },
+      {
+        "teamName": "Union Berlin",
+        "logo": "https://footballia.net/uploads/team/logo/513/medium_566px-1._FC_Union_Berlin_logo.svg.png"
+      },
+      {
+        "teamName": "Freiburg",
+        "logo": "https://footballia.net/uploads/team/logo/849/medium_SC-Freiburg_Logo-neu.svg.png"
+      },
+      {
+        "teamName": "Borussia Monchengladbach",
+        "logo": "https://footballia.net/uploads/team/logo/131/medium_218px-Borussia_M_nchengladbach_logo.svg.png"
+      },
+      {
+        "teamName": "Hertha BSC",
+        "logo": "https://footballia.net/uploads/team/logo/573/medium_Hertha_BSC_Logo_2012.svg.png"
+      }
+    ]
+  },
+  {
+    "leagueType": "La Liga",
+    "teams": [
+      {
+        "teamName": "Barcelona",
+        "logo": "https://footballia.net/uploads/team/logo/21/medium_559px-Logo_FC_Barcelona.svg.png"
+      },
+      {
+        "teamName": "Real Madrid",
+        "logo": "https://footballia.net/uploads/team/logo/16/medium_143px-Real_Madrid_CF.svg.png"
+      },
+      {
+        "teamName": "Sevilla",
+        "logo": "https://footballia.net/uploads/team/logo/93/medium_Sevilla_cf_200px.png"
+      },
+      {
+        "teamName": "Real Sociedad",
+        "logo": "https://footballia.net/uploads/team/logo/108/medium_200px-Real_Sociedad_logo.svg.png"
+      },
+      {
+        "teamName": "Getafe",
+        "logo": "https://footballia.net/uploads/team/logo/177/medium_Getafe_cf_200px.png"
+      },
+      {
+        "teamName": "Atletico Madrid",
+        "logo": "https://footballia.net/uploads/team/logo/82/medium_800px-Atletico_Madrid_2017_logo.svg.png"
+      },
+      {
+        "teamName": "Valencia",
+        "logo": "https://footballia.net/uploads/team/logo/2/medium_Valencia_CF_logo.png"
+      },
+      {
+        "teamName": "Villarreal",
+        "logo": "https://footballia.net/uploads/team/logo/161/medium_150px-Villarreal_CF_logo.svg.png"
+      },
+      {
+        "teamName": "Granada",
+        "logo": "https://footballia.net/uploads/team/logo/300/medium_100px-Granada_CF_logotipo.svg.png"
+      },
+      {
+        "teamName": "Athletic Club",
+        "logo": "https://footballia.net/uploads/team/logo/78/medium_496px-Athletic_Club_Bilbao.svg.png"
+      },
+      {
+        "teamName": "Osasuna",
+        "logo": "https://footballia.net/uploads/team/logo/169/medium_150px-Osasuna_logo.svg.png"
+      },
+      {
+        "teamName": "Real Betis",
+        "logo": "https://footballia.net/uploads/team/logo/77/medium_230px-Real_betis_logo.svg.png"
+      },
+      {
+        "teamName": "Levante",
+        "logo": "https://footballia.net/uploads/team/logo/381/medium_595px-Levante_Uni_n_Deportiva__S.A.D._logo.svg.png"
+      },
+      {
+        "teamName": "Deportivo Alaves",
+        "logo": "https://footballia.net/uploads/team/logo/162/medium_1200px-Deportivo_Alaves_logo.svg.png"
+      },
+      {
+        "teamName": "Real Valladolid",
+        "logo": "https://footballia.net/uploads/team/logo/238/medium_Real_Valladolid_Logo.svg.png"
+      },
+      {
+        "teamName": "Eibar",
+        "logo": "https://footballia.net/uploads/team/logo/419/medium_SD_Eibar_logo_2016.png"
+      },
+      {
+        "teamName": "Celta Vigo",
+        "logo": "https://footballia.net/uploads/team/logo/154/medium_155px-RC_Celta_de_Vigo_logo.svg.png"
+      },
+      {
+        "teamName": "Mallorca",
+        "logo": "https://footballia.net/uploads/team/logo/148/medium_170px-Rcd_mallorca.svg.png"
+      },
+      {
+        "teamName": "Leganes",
+        "logo": "https://footballia.net/uploads/team/logo/481/medium_Club_Deportivo_Legan_s.png"
+      },
+      {
+        "teamName": "Espanyol",
+        "logo": "https://footballia.net/uploads/team/logo/141/medium_170px-Rcd_espanyol_logo.svg.png"
+      }
+    ]
+  }
+]
