@@ -44,7 +44,7 @@ router.get("/api/logout", (req, res) => {
  * This route extracts the user from the cookie and return it back to user.
  */
 router.get("/api/current_user", auth, (req, res) => {
-  res.send(req.user);
+  res.status(200).send(req.user);
 });
 
 module.exports = router;
