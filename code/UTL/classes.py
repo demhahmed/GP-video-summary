@@ -21,7 +21,7 @@ class shot:
         return shot_info
 
 
-class SHOT_TYPES:
+class shot_types:
     __slots__ = ('LOGO', 'WIDE', 'MEDIUM', 'CLOSE', 'CLOSE_OUT')
 
     def __init__(self):
@@ -32,7 +32,7 @@ class SHOT_TYPES:
         self.CLOSE_OUT = 'close-out'
 
 
-class EVENT_TYPES:
+class event_types:
     __slots__ = ('GOAL', 'ATTACK', 'OTHER')
 
     def __init__(self):

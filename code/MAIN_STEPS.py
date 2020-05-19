@@ -8,9 +8,9 @@ import cv2
 
 def main():
     # CONSTANTS _________________________________________________________
-    video_name = "matchnew3"
+    video_name = "Arsenal-Chelsea 1 pt2"
     VIDEO_PATH = "{0}{1}{2}".format(
-        'C:/Users\\salama\\Desktop\\', video_name, '.mp4')
+        'C:/Users\\medo\\Desktop\\match_test\\', video_name, '.mp4')
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
         print('err reading video')

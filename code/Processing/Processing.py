@@ -2,7 +2,7 @@ from Audio.audio import get_peak_times
 from UTL.UTL import find_gt, blockPrint, enablePrint,  printProgressBar
 import time
 import operator
-from UTL.classes import SHOT_TYPES, EVENT_TYPES
+from UTL.classes import shot_types as SHOT_TYPES, event_types as EVENT_TYPES
 from moviepy.editor import VideoFileClip, concatenate
 from ShotClassifier.ShotClassifier import ShotClassifier
 from GoalDetector.GoalDetector import GoalDetector

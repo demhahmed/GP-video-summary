@@ -1,11 +1,11 @@
 import time
-from UTL.Processing import *
+from Processing.Processing import *
 import cv2
 
 
 def main():
     # CONSTANTS
-    video_name = "Chelsea-Wesham 1 pt3"
+    video_name = "Arsenal-Chelsea 1 pt2"
     VIDEO_PATH = "{0}{1}{2}".format(
         'C:/Users\\medo\\Desktop\\match_test\\', video_name, '.mp4')
 

@@ -47,13 +47,13 @@ frame_number: 20690 | start: 00:07:05 | end: 00:07:10 | type: close | goal: Fals
 frame_number: 21735 | start: 00:07:10 | end: 00:07:31 | type: wide | goal: False | goal_mouth: False | audio: True 
 frame_number: 22520 | start: 00:07:31 | end: 00:07:47 | type: medium | goal: False | goal_mouth: True | audio: True 
 frame_number: 43015 | start: 00:07:47 | end: 00:07:57 | type: medium | goal: False | goal_mouth: False | audio: True 
-frame_number: 43040 | start: 00:07:57 | end: 00:07:57 | type: <member 'LOGO' of 'SHOT_TYPES' objects> | goal: False | goal_mouth: False | audio: False 
+frame_number: 43040 | start: 00:07:57 | end: 00:07:57 | type: <member 'LOGO' of 'shot_types' objects> | goal: False | goal_mouth: False | audio: False 
 frame_number: 23045 | start: 00:07:57 | end: 00:07:57 | type: logo | goal: False | goal_mouth: False | audio: False 
 frame_number: 23475 | start: 00:07:57 | end: 00:08:06 | type: medium | goal: False | goal_mouth: False | audio: True 
 frame_number: 23515 | start: 00:08:06 | end: 00:08:07 | type: logo | goal: False | goal_mouth: False | audio: False 
 frame_number: 23695 | start: 00:08:07 | end: 00:08:10 | type: medium | goal: False | goal_mouth: False | audio: False 
 frame_number: 44260 | start: 00:08:10 | end: 00:08:21 | type: close-out | goal: False | goal_mouth: False | audio: True 
-frame_number: 44285 | start: 00:08:21 | end: 00:08:22 | type: <member 'LOGO' of 'SHOT_TYPES' objects> | goal: False | goal_mouth: False | audio: False 
+frame_number: 44285 | start: 00:08:21 | end: 00:08:22 | type: <member 'LOGO' of 'shot_types' objects> | goal: False | goal_mouth: False | audio: False 
 frame_number: 25545 | start: 502.6 | end: 527.7 | type: medium | goal: False | goal_mouth: False | audio: False 
 frame_number: 25585 | start: 527.8 | end: 528.5 | type: logo | goal: False | goal_mouth: False | audio: False 
 frame_number: 25775 | start: 528.6 | end: 532.3 | type: close | goal: False | goal_mouth: False | audio: False 
@@ -171,11 +171,11 @@ Important Events: 58
 , frame_number: 34030 | start: 00:11:31 | end: 00:11:37 | type: close | goal: True | goal_mouth: False | audio: True 
 , frame_number: 37845 | start: 00:12:53 | end: 00:13:02 | type: wide | goal: False | goal_mouth: True | audio: True 
 , frame_number: 43015 | start: 00:07:47 | end: 00:07:57 | type: medium | goal: False | goal_mouth: False | audio: True 
-, frame_number: 43040 | start: 00:07:57 | end: 00:07:57 | type: <member 'LOGO' of 'SHOT_TYPES' objects> | goal: False | goal_mouth: False | audio: False 
+, frame_number: 43040 | start: 00:07:57 | end: 00:07:57 | type: <member 'LOGO' of 'shot_types' objects> | goal: False | goal_mouth: False | audio: False 
 , frame_number: 44260 | start: 00:08:10 | end: 00:08:21 | type: close-out | goal: False | goal_mouth: False | audio: True 
-, frame_number: 44285 | start: 00:08:21 | end: 00:08:22 | type: <member 'LOGO' of 'SHOT_TYPES' objects> | goal: False | goal_mouth: False | audio: False 
+, frame_number: 44285 | start: 00:08:21 | end: 00:08:22 | type: <member 'LOGO' of 'shot_types' objects> | goal: False | goal_mouth: False | audio: False 
 ]
 
 GOALS: 1 | ATTACKS: 0 | OTHER: 0 
 
-running time: 328.9009578227997
+running time: 331.62455654144287
