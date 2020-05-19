@@ -16,13 +16,6 @@ class SummaryDetails extends Component {
     wait: true,
   };
 
-  componentWillMount() {
-    this.setState({ wait: true }, () => {
-      this.props.fetchSummaries().then(() => {
-        this.setState({ wait: false });
-      });
-    });
-  }
   render() {
     if(this.state.wait) {
       return null;

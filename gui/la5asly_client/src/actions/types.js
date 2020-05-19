@@ -1,6 +1,6 @@
 export const ERROR = "ERROR";
-export const SIGN_IN = "LOG_IN";
-export const SIGN_OUT = "SIGN_OUT";
+export const LOG_OUT = "LOG_OUT";
+export const FETCH_USER = "FETCH_USER";
 export const SUMMARIZE = "SUMMARIZE";
 export const FETCH_SUMMARIES = "FETCH_MOVIES";
 

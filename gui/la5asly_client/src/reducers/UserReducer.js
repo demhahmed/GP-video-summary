@@ -1,20 +1,17 @@
-import {
-    SIGN_IN,
-    SIGN_UP,
-    SIGN_OUT, RESERVE_MOVIE_SCREEN
-} from '../actions/types';
+import { FETCH_USER, LOG_OUT } from "../actions/types";
+import _ from "lodash";
 
 const initialState = {
-    user: null
+  isLoggedIn: false,
 };
 
 export default (state = initialState, action) => {
-    switch (action.type) {
-        case SIGN_IN:
-            return {...state, user: action.payload};
-        case SIGN_OUT:
-            return {...state, user: null};
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case FETCH_USER:
+      return { isLoggedIn: true, ...action.payload };
+    case LOG_OUT:
+      return { isLoggedIn: false };
+    default:
+      return state;
+  }
 };

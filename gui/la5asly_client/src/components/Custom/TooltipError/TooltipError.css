@@ -1,0 +1,25 @@
+.my-tooltip {
+  background: #363636 0% 0% no-repeat padding-box;
+  border-radius: 10px;
+  display: block;
+  min-width: 180px;
+  position: relative;
+}
+
+.caret {
+  position: absolute;
+  left: -18px;
+  color: #dd4b00;
+  font-size: 30px;
+  top: 10px;
+}
+
+.my-tooltip p {
+  color: #dcdcdc;
+  padding-left: 20px;
+  margin-top: 13px;
+  margin-bottom: 13px;
+  padding-right: 20px;
+  text-align: center;
+}
+

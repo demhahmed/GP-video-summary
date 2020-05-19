@@ -1,10 +1,14 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col, Image } from "react-bootstrap";
 
-import { IoLogoGoogle } from "react-icons/io";
+import { FaHome } from "react-icons/fa";
+
+import logo from "../../assets/logo_svg.svg";
+import signup_image from "../../assets/sign in.jpg";
 
 import validator from "validator";
+import TooltipError from "../Custom/TooltipError";
 import "./SignUp.css";
 
 const renderField = ({
@@ -15,15 +19,21 @@ const renderField = ({
   meta: { touched, error },
 }) => {
   return (
-    <Form.Group as={Row} controlId="formHorizontalEmail">
-      <Form.Label column sm={3}>
-        {label}
-      </Form.Label>
-      <Col sm={9}>
-        <Form.Control {...input} type={type} placeholder={placeholder} />
-        {touched && error && <span className="text-danger">{error}</span>}
-      </Col>
-    </Form.Group>
+    <div className="input-container">
+      <p className="label">{label}</p>
+      <div className="input-tooltip-container">
+        <input
+          className="custom-input"
+          {...input}
+          type={type}
+          placeholder={placeholder}
+          type="text"
+        />
+        {touched && error && (
+          <TooltipError className="tooltip-pos" error_msg={error} />
+        )}
+      </div>
+    </div>
   );
 };
 
@@ -51,52 +61,44 @@ class SignUp extends React.Component {
 
   render() {
     return (
-      <div className="my-form">
-        <Row>
-          <Col xs={{ offset: 3 }}>
-            <h2 style={{ marginBottom: "30px" }}>Create a new account</h2>
-          </Col>
-        </Row>
-        <Form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
-          <Field
-            name="username"
-            type="text"
-            label="Username"
-            placeholder="Enter Username"
-            component={renderField}
-          />
-          <Field
-            name="email"
-            type="email"
-            label="Email"
-            placeholder="Enter Email"
-            component={renderField}
-          />
+      <div>
+        <div className="back-home">
+          <FaHome /> Back to Home
+        </div>
+        <Image className="bk-overlay" src={signup_image} />
+        <div className="dark-overlay" />
+        <Image src={logo} className="logo" />
+        <div className="my-form">
+          <Form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
+            <Field
+              name="username"
+              type="text"
+              label="Username"
+              placeholder="Enter Username"
+              component={renderField}
+            />
+            <Field
+              name="email"
+              type="email"
+              label="Email"
+              placeholder="Enter Email"
+              component={renderField}
+            />
 
-          <Field
-            name="password"
-            type="password"
-            label="Password"
-            placeholder="Enter Password"
-            component={renderField}
-          />
-        </Form>
-        <Form.Group as={Row}>
-          <Col sm={{ offset: 3 }}>
-            <div className="text-center">
-              <Button block type="submit">
-                Sign Up
-              </Button>
-            </div>
-          </Col>
-        </Form.Group>
-        <Form.Group as={Row}>
-          <Col sm={{ offset: 3 }}>
-            <div className="text-center">
-             
-            </div>
-          </Col>
-        </Form.Group>
+            <Field
+              name="password"
+              type="password"
+              label="Password"
+              placeholder="Enter Password"
+              component={renderField}
+            />
+          </Form>
+          <div className="buttons">
+            <button className="custom-btn" type="submit">
+              Sign Up
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
@@ -105,7 +107,7 @@ class SignUp extends React.Component {
 const validate = (formValues) => {
   const errors = {};
   if (!formValues.username) {
-    errors.username = "You must enter a username";
+    errors.username = "Invalid username";
   }
   if (!formValues.password) {
     errors.password = "You must enter a password";

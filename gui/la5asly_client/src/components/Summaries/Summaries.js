@@ -19,7 +19,6 @@ class Summaries extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchSummaries({});
   }
 
   handleFilter = (type) => {

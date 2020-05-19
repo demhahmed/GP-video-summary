@@ -4,69 +4,11 @@ import { Navbar, Form, FormControl, Button, Nav, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./Navigation.css";
 import { IoIosFootball, IoLogoGoogle } from "react-icons/io";
-import { signIn, signOut } from "../../actions";
 
 class Navigation extends Component {
-  componentWillMount() {
-    window.gapi.load("client:auth2", () => {
-      window.gapi.client
-        .init({
-          clientId:
-            "1024627819936-qdje81scffuehjdee38m1b2astim6b7t.apps.googleusercontent.com",
-          scope: 'email',
-        })
-        .then(() => {
-          this.auth = window.gapi.auth2.getAuthInstance();
-          this.onAuthChange(this.auth.isSignedIn.get());
-          this.auth.isSignedIn.listen(this.onAuthChange);
-        });
-    });
-  }
-
-  onAuthChange = (isSignedIn) => {
-    if (isSignedIn) {
-      const username = this.auth.currentUser.get().getBasicProfile().getName();
-      const googleId = this.auth.currentUser.get().getBasicProfile().getId();
-      const image = this.auth.currentUser.get().getBasicProfile().getImageUrl();
-      this.props.signIn(googleId, username, image);
-    } else {
-      this.props.signOut();
-    }
-  };
-
-  onSignInClick = () => {
-    this.auth.signIn();
-  };
-
-  onSignOutClick = () => {
-    this.auth.signOut();
-  };
-
-  renderAuthButton() {
-    if (this.props.isSignedIn === null) {
-      return null;
-    }
-    if (this.props.user) {
-      return (
-        <button onClick={this.onSignOutClick} className="ui red google button">
-          <i className="google icon" />
-          Sign out
-        </button>
-      );
-    } else {
-      return (
-        <button onClick={this.onSignInClick} className="ui red google button">
-          <i className="google icon" />
-          Sign In with Google
-        </button>
-      );
-    }
-  }
-
-
   render() {
     if (this.props.user) {
-      console.log(this.props.user.image)
+      console.log(this.props.user.image);
     }
     return (
       <Navbar bg="light" variant="light">
@@ -81,35 +23,11 @@ class Navigation extends Component {
             </Link>
           </Nav>
           <Nav className="mr-sm-2">
-            {this.props.user && (
+            {!this.props.user.isLoggedIn && (
               <Nav className="mr-auto">
-                <Link
-                  onClick={this.onSignOutClick}
-                  className="custom-link accent-hover-class"
-                  to="/"
-                >
-                  <div className="link" style={{ marginRight: "20px" }}>
-                    Log out
-                  </div>
-                </Link>
-              </Nav>
-            )}
-            {this.props.user && (
-              <Nav className="mr-auto">
-                <Image
-                  width="40px"
-                  height="40px"
-                  roundedCircle
-                  src={this.props.user.image}
-                />
-              </Nav>
-            )}
-            {this.props.isSignedIn !== null && !this.props.user && (
-              <Nav className="mr-auto">
-                <Button onClick={this.onSignInClick} block type="submit" variant="danger">
-                  <IoLogoGoogle className="custom-google-icon" /> Login with
-                  Google
-                </Button>
+                <li>
+                  <a href="/auth/google">Login With Google</a>
+                </li>
               </Nav>
             )}
           </Nav>
@@ -120,7 +38,7 @@ class Navigation extends Component {
 }
 
 const mapStateToProps = (store) => {
-  return { user: store.user.user };
+  return { user: store.user };
 };
 
-export default connect(mapStateToProps, { signIn, signOut })(Navigation);
+export default connect(mapStateToProps, {})(Navigation);
