@@ -33,7 +33,9 @@ def detect_wide(lines):
                     if isparallel_wide(lines[i], lines[j]):
                         pf += 1
                     if pf >= 2:
-                        return True
+                    	del lines
+                    	return True
+    del lines
     return False
 
 def wide(im):
@@ -44,6 +46,8 @@ def wide(im):
     edges = cv2.Canny(im, 60, 120)
     
     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 90, minLineLength=80, maxLineGap=10)
+
+    del edges
     if lines is None:
         return False
     
@@ -54,14 +58,14 @@ def wide(im):
 def prep(img1, img2):
     img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
 
-    light = (36, 25, 25)
-    dark = (70, 255, 255)
+    light, dark = (36, 25, 25), (70, 255, 255)
     
     hsv = cv2.cvtColor(img1, cv2.COLOR_RGB2HSV)
     mask = cv2.inRange(hsv, light, dark)
 
     final_result = cv2.bitwise_and(img2, img2, mask=mask)
 
+    del mask, hsv
     return final_result
 
 def magnitude(x1, y1, x2, y2):
@@ -78,22 +82,25 @@ def isparallel_medium(line1, line2, tol=None):
 def detect_medium(edges):
     # 65, 50, (5) or 7 or 8        // 75 60 10                 
     lines = cv2.HoughLinesP(edges, 1, np.pi/180, 75, minLineLength=60, maxLineGap=10) # maxline can be 5 or 8
+    
+    del edges
+
     if lines is None:
         return False
 
     for i in range(len(lines)):
-        if (magnitude(*lines[i][0]) < 1):
-            # print("YEP")
-            continue
+        # if (magnitude(*lines[i][0]) < 1):
+        #     continue
         pf = 0
         for j in range(i + 1, len(lines)):
-            if (magnitude(*lines[j][0]) < 1):
-                # print("YEP")
-                continue
+            # if (magnitude(*lines[j][0]) < 1):
+            #     continue
             if isparallel_medium(lines[i], lines[j]):
                 pf += 1
             if pf >= 2:
-                return True
+            	del lines
+            	return True
+    del lines
     return False
 
 def medium(img):
