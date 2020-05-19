@@ -158,6 +158,7 @@
   },
   {
     "leagueType": "Bundesliga",
+    "logo": "https://upload.wikimedia.org/wikipedia/ar/f/f9/Bundesliga_logo_%282017%29.png",
     "teams": [
       {
         "teamName": "Bayern Munich",
@@ -236,6 +237,7 @@
   },
   {
     "leagueType": "La Liga",
+    "logo": "https://pngimage.net/wp-content/uploads/2018/06/logo-laliga-png-6.png",
     "teams": [
       {
         "teamName": "Barcelona",

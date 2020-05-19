@@ -14,6 +14,8 @@ require("./db/mongoose");
 require("./models/User");
 require("./models/Summary");
 require("./models/Feedback");
+require("./models/League");
+require("./models/Team");
 
 // Binding Passport to our application.
 require("./services/passport");
@@ -21,6 +23,7 @@ require("./services/passport");
 // Loading the routes
 const userRoute = require("./routes/userRoute");
 const summaryRoute = require("./routes/summaryRoute");
+const teamRoute = require("./routes/teamRoute");
 
 const app = express(); // configuring the server
 const port = 3001;
@@ -45,5 +48,6 @@ app.use("/thumbnails", express.static(path.join(__dirname, "thumbnails")));
 // Attach routes
 app.use(userRoute);
 app.use(summaryRoute);
+app.use(teamRoute);
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
