@@ -1,5 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
+
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -13,19 +15,19 @@ import UploadMatch from "./components/UploadMatch";
 import Notification from "./components/Notification";
 import SummaryDetails from "./components/SummaryDetails";
 
-import { fetchUser } from "./actions";
-import "./App.css";
+import { fetchUser, fetchTeams } from "./actions";
 
 class App extends React.Component {
   componentDidMount() {
     this.props.fetchUser();
+    this.props.fetchTeams();
   }
 
   render() {
     return (
       <div className="app">
         <Router>
-          <div className="page-wrap">
+          <div >
             <Switch>
               <Route path="/signup" component={signUpContainer} exact />
               <Route component={defaultContainer} />
@@ -68,4 +70,4 @@ const mapStateToProps = (store) => {
   return { user: store.user };
 };
 
-export default connect(mapStateToProps, { fetchUser })(App);
+export default connect(mapStateToProps, { fetchUser, fetchTeams })(App);

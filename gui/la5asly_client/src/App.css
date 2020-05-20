@@ -1,0 +1,27 @@
+body {
+  color: #dcdcdc;
+}
+
+.container {
+  max-width: 1471px !important;
+}
+
+.my-btn {
+  background: #dd4b00 0% 0% no-repeat padding-box;
+  border-radius: 5px;
+  color: #dcdcdc;
+  background-color: #dd4b00;
+  border-color: #cf4602;
+  display: inline-block;
+  font-weight: 400;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.my-btn:hover {
+  background-color: #cf4602;
+}

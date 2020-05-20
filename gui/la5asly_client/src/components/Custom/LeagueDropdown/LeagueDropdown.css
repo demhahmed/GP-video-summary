@@ -1,0 +1,82 @@
+.login-dropdown {
+  text-decoration: none;
+  background-color: #ff641a;
+}
+.login-dropdown,
+.login-dropdown:hover,
+.login-dropdown:focus,
+.login-dropdown:active {
+  color: #dcdcdc;
+  text-decoration: none;
+}
+
+.custom-dropdown {
+  min-width: 100px;
+  padding: 10px;
+  background-color: #363636;
+}
+
+.signin-custom-input,
+.signin-custom-input:focus {
+  height: 41px;
+  background: #363636 0% 0% no-repeat padding-box;
+  border: 1px solid #ff641a;
+  opacity: 1;
+  width: 200px;
+  border-radius: 8px;
+  font-size: 12px;
+  color: #dcdcdc;
+  margin-bottom: 10px;
+  padding: 0px 10px;
+}
+
+.form-input p {
+  margin-bottom: 0;
+  font-size: 1rem;
+}
+
+.error-msg {
+  font-size: 11px;
+  display: block;
+  margin-left: 5px;
+  margin-top: -5px;
+  color: #ff641a;
+}
+
+.my-label {
+  font-size: 14px;
+  color: #dcdcdc;
+  margin-bottom: 2px;
+}
+
+.dropdown-mybtn {
+  padding: 0.45rem 1rem;
+  font-size: 14px;
+  border-radius: 5px;
+  display: block;
+  width: 100%;
+}
+
+.google-btn {
+  background-color: #bc3232;
+  margin-top: 7px !important;
+  display: block !important;
+  width: 100% !important;
+  margin-bottom: 0px !important;
+}
+
+.google-btn,
+.google-btn:hover {
+  color: #dcdcdc;
+}
+.navbar-expand .navbar-nav .dropdown-menu {
+  position: absolute;
+  right: 0;
+  left: auto;
+}
+
+.league-logo {
+  height: 35px;
+  width: 35px;
+  margin-right: 10px;
+}

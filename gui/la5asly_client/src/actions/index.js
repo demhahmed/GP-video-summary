@@ -21,6 +21,15 @@ export const fetchSummaries = (filterObject) => async (dispatch) => {
   }
 };
 
+export const fetchTeams = () => async (dispatch) => {
+  try {
+    let response = await axios.get("/api/fetch_league_teams");
+    dispatch({ type: types.FETCH_TEAMS, payload: response.data });
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
 export const summarize = (userId, title, leagueType, file, versions) => async (
   dispatch
 ) => {
