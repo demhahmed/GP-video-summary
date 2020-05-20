@@ -1,0 +1,4 @@
+{"_id":{"$oid":"5ec53b6a0c53bb2754db2903"},"name":"Premier League","logo":"/logos/leagues/premier_league_.png","__v":0}
+{"_id":{"$oid":"5ec53b6b0c53bb2754db2904"},"name":"Seria A","logo":"/logos/leagues/seria_a_.png","__v":0}
+{"_id":{"$oid":"5ec53b6c0c53bb2754db2905"},"name":"Bundesliga","logo":"/logos/leagues/bundesliga_.png","__v":0}
+{"_id":{"$oid":"5ec53b6c0c53bb2754db2906"},"name":"La Liga","logo":"/logos/leagues/la_liga_.png","__v":0}

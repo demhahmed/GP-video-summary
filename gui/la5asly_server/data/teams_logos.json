@@ -1,0 +1,74 @@
+{"_id":{"$oid":"5ec53b6e0c53bb2754db2907"},"name":"Machester United","logo":"/logos/teams/premier_league_machester_united_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b6e0c53bb2754db2908"},"name":"Machester City","logo":"/logos/teams/premier_league_machester_city_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b6f0c53bb2754db2909"},"name":"Aston Villa","logo":"/logos/teams/premier_league_aston_villa_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b6f0c53bb2754db290a"},"name":"Leicester City","logo":"/logos/teams/premier_league_leicester_city_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b6f0c53bb2754db290b"},"name":"Tottenham Hotspur","logo":"/logos/teams/premier_league_tottenham_hotspur_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b700c53bb2754db290c"},"name":"Fulham FC","logo":"/logos/teams/premier_league_fulham_fc_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b700c53bb2754db290d"},"name":"Sheffield United","logo":"/logos/teams/premier_league_sheffield_united_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b710c53bb2754db290e"},"name":"Crystal Palace","logo":"/logos/teams/premier_league_crystal_palace_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b710c53bb2754db290f"},"name":"Wolverhampton Wanderers","logo":"/logos/teams/premier_league_wolverhampton_wanderers_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b720c53bb2754db2910"},"name":"Arsenal FC","logo":"/logos/teams/premier_league_arsenal_fc_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b720c53bb2754db2911"},"name":"Burnley FC","logo":"/logos/teams/premier_league_burnley_fc_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b730c53bb2754db2912"},"name":"Newcastle United","logo":"/logos/teams/premier_league_newcastle_united_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b730c53bb2754db2913"},"name":"Chelsea FC","logo":"/logos/teams/premier_league_chelsea_fc_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b740c53bb2754db2914"},"name":"Liverpool FC","logo":"/logos/teams/premier_league_liverpool_fc_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b740c53bb2754db2915"},"name":"Watford FC","logo":"/logos/teams/premier_league_watford_fc_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b740c53bb2754db2916"},"name":"West Ham United","logo":"/logos/teams/premier_league_west_ham united_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b750c53bb2754db2917"},"name":"Brighton \u0026 Hove Albion","logo":"/logos/teams/premier_league_brighton_\u0026 hove albion_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b750c53bb2754db2918"},"name":"Norwich City","logo":"/logos/teams/premier_league_norwich_city_logo.png","league":{"$oid":"5ec53b6a0c53bb2754db2903"},"__v":0}
+{"_id":{"$oid":"5ec53b760c53bb2754db2919"},"name":"AC Milan","logo":"/logos/teams/seria_a_ac_milan_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b770c53bb2754db291a"},"name":"Genoa CFC","logo":"/logos/teams/seria_a_genoa_cfc_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b770c53bb2754db291b"},"name":"Juventus FC","logo":"/logos/teams/seria_a_juventus_fc_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b770c53bb2754db291c"},"name":"FC Internazionale","logo":"/logos/teams/seria_a_fc_internazionale_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b780c53bb2754db291d"},"name":"US Lecce","logo":"/logos/teams/seria_a_us_lecce_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b780c53bb2754db291e"},"name":"Cagliari Calcio","logo":"/logos/teams/seria_a_cagliari_calcio_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b790c53bb2754db291f"},"name":"AS Roma","logo":"/logos/teams/seria_a_as_roma_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b790c53bb2754db2920"},"name":"SS Lazio","logo":"/logos/teams/seria_a_ss_lazio_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7a0c53bb2754db2921"},"name":"SSC Napoli","logo":"/logos/teams/seria_a_ssc_napoli_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7a0c53bb2754db2922"},"name":"UC Sampdoria","logo":"/logos/teams/seria_a_uc_sampdoria_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7b0c53bb2754db2923"},"name":"Torino FC","logo":"/logos/teams/seria_a_torino_fc_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7c0c53bb2754db2924"},"name":"Atalanta BC","logo":"/logos/teams/seria_a_atalanta_bc_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7d0c53bb2754db2925"},"name":"Udinese","logo":"/logos/teams/seria_a_udinese_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7d0c53bb2754db2926"},"name":"Bologna FC","logo":"/logos/teams/seria_a_bologna_fc_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7e0c53bb2754db2927"},"name":"ACF Fiorentina","logo":"/logos/teams/seria_a_acf_fiorentina_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7e0c53bb2754db2928"},"name":"US Sassuolo","logo":"/logos/teams/seria_a_us_sassuolo_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7f0c53bb2754db2929"},"name":"Parma Calcio","logo":"/logos/teams/seria_a_parma_calcio_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7f0c53bb2754db292a"},"name":"Brescia Calcio","logo":"/logos/teams/seria_a_brescia_calcio_logo.png","league":{"$oid":"5ec53b6b0c53bb2754db2904"},"__v":0}
+{"_id":{"$oid":"5ec53b7f0c53bb2754db292b"},"name":"Bayern Munich","logo":"/logos/teams/bundesliga_bayern_munich_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b800c53bb2754db292c"},"name":"Borussia Dortmund","logo":"/logos/teams/bundesliga_borussia_dortmund_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b800c53bb2754db292d"},"name":"Mainz 05","logo":"/logos/teams/bundesliga_mainz_05_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b810c53bb2754db292e"},"name":"Bayer Leverkusen","logo":"/logos/teams/bundesliga_bayer_leverkusen_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b810c53bb2754db292f"},"name":"Werder Bremen","logo":"/logos/teams/bundesliga_werder_bremen_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b820c53bb2754db2930"},"name":"Schalke 04","logo":"/logos/teams/bundesliga_schalke_04_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b820c53bb2754db2931"},"name":"Hoffenheim","logo":"/logos/teams/bundesliga_hoffenheim_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b830c53bb2754db2932"},"name":"Paderborn","logo":"/logos/teams/bundesliga_paderborn_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b830c53bb2754db2933"},"name":"Eintracht Frankfurt","logo":"/logos/teams/bundesliga_eintracht_frankfurt_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b830c53bb2754db2934"},"name":"RB Leipzig","logo":"/logos/teams/bundesliga_rb_leipzig_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b840c53bb2754db2935"},"name":"Augsburg","logo":"/logos/teams/bundesliga_augsburg_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b840c53bb2754db2936"},"name":"Koln","logo":"/logos/teams/bundesliga_koln_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b850c53bb2754db2937"},"name":"Fortuna Dusseldorf","logo":"/logos/teams/bundesliga_fortuna_dusseldorf_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b850c53bb2754db2938"},"name":"Wolfsburg","logo":"/logos/teams/bundesliga_wolfsburg_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b860c53bb2754db2939"},"name":"Union Berlin","logo":"/logos/teams/bundesliga_union_berlin_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b860c53bb2754db293a"},"name":"Freiburg","logo":"/logos/teams/bundesliga_freiburg_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b860c53bb2754db293b"},"name":"Borussia Monchengladbach","logo":"/logos/teams/bundesliga_borussia_monchengladbach_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b870c53bb2754db293c"},"name":"Hertha BSC","logo":"/logos/teams/bundesliga_hertha_bsc_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2905"},"__v":0}
+{"_id":{"$oid":"5ec53b870c53bb2754db293d"},"name":"Barcelona","logo":"/logos/teams/la_liga_barcelona_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b880c53bb2754db293e"},"name":"Real Madrid","logo":"/logos/teams/la_liga_real_madrid_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b880c53bb2754db293f"},"name":"Sevilla","logo":"/logos/teams/la_liga_sevilla_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b890c53bb2754db2940"},"name":"Real Sociedad","logo":"/logos/teams/la_liga_real_sociedad_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b890c53bb2754db2941"},"name":"Getafe","logo":"/logos/teams/la_liga_getafe_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8a0c53bb2754db2942"},"name":"Atletico Madrid","logo":"/logos/teams/la_liga_atletico_madrid_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8a0c53bb2754db2943"},"name":"Valencia","logo":"/logos/teams/la_liga_valencia_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8b0c53bb2754db2944"},"name":"Villarreal","logo":"/logos/teams/la_liga_villarreal_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8b0c53bb2754db2945"},"name":"Granada","logo":"/logos/teams/la_liga_granada_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8b0c53bb2754db2946"},"name":"Athletic Club","logo":"/logos/teams/la_liga_athletic_club_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8c0c53bb2754db2947"},"name":"Osasuna","logo":"/logos/teams/la_liga_osasuna_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8c0c53bb2754db2948"},"name":"Real Betis","logo":"/logos/teams/la_liga_real_betis_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8d0c53bb2754db2949"},"name":"Levante","logo":"/logos/teams/la_liga_levante_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8d0c53bb2754db294a"},"name":"Deportivo Alaves","logo":"/logos/teams/la_liga_deportivo_alaves_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8e0c53bb2754db294b"},"name":"Real Valladolid","logo":"/logos/teams/la_liga_real_valladolid_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8e0c53bb2754db294c"},"name":"Eibar","logo":"/logos/teams/la_liga_eibar_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8e0c53bb2754db294d"},"name":"Celta Vigo","logo":"/logos/teams/la_liga_celta_vigo_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b8f0c53bb2754db294e"},"name":"Mallorca","logo":"/logos/teams/la_liga_mallorca_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b900c53bb2754db294f"},"name":"Leganes","logo":"/logos/teams/la_liga_leganes_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
+{"_id":{"$oid":"5ec53b900c53bb2754db2950"},"name":"Espanyol","logo":"/logos/teams/la_liga_espanyol_logo.png","league":{"$oid":"5ec53b6c0c53bb2754db2906"},"__v":0}
