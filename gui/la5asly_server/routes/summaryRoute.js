@@ -61,12 +61,12 @@ router.post("/summarize", upload.single("video"), async (req, res) => {
         });
 
 
-        const original_video_name = path.join(__dirname, `summaries/${req.file.filename}`).replace('routers/', '');
-        const thumbnail_path = path.join(__dirname, `thumbnails/thumbnail_${no_ext_filename}.jpg`).replace('routers/', '');
+        const original_video_name = path.join(__dirname, `summaries/${req.file.filename}`).replace('routes/', '');
+        const thumbnail_path = path.join(__dirname, `thumbnails/thumbnail_${no_ext_filename}.jpg`).replace('routes/', '');
 
         exec(`ffmpeg -i ${original_video_name} -ss 00:00:01.000 -vframes 1 ${thumbnail_path}`, (err) => { if(err) console.log(err) });
         versions.forEach(version => {
-            const video_path = path.join(__dirname, `summaries/${no_ext_filename}_${version}.mp4`).replace('routers/', '');
+            const video_path = path.join(__dirname, `summaries/${no_ext_filename}_${version}.mp4`).replace('routes/', '');
             // Execute main.py here // Assume video_path_version.mp4 will be created
             exec(`cp ${original_video_name} ${video_path}`)
         });

@@ -1,7 +1,10 @@
 const fs = require("fs");
+const path = require("path");
+const http = require("https");
+const Axios = require("axios");
 const express = require("express");
-
 const mongoose = require("mongoose");
+const ProgressBar = require("progress");
 
 const Team = mongoose.model("Team");
 const League = mongoose.model("League");
@@ -64,6 +67,72 @@ router.post("/api/generate_data", async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(404).send({ error: error.message });
+  }
+});
+
+async function downloadFile(url, folder, filename) {
+  const dest = path
+    .join(__dirname, `${folder}/${filename}`)
+    .replace("/routes", "");
+  const writer = fs.createWriteStream(dest);
+  return Axios({
+    method: "get",
+    url: url,
+    responseType: "stream",
+  }).then((response) => {
+    return new Promise((resolve, reject) => {
+      response.data.pipe(writer);
+      let error = null;
+      writer.on("error", (err) => {
+        error = err;
+        writer.close();
+        reject(err);
+      });
+      writer.on("close", () => {
+        if (!error) {
+          resolve(true);
+        }
+      });
+    });
+  });
+}
+
+/**
+ * This route get the logos from another place to be hosted in our server.
+ */
+router.post("/api/host_logos", async (req, res) => {
+  try {
+    const data = JSON.parse(fs.readFileSync("data/team-logos.json"));
+    const leagues = {};
+    for ({ teams, leagueType, logo } of data) {
+      const leg_path = leagueType.replace(" ", "_").toLowerCase() + "_.png";
+      const folder = "/logos/leagues";
+      await downloadFile(logo, folder, leg_path);
+      const savedLeague = await new League({
+        name: leagueType,
+        logo: "/logos/leagues" + leg_path,
+      }).save();
+      leagues[leagueType] = savedLeague._id;
+    }
+    for ({ teams, leagueType, leg_logo } of data) {
+      for ({ logo: team_logo, teamName } of teams) {
+        const folder = "/logos/teams";
+        const file_name =
+          leagueType.replace(" ", "_").toLowerCase() +
+          "_" +
+          teamName.replace(" ", "_").toLowerCase() +
+          "_logo.png";
+        await downloadFile(team_logo, folder, file_name);
+        await new Team({
+          name: teamName,
+          logo: file_name,
+          league: leagues[leagueType],
+        }).save();
+      }
+    }
+    res.status(200).send();
+  } catch (error) {
+    res.status(400).send(error.message);
   }
 });
 
