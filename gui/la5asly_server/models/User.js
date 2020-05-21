@@ -14,6 +14,14 @@ const userSchema = new Schema({
     type: String,
     minlength: 8,
   },
+  image: {
+    type: String,
+    default: "default"
+  },
+  type: {
+    type: String,
+    default: "normal"
+  }
 });
 
 mongoose.model("User", userSchema);

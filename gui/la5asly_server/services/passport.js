@@ -2,8 +2,11 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
-const keys = require("../config/keys");
+const sharp = require("sharp");
+const fs = require("fs");
 
+const keys = require("../config/keys");
+const downloadFile = require("../utils/download");
 const User = mongoose.model("User");
 
 /*
@@ -35,10 +38,21 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       try {
         const existingUser = await User.findOne({ googleId: profile.id });
+        const filename = profile.id;
         if (existingUser) {
+          await downloadFile(profile._json.picture, "avatars", filename);
+          const buffer = fs.readFileSync(`avatars/${profile.id}`);
+          sharp(buffer).png().toFile(`avatars/${profile.id}.png`);
+          fs.unlinkSync(`avatars/${profile.id}`);
           return done(null, existingUser);
         }
-        const user = await new User({ googleId: profile.id }).save();
+        const user = await new User({
+          googleId: profile.id,
+        }).save();
+        await downloadFile(profile._json.picture, "avatars", filename);
+        const buffer = fs.readFileSync(`avatars/${profile.id}`);
+        sharp(buffer).png().toFile(`avatars/${profile.id}.png`);
+        fs.unlinkSync(`avatars/${profile.id}`);
         done(null, user);
       } catch (error) {
         done(error);

@@ -1,10 +1,10 @@
 const fs = require("fs");
 const path = require("path");
 const http = require("https");
-const Axios = require("axios");
 const express = require("express");
 const mongoose = require("mongoose");
-const ProgressBar = require("progress");
+const auth = require("../middleware/auth");
+const downloadFile = require("../utils/download");
 
 const Team = mongoose.model("Team");
 const League = mongoose.model("League");
@@ -70,33 +70,6 @@ router.post("/api/generate_data", async (req, res) => {
   }
 });
 
-async function downloadFile(url, folder, filename) {
-  const dest = path
-    .join(__dirname, `${folder}/${filename}`)
-    .replace("/routes", "");
-  const writer = fs.createWriteStream(dest);
-  return Axios({
-    method: "get",
-    url: url,
-    responseType: "stream",
-  }).then((response) => {
-    return new Promise((resolve, reject) => {
-      response.data.pipe(writer);
-      let error = null;
-      writer.on("error", (err) => {
-        error = err;
-        writer.close();
-        reject(err);
-      });
-      writer.on("close", () => {
-        if (!error) {
-          resolve(true);
-        }
-      });
-    });
-  });
-}
-
 /**
  * This route get the logos from another place to be hosted in our server.
  */
@@ -135,5 +108,7 @@ router.post("/api/host_logos", async (req, res) => {
     res.status(400).send(error.message);
   }
 });
+
+
 
 module.exports = router;

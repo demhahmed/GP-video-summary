@@ -1,5 +1,8 @@
+const fs = require("fs");
 const express = require("express");
 const passport = require("passport");
+const sharp = require("sharp");
+
 const auth = require("../middleware/auth");
 
 const router = new express.Router();
@@ -45,6 +48,16 @@ router.get("/api/logout", (req, res) => {
  */
 router.get("/api/current_user", auth, (req, res) => {
   res.status(200).send(req.user);
+});
+
+router.get("/api/me/avatar", auth, async (req, res) => {
+  try {
+    const img = fs.readFileSync(`avatars/${req.user.googleId}.png`)
+    res.set("Content-Type", "image/png");
+    res.status(200).send(img);
+  } catch (error) {
+    res.status(404).send();
+  }
 });
 
 module.exports = router;

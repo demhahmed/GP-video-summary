@@ -48,7 +48,6 @@ app.use("/thumbnails", express.static(path.join(__dirname, "thumbnails")));
 // Directory contains the logos.
 app.use("/logos", express.static(path.join(__dirname, "logos")));
 
-
 // Attach routes
 app.use(userRoute);
 app.use(summaryRoute);
