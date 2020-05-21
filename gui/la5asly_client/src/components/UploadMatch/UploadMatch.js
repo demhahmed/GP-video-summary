@@ -65,57 +65,47 @@ const renderMultiselect = ({
 
 class UploadMatch extends React.Component {
   state = {
-    error: null,
+    home: null,
+    away: null,
     leagueId: null,
+    versions: [],
+    file: null,
   };
-  leagues = [
-    { league: "Premier League", value: "PREMIER_LEAGUE" },
-    { league: "La Liga", value: "LA_LIGA" },
-    { league: "Ligue 1", value: "LIGUE_1" },
-    { league: "BundesLiga", value: "BUNDESLIGA" },
-  ];
+
+  onFileSelected = (file) => {
+    this.setState({ file });
+  };
+
   handleLeagueSelect = (leagueId) => {
     this.setState({ leagueId });
   };
-  handleSubmit = ({ title, leagueType, versions }) => {
-    if (this.state.file) {
-      this.props.summarize(
-        this.props.user._id,
-        title,
-        leagueType,
-        this.state.file,
-        versions
-      );
+  handleSubmit = () => {
+    const { home, away, leagueId, versions, file } = this.state;
+    this.props.summarize(
+      this.props.user._id,
+      leagueId,
+      home,
+      away,
+      file,
+      versions
+    );
+  };
+
+  handleTeamSelect = (type, team) => {
+    this.setState({ [type]: team });
+  };
+
+  handleVersionSelect = (version) => {
+    let idx = this.state.versions.indexOf(version);
+    if (idx !== -1) {
+      this.setState({
+        versions: this.state.versions.filter((version) => version !== version),
+      });
     } else {
-      this.setState({ error: true });
+      this.setState({
+        versions: [...this.state.versions, version],
+      });
     }
-  };
-
-  renderDropdownList = ({ input, data, valueField, textField }) => {
-    return (
-      <DropdownList
-        {...input}
-        data={data}
-        valueField={valueField}
-        textField={textField}
-        onChange={input.onChange}
-      />
-    );
-  };
-
-  renderCheckBox = (id, label) => {
-    return (
-      <Form.Group as={Row} controlId={id}>
-        <Form.Label column sm={3}>
-          {label}
-        </Form.Label>
-        <Col sm={9}>
-          <Form.Group controlId={id}>
-            <Form.Check type="checkbox" label={label} />
-          </Form.Group>
-        </Col>
-      </Form.Group>
-    );
   };
 
   render() {
@@ -134,6 +124,9 @@ class UploadMatch extends React.Component {
       }, 2000);
       return <Redirect to="/" />;
     }
+    const { home, away, leagueId, versions, file } = this.state;
+    const activeBtn = home && away && leagueId && versions.length > 0 && file;
+
     return (
       <div className="container">
         <div className="my-form">
@@ -146,7 +139,7 @@ class UploadMatch extends React.Component {
           </section>
           <p>Video Path</p>
           <div className="search-path">
-            <FileUpload />
+            <FileUpload onFileSelected={this.onFileSelected} />
           </div>
           <p>League</p>
           <div className="league-drop-down">
@@ -161,13 +154,23 @@ class UploadMatch extends React.Component {
                 <Col xs={4}>
                   <div className="league-drop-down">
                     <p>Home Team</p>
-                    <TeamsDropdown leagueId={this.state.leagueId} />
+                    <TeamsDropdown
+                      handleTeamSelect={(team) =>
+                        this.handleTeamSelect("home", team)
+                      }
+                      leagueId={this.state.leagueId}
+                    />
                   </div>
                 </Col>
-                <Col xs={4}>
+                <Col>
                   <div className="league-drop-down">
                     <p>Away Team</p>
-                    <TeamsDropdown leagueId={this.state.leagueId} />
+                    <TeamsDropdown
+                      handleTeamSelect={(team) =>
+                        this.handleTeamSelect("away", team)
+                      }
+                      leagueId={this.state.leagueId}
+                    />
                   </div>
                 </Col>
               </Row>
@@ -175,17 +178,30 @@ class UploadMatch extends React.Component {
           </section>
           <section>
             <p style={{ paddingTop: "45px" }}>Select Version</p>
-            <button style={{ width: "100px" }} className="my-btn disabled">
+            <button
+              style={{ width: "100px" }}
+              onClick={() => this.handleVersionSelect("detailed")}
+              className={`my-btn ${
+                this.state.versions.indexOf("detailed") === -1 ? "disabled" : ""
+              }`}
+            >
               Detailed
             </button>
-            <button style={{ width: "100px" }} className="my-btn">
+            <button
+              style={{ width: "100px" }}
+              onClick={() => this.handleVersionSelect("audio")}
+              className={`my-btn ${
+                this.state.versions.indexOf("audio") === -1 ? "disabled" : ""
+              }`}
+            >
               Audio
             </button>
           </section>
           <section style={{ marginTop: "25px" }}>
             <button
               style={{ display: "inline-block" }}
-              className="my-btn"
+              onClick={this.handleSubmit}
+              className={`my-btn ${activeBtn ? "" : "disabled-btn"}`}
             >
               <FaUpload /> <span>Upload</span>
             </button>

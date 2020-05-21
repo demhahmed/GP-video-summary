@@ -52,7 +52,7 @@ class SignUp extends React.Component {
   };
   responseSuccessGoogle = (response) => console.log(response);
   responseFailGoogle = (response) => console.log(response);
-  onImageSelected = (img) => {
+  onFileSelected = (img) => {
     this.setState({ img: URL.createObjectURL(img), imgObj: img });
   };
   render() {
@@ -93,7 +93,7 @@ class SignUp extends React.Component {
           <div style={{ marginTop: "20px" }} className="input-container">
             <p className="label">Image</p>
             <FileUpload
-              onImageSelected={this.onImageSelected}
+              onFileSelected={this.onFileSelected}
               style={{ color: "#777474", border: "1px solid #dd4b00" }}
             />
             {this.state.img && (

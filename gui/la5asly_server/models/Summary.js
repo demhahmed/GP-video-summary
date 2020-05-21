@@ -20,28 +20,40 @@ const summarySchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
       ref: "League",
+      autopopulate: true
     },
     homeTeam: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Team",
+      autopopulate: true
     },
     awayTeam: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Team",
+      autopopulate: true
     },
     user: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
+      autopopulate: true
     },
-    versions: [Schema.Types.ObjectId],
+    versions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "SummaryVersion",
+        autopopulate: true,
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
+
+summarySchema.plugin(require("mongoose-autopopulate"));
 
 const Summary = mongoose.model("Summary", summarySchema);
 

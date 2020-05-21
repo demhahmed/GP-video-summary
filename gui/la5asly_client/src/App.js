@@ -14,15 +14,14 @@ import UploadMatch from "./components/UploadMatch";
 import Notification from "./components/Notification";
 import SummaryDetails from "./components/SummaryDetails";
 
-import { fetchUser, fetchTeams } from "./actions";
+import { prepareData } from "./actions";
 import Footer from "./components/Footer";
 import Loading from "./components/Loading";
 import About from "./components/About";
 
 class App extends React.Component {
   async componentWillMount() {
-    await this.props.fetchUser();
-    await this.props.fetchTeams();
+    await this.props.prepareData()
   }
 
   render() {
@@ -74,4 +73,4 @@ const mapStateToProps = (store) => {
   return { user: store.user };
 };
 
-export default connect(mapStateToProps, { fetchUser, fetchTeams })(App);
+export default connect(mapStateToProps, { prepareData })(App);

@@ -26,4 +26,16 @@ module.exports = function (app) {
       target: "http://localhost:3001",
     })
   );
+  app.use(
+    "/summaries/*",
+    createProxyMiddleware({
+      target: "http://localhost:3001",
+    })
+  );
+  app.use(
+    "/thumbnails/*",
+    createProxyMiddleware({
+      target: "http://localhost:3001",
+    })
+  );
 };

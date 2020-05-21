@@ -1,16 +1,12 @@
-import { FETCH_SUMMARIES } from "../actions/types";
+import { FETCH_SUMMARIES, ADD_SUMMARY } from "../actions/types";
 
-import _ from "lodash";
-
-const initialState = {
-    summaries: [],
-};
-
-export default (state = initialState, action) => {
-    switch (action.type) {
-        case FETCH_SUMMARIES:
-            return { ...state, summaries: _.cloneDeep(action.payload) };
-        default:
-            return state;
-    }
+export default (state = [], action) => {
+  switch (action.type) {
+    case FETCH_SUMMARIES:
+      return action.payload;
+    case ADD_SUMMARY:
+      return [...state, action.payload];
+    default:
+      return state;
+  }
 };

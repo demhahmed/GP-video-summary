@@ -12,11 +12,11 @@ class Results extends Component {
     wait: false,
   };
   renderPages = () => {
-    if (!this.props.teams) return [];
+    if (!this.props.summaries) return [];
     let items = [];
     for (
       let number = 1;
-      number <= Math.ceil(this.props.teams.length / 12);
+      number <= Math.ceil(this.props.summaries.length / 12);
       number++
     ) {
       items.push(
@@ -35,6 +35,7 @@ class Results extends Component {
         </Pagination.Item>
       );
     }
+    if (items.length === 1) return [];
     return items;
   };
   render() {
@@ -46,21 +47,22 @@ class Results extends Component {
         {this.state.wait && <Loading />}
         {!this.state.wait && (
           <Row>
-            {this.props.teams &&
-              this.props.teams
-                .slice(
-                  (this.state.page - 1) * 12,
-                  (this.state.page - 1) * 12 + 12
-                )
-                .map((team) => (
-                  <Col xs={3}>
-                    <SummaryCard
-                      verysmall={true}
-                      homeTeam={team.logo}
-                      awayTeam={team.logo}
-                    />
-                  </Col>
-                ))}
+            {this.props.summaries
+              .slice(
+                (this.state.page - 1) * 12,
+                (this.state.page - 1) * 12 + 12
+              )
+              .map((summary) => (
+                <Col xs={3}>
+                  <SummaryCard
+                    verysmall={true}
+                    homeTeam={summary.homeTeam.logo}
+                    awayTeam={summary.awayTeam.logo}
+                    thumbnail={summary.thumbnail}
+                    summaryId={summary._id}
+                  />
+                </Col>
+              ))}
           </Row>
         )}
         <Pagination>{this.renderPages()}</Pagination>
@@ -71,7 +73,7 @@ class Results extends Component {
 
 const mapStateToProps = (store) => {
   return {
-    teams: store.teams.teams,
+    summaries: store.summaries,
   };
 };
 

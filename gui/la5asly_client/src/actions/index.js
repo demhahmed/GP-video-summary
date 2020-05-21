@@ -1,13 +1,23 @@
 import * as types from "./types";
 import axios from "axios";
 
-export const fetchUser = () => async (dispatch) => {
+export const prepareData = () => async (dispatch) => {
   try {
     dispatch({ type: types.WAIT_FETCH });
+    await dispatch(fetchUser());
+    await dispatch(fetchTeams());
+    await dispatch(fetchSummaries());
+  } catch (error) {
+    showPopUp(error, dispatch);
+  }
+  dispatch({ type: types.CANCEL_WAIT_FETCH });
+};
+
+export const fetchUser = () => async (dispatch) => {
+  try {
     let response = await axios.get("/api/current_user");
     dispatch({ type: types.FETCH_USER, payload: response.data });
   } catch (error) {}
-  dispatch({ type: types.CANCEL_WAIT_FETCH });
 };
 
 export const signUp = (email, password, file) => async (dispatch) => {
@@ -50,17 +60,27 @@ export const logOut = () => async (dispatch) => {
 };
 
 export const fetchSummaries = (filterObject) => async (dispatch) => {
-  // Example of filter object { username: "Moamen", leagueType: "PREMIER_LEAGUE" }
   try {
-    let response = await axios.get("/fetch_summaries", {
+    let response = await axios.get("/api/fetch_summaries", {
       params: { ...filterObject },
     });
-    console.log(response.data);
     dispatch({ type: types.FETCH_SUMMARIES, payload: response.data });
   } catch (error) {
     handleError(error, dispatch);
   }
 };
+
+export const fetchSummaryDetails = (filterObject) => async (dispatch) => {
+  try {
+    let response = await axios.get("/api/fetch_summaries", {
+      params: { ...filterObject },
+    });
+    dispatch({ type: types.FETCH_SUMMARIES, payload: response.data });
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
 
 export const fetchTeams = () => async (dispatch) => {
   try {
@@ -71,27 +91,34 @@ export const fetchTeams = () => async (dispatch) => {
   }
 };
 
-export const summarize = (userId, title, leagueType, file, versions) => async (
-  dispatch
-) => {
+export const summarize = (
+  user,
+  leagueType,
+  homeTeam,
+  awayTeam,
+  file,
+  versions
+) => async (dispatch) => {
   // Example of filter object { username: "Moamen", leagueType: "PREMIER_LEAGUE" }
   let versions_str = "";
   versions.forEach((version) => (versions_str += version + " "));
   versions_str = versions_str.trim();
   try {
     const formData = new FormData();
-    formData.append("video", file[0]);
-    await axios.post("/summarize", formData, {
+    formData.append("video", file);
+    const response = await axios.post("/api/summarize", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
       params: {
-        user: userId,
-        leagueType: leagueType.league,
-        title,
+        user,
+        leagueType,
+        homeTeam,
+        awayTeam,
         versions: versions_str,
       },
     });
+    dispatch({ type: types.ADD_SUMMARY, payload: response.data });
     showPopUp(
       "File Uploaded Successfully and we're processing the video now",
       dispatch

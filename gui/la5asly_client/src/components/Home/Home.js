@@ -7,7 +7,6 @@ import { showNotification, hideNotification } from "../../actions";
 import homeImage from "../../assets/home.jpg";
 
 import "./Home.css";
-import { FaFire, FaVideo, FaCalendarDay } from "react-icons/fa";
 import SummaryCard from "../SummaryCard";
 import HomeFilterForm from "./HomeFilterForm";
 import Results from "./Results/Results";

@@ -4,6 +4,7 @@ const express = require("express");
 const multer = require("multer");
 const exec = require("child_process").exec;
 
+const SummaryVersion = require("../models/SummaryVersion");
 const Summary = require("../models/Summary");
 
 const router = new express.Router();
@@ -30,7 +31,7 @@ const upload = multer({
 /**
  * This route fetch all summaries
  */
-router.get("/fetch_summaries", async (req, res) => {
+router.get("/api/fetch_summaries", async (req, res) => {
   try {
     const data = await Summary.find();
     res.status(200).send(data);
@@ -42,7 +43,7 @@ router.get("/fetch_summaries", async (req, res) => {
 /**
  * This route uploads a video on the server to be hosted.
  */
-router.post("/summarize", upload.single("video"), async (req, res) => {
+router.post("/api/summarize", upload.single("video"), async (req, res) => {
   try {
     const no_ext_filename = req.file.filename.slice(
       0,
@@ -51,14 +52,22 @@ router.post("/summarize", upload.single("video"), async (req, res) => {
     const versions = req.query.versions.split(" ");
     delete req.query.versions;
     // Here we run the Python Script.
+    const summaryVersions = [];
+    for (version of versions) {
+      const saved = await new SummaryVersion({
+        type: version,
+        goals: Math.floor(Math.random() * 10),
+        chances: Math.floor(Math.random() * 10),
+        length: Math.floor(Math.random() * 10),
+      }).save();
+      summaryVersions.push(saved._id);
+    }
+
     const newSummary = new Summary({
       ...req.query,
       summaryPath: req.file.filename,
-      goals: Math.floor(Math.random() * 10),
-      chances: Math.floor(Math.random() * 10),
-      length: Math.floor(Math.random() * 10),
       thumbnail: `thumbnail_${no_ext_filename}.jpg`,
-      versions,
+      versions: summaryVersions,
     });
 
     const original_video_name = path
@@ -93,7 +102,7 @@ router.post("/summarize", upload.single("video"), async (req, res) => {
 /**
  * This route delete an existing video summary
  */
-router.delete("/delete_summary/:id", async (req, res) => {
+router.delete("/api/delete_summary/:id", async (req, res) => {
   try {
     const summary = await Summary.findOne({ _id: req.params.id });
     if (summary) {

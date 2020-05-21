@@ -16,18 +16,26 @@ class SummaryDetails extends Component {
   state = {
     value: 2,
   };
+
+  async componentWillMount() {
+    this.props.fetchSummaries();
+  }
+
   render() {
+    const idx = this.props.summaries
+      .map((summary) => summary._id)
+      .indexOf(this.props.match.params.id);
     return (
       <div className="container">
         <Image className="bk-overlay" src={homeImage} />
         <div className="dark-overlay" />
         <div style={{ padding: "40px 0" }}>
-          {this.props.teams && (
+          {idx !== -1 && (
             <Row>
               <Col xs={10}>
                 <ReactPlayer
                   className="player"
-                  url="https://www.youtube.com/watch?v=wm4kB5tOc1s"
+                  url={`/summaries/${this.props.summaries[idx].summaryPath}`}
                   playing={false}
                   controls
                 />
@@ -50,7 +58,7 @@ class SummaryDetails extends Component {
                         onChange={(value) => this.setState({ value })}
                       />
                       <button className="my-btn feedback">
-                        <RiFeedbackLine style={{fontSize: "20px"}} /> Send
+                        <RiFeedbackLine style={{ fontSize: "20px" }} /> Send
                       </button>
                     </div>
                   </Col>
@@ -73,23 +81,27 @@ class SummaryDetails extends Component {
                   <Col xs={6}>
                     <Image
                       className="details-logo"
-                      src={this.props.teams[0].logo}
+                      src={this.props.summaries[idx].homeTeam.logo}
                     />
                   </Col>
                   <Col xs={6}>
                     <Image
                       className="details-logo"
-                      src={this.props.teams[1].logo}
+                      src={this.props.summaries[idx].awayTeam.logo}
                     />
                   </Col>
                 </Row>
                 <div className="text-center details-section">
                   <p className="details-label">Goals</p>
-                  <p className="details-result">10</p>
+                  <p className="details-result">{this.props.summaries[idx].versions[0].goals}</p>
                 </div>
                 <div className="text-center details-section">
                   <p className="details-label">Chances</p>
-                  <p className="details-result">10</p>
+                  <p className="details-result">{this.props.summaries[idx].versions[0].chances}</p>
+                </div>
+                <div className="text-center details-section">
+                  <p className="details-label">Length</p>
+                  <p className="details-result">{this.props.summaries[idx].versions[0].length} min</p>
                 </div>
               </Col>
             </Row>
@@ -101,7 +113,7 @@ class SummaryDetails extends Component {
 }
 
 const mapStateToProps = (store) => {
-  return { user: store.user, teams: store.teams.teams };
+  return { summaries: store.summaries };
 };
 
 export default connect(mapStateToProps, { fetchSummaries })(SummaryDetails);

@@ -9,13 +9,19 @@ import { Link } from "react-router-dom";
 export default class SummaryCard extends Component {
   render() {
     return (
-      <Link className="custom-link" to={`/summary_details/123`}>
+      <Link
+        className="custom-link"
+        to={`/summary_details/${this.props.summaryId}`}
+      >
         <div
           className={`my-card ${this.props.small ? "small" : ""} ${
             this.props.verysmall ? "very-small" : ""
           }`}
         >
-          <Image className="thumbnail-image" src={thumbnail} />
+          <Image
+            className="thumbnail-image"
+            src={`/thumbnails/${this.props.thumbnail}`}
+          />
           <RiPlayCircleLine
             className={`play-logo ${
               this.props.small || this.props.verysmall ? "small" : ""

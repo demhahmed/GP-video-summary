@@ -23,8 +23,16 @@ const userSchema = new Schema({
     default: "default",
   },
 
-  feedbacks: [Schema.Types.ObjectId],
+  feedbacks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Feedback",
+      autopopulate: true,
+    },
+  ],
 });
+
+userSchema.plugin(require("mongoose-autopopulate"));
 
 const User = mongoose.model("User", userSchema);
 

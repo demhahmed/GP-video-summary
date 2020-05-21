@@ -21,8 +21,16 @@ const summaryVersionSchema = new Schema({
     type: Number,
     required: true,
   },
-  feedbacks: [Schema.Types.ObjectId],
+  feedbacks: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Feedback",
+      autopopulate: true,
+    },
+  ],
 });
+
+summaryVersionSchema.plugin(require("mongoose-autopopulate"));
 
 const SummaryVersion = mongoose.model("SummaryVersion", summaryVersionSchema);
 

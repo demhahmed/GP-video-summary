@@ -9,8 +9,8 @@ class FileUpload extends React.Component {
   onChange = (e) => {
     if (!e.target.files || (e.target.files && e.target.files.length === 0))
       return;
-    if (this.props.onImageSelected) {
-      this.props.onImageSelected(e.target.files[0]);
+    if (this.props.onFileSelected) {
+      this.props.onFileSelected(e.target.files[0]);
     }
     this.setState({
       file: e.target.files[0],
