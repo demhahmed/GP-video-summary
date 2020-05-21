@@ -33,11 +33,12 @@
 }
 
 .my-form {
-  width: 500px;
 }
 
 .input-container {
   position: relative;
+  width: 360px;
+  margin: 0 auto;
 }
 
 .label {
@@ -49,14 +50,16 @@
 }
 
 .custom-input,
-.custom-input:focus {
-  background: #363636 0% 0% no-repeat padding-box;
-  border: 2px solid #dd4b00;
-  border-radius: 10px;
+.custom-input:focus,
+.custom-input:active {
+  background: #363636 0% 0% no-repeat padding-box !important;
+  background-color: #363636 !important;
+  border: 1px solid #dd4b00 !important;
+  border-radius: 3px;
   opacity: 1;
   padding: 10px 20px;
-  color: #dcdcdc;
-  font-size: 20px;
+  color: #dcdcdc !important;
+  font-size: 15px;
   width: 100%;
 }
 .custom-btn {
@@ -94,7 +97,7 @@
 .tooltip-pos {
   position: absolute;
   top: 0;
-  left: 516px;
+  left: 374px;
 }
 
 .input-tooltip-container {
@@ -124,4 +127,20 @@
 
 .back-home:hover {
   background-color: #b43e03;
+}
+
+.preview-img {
+  width: 100px;
+  position: absolute;
+  left: 400px;
+  bottom: -38px;
+  border: 1px solid #fff;
+}
+
+.disabled-btn,
+.disabled-btn:active,
+.disabled-btn:focus,
+.disabled-btn:hover {
+  background-color: gray;
+  cursor: not-allowed;
 }

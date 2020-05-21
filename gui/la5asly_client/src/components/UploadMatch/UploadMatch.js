@@ -2,15 +2,23 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Field, reduxForm } from "redux-form";
 import { Redirect } from "react-router-dom";
-import { Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col, Image } from "react-bootstrap";
 import DropdownList from "react-widgets/lib/DropdownList";
 import Multiselect from "react-widgets/lib/Multiselect";
 import moment from "moment";
 import momentLocaliser from "react-widgets-moment";
 import { showNotification, hideNotification, summarize } from "../../actions";
+import uploadLogo from "../../assets/upload.svg";
 
 import "react-widgets/dist/css/react-widgets.css";
 import "./UploadMatch.css";
+import Loading from "../Loading";
+import FileUpload from "../FileUploader/FileUpload";
+import uploadImage from "../../assets/upload.jpg";
+import LeagueDropdown from "../Custom/LeagueDropdown/LeagueDropdown";
+import TeamsDropdown from "../Custom/TeamsDropdown";
+import { SelectList } from "react-widgets";
+import { FaUpload } from "react-icons/fa";
 momentLocaliser(moment);
 
 const renderField = ({
@@ -58,6 +66,7 @@ const renderMultiselect = ({
 class UploadMatch extends React.Component {
   state = {
     error: null,
+    leagueId: null,
   };
   leagues = [
     { league: "Premier League", value: "PREMIER_LEAGUE" },
@@ -65,7 +74,9 @@ class UploadMatch extends React.Component {
     { league: "Ligue 1", value: "LIGUE_1" },
     { league: "BundesLiga", value: "BUNDESLIGA" },
   ];
-
+  handleLeagueSelect = (leagueId) => {
+    this.setState({ leagueId });
+  };
   handleSubmit = ({ title, leagueType, versions }) => {
     if (this.state.file) {
       this.props.summarize(
@@ -108,85 +119,78 @@ class UploadMatch extends React.Component {
   };
 
   render() {
-    if (!this.props.user) {
-      this.props.showNotification("You are not logged in to upload summary!");
+    if (this.props.globalReducer.wait) {
+      return <Loading />;
+    }
+    if (
+      !this.props.user.isLoggedIn ||
+      (this.props.user.isLoggedIn && this.props.user.type !== "admin")
+    ) {
+      this.props.showNotification(
+        "You are not logged in as admin to upload video!"
+      );
       setTimeout(() => {
         this.props.hideNotification();
       }, 2000);
       return <Redirect to="/" />;
     }
     return (
-      <div className="my-form">
-        <Row>
-          <Col xs={{ offset: 3 }}>
-            <h2 style={{ marginBottom: "30px" }}>Summarize a new match</h2>
-          </Col>
-        </Row>
-        <Form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
-          <Field
-            name="title"
-            type="text"
-            label="Title"
-            placeholder="Enter title"
-            component={renderField}
-          />
-          <Row style={{ marginBottom: "15px" }}>
-            <Form.Label column sm={3}>
-              Versions
-            </Form.Label>
-            <Col sm={9}>
-              <div>
-                <Field
-                  name="versions"
-                  component={renderMultiselect}
-                  data={["Full", "Audio_85", "Audio_90", "Audio_95"]}
-                />
-              </div>
-            </Col>
-          </Row>
-          <Row style={{ marginBottom: "15px" }}>
-            <Form.Label column sm={3}>
-              League Type
-            </Form.Label>
-            <Col sm={9}>
-              <Field
-                name="leagueType"
-                component={this.renderDropdownList}
-                data={this.leagues}
-                valueField="value"
-                textField="league"
-              />
-            </Col>
-          </Row>
-          <Form.Group as={Row}>
-            <Form.Label column sm={3}>
-              Match File
-            </Form.Label>
-            <Col sm={9}>
-              <input
-                type="file"
-                onChange={(e) => {
-                  this.setState({ file: e.target.files, error: null });
-                }}
-              />
-              {this.state.error && (
-                <p className="text-danger">please upload a file</p>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row}>
-            <Col sm={{ offset: 3 }}>
-              <Button
-                disabled={this.props.uploadMatchForm && this.props.uploadMatchForm.syncErrors || !this.state.file}
-                block
-                variant="success"
-                type="submit"
-              >
-                Summarize
-              </Button>
-            </Col>
-          </Form.Group>
-        </Form>
+      <div className="container">
+        <div className="my-form">
+          <Image className="bk-overlay" src={uploadImage} />
+          <div className="dark-overlay" />
+          <section>
+            <div className="home-header">
+              <span>Upload</span>
+            </div>
+          </section>
+          <p>Video Path</p>
+          <div className="search-path">
+            <FileUpload />
+          </div>
+          <p>League</p>
+          <div className="league-drop-down">
+            <LeagueDropdown
+              handleLeagueSelect={this.handleLeagueSelect}
+              className="smaller-dropdown"
+            />
+          </div>
+          <section style={{ marginTop: "30px" }}>
+            {this.props.leagues && this.state.leagueId && (
+              <Row style={{ marginBottom: "20px" }}>
+                <Col xs={4}>
+                  <div className="league-drop-down">
+                    <p>Home Team</p>
+                    <TeamsDropdown leagueId={this.state.leagueId} />
+                  </div>
+                </Col>
+                <Col xs={4}>
+                  <div className="league-drop-down">
+                    <p>Away Team</p>
+                    <TeamsDropdown leagueId={this.state.leagueId} />
+                  </div>
+                </Col>
+              </Row>
+            )}
+          </section>
+          <section>
+            <p style={{ paddingTop: "45px" }}>Select Version</p>
+            <button style={{ width: "100px" }} className="my-btn disabled">
+              Detailed
+            </button>
+            <button style={{ width: "100px" }} className="my-btn">
+              Audio
+            </button>
+          </section>
+          <section style={{ marginTop: "25px" }}>
+            <button
+              style={{ display: "inline-block" }}
+              className="my-btn"
+            >
+              <FaUpload /> <span>Upload</span>
+            </button>
+          </section>
+        </div>
       </div>
     );
   }
@@ -210,7 +214,12 @@ const validate = (formValues) => {
 };
 
 const mapStateToProps = (store) => {
-  return { user: store.user.user, uploadMatchForm: store.form.uploadMatch };
+  return {
+    user: store.user,
+    uploadMatchForm: store.form.uploadMatch,
+    globalReducer: store.globalReducer,
+    leagues: store.teams.leagues,
+  };
 };
 
 export default connect(mapStateToProps, {

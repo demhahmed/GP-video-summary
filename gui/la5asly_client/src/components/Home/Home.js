@@ -1,18 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { Image, Row, Col } from "react-bootstrap";
+import { Image, Row, Col, Button } from "react-bootstrap";
 import { showNotification, hideNotification } from "../../actions";
 
 import homeImage from "../../assets/home.jpg";
-import Summaries from "../Summaries";
 
 import "./Home.css";
 import { FaFire, FaVideo, FaCalendarDay } from "react-icons/fa";
 import SummaryCard from "../SummaryCard";
-import HomeFilterForm from "../HomeFilterForm";
+import HomeFilterForm from "./HomeFilterForm";
+import Results from "./Results/Results";
 
 class Home extends Component {
+  state = {
+    filter: true,
+  };
   render() {
     return (
       <div className="container">
@@ -21,41 +24,79 @@ class Home extends Component {
         <section>
           <HomeFilterForm />
         </section>
-        <section>
-          <div className="home-header">
-            <span>Today</span>
-          </div>
+        {this.state.filter ? (
+          <Results />
+        ) : (
+          <div>
+            <section>
+              <div className="home-header">
+                <span>Today</span>
+              </div>
 
-          {this.props.teams && this.props.teams.length && (
-            <Row>
-              <Col xs={6}>
-                <SummaryCard
-                  homeTeam={this.props.teams[0].logo}
-                  awayTeam={this.props.teams[0].logo}
-                />
-              </Col>
-              <Col xs={6}>
+              {this.props.teams && this.props.teams.length && (
+                <Row>
+                  <Col xs={6}>
+                    <SummaryCard
+                      homeTeam={this.props.teams[0].logo}
+                      awayTeam={this.props.teams[0].logo}
+                    />
+                  </Col>
+                  <Col xs={6}>
+                    <Row>
+                      {this.props.teams
+                        .slice(8, Math.min(12, this.props.teams.length))
+                        .map((team) => (
+                          <Col xs={6}>
+                            <SummaryCard
+                              small={true}
+                              homeTeam={team.logo}
+                              awayTeam={team.logo}
+                            />
+                          </Col>
+                        ))}
+                    </Row>
+                  </Col>
+                </Row>
+              )}
+              {this.props.teams && (
+                <button
+                  style={{ display: "block", margin: "70px auto 0px" }}
+                  className="my-btn"
+                >
+                  View More
+                </button>
+              )}
+            </section>
+            <section className="my-section">
+              <div className="home-header">
+                <span>Popular</span>
+              </div>
+              {this.props.teams && (
                 <Row>
                   {this.props.teams
-                    .slice(8, Math.min(12, this.props.teams.length))
+                    .slice(8, Math.min(20, this.props.teams.length))
                     .map((team) => (
-                      <Col xs={6}>
+                      <Col xs={3}>
                         <SummaryCard
-                          small={true}
+                          verysmall={true}
                           homeTeam={team.logo}
                           awayTeam={team.logo}
                         />
                       </Col>
                     ))}
                 </Row>
-              </Col>
-            </Row>
-          )}
-        </section>
-        <div className="home-header">
-          <FaFire className="home-header-icon" />
-          <span>Popular</span>
-        </div>
+              )}
+              {this.props.teams && (
+                <button
+                  style={{ display: "block", margin: "20px auto" }}
+                  className="my-btn"
+                >
+                  View More
+                </button>
+              )}
+            </section>
+          </div>
+        )}
       </div>
     );
   }

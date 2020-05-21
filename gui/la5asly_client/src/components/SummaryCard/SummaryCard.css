@@ -6,7 +6,13 @@
   margin-top: 10px;
   margin-bottom: 10px;
   box-shadow: 0 1px 2px #333333;
-  transition: box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+  transition: transform 0.2s ease-in;
+}
+
+.my-card:hover {
+  transform: translate(5px, 5px);
+  z-index: 14;
 }
 
 .my-card.small {
@@ -51,6 +57,7 @@
   left: 0;
 }
 
+height: 75px;
 .team-image .awayTeam {
   right: 0;
 }
@@ -67,4 +74,35 @@
 .vs.small {
   right: 21%;
   bottom: 9%;
+}
+
+.my-card.very-small {
+  width: 328px;
+  height: 186px;
+}
+.my-card-scoreboard.very-small {
+  width: 72px;
+  height: 29px;
+}
+.team-image img.very-small {
+  width: 17px;
+  height: 18px;
+}
+.vs.very-small {
+  right: 9%;
+  bottom: 3%;
+  font-size: 10px;
+}
+
+.play-logo {
+  position: absolute;
+  left: 40%;
+  top: 40%;
+  width: 75px;
+  height: 75px;
+}
+
+.play-logo.small {
+  height: 40px;
+  width: 40px;
 }

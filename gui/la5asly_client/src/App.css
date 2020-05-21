@@ -25,3 +25,21 @@ body {
 .my-btn:hover {
   background-color: #cf4602;
 }
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.page-wrap {
+  flex: 1;
+}
+
+.custom-link,
+.custom-link:active,
+.custom-link:focus,
+.custom-link:hover {
+  text-decoration: none;
+  color: inherit;
+}

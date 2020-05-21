@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Dropdown, Image } from "react-bootstrap";
+import { FaCaretUp, FaCaretDown } from "react-icons/fa";
 import { connect } from "react-redux";
-import "./LeagueDropdown.css";
-import { FaCaretDown, FaCaretUp } from "react-icons/fa";
 
-class LeagueDropdown extends Component {
+class TeamsDropdown extends Component {
   state = {
     down: true,
-    leagueName: null,
+    teamName: null,
     logo: null,
   };
   CustomMenu = React.forwardRef(
@@ -32,7 +31,6 @@ class LeagueDropdown extends Component {
         className="my-filter-btn"
         onClick={(e) => {
           e.preventDefault();
-          // this.setState({ down: !this.state.down });
           onClick(e);
         }}
       >
@@ -61,45 +59,50 @@ class LeagueDropdown extends Component {
     return (
       <Dropdown className={this.props.className}>
         <Dropdown.Toggle as={this.CustomToggle} id="dropdown-custom-components">
-          {this.state.leagueName ? (
+          {this.state.teamName ? (
             <div>
               <Image className="league-logo" src={this.state.logo} />
-              {this.state.leagueName}
+              {this.state.teamName}
             </div>
           ) : (
-            "Select League"
+            "Select Team"
           )}
         </Dropdown.Toggle>
 
-        <Dropdown.Menu className="right-dropdown" as={this.CustomMenu}>
-          {this.props.leagues &&
-            this.props.leagues.map((league) => {
-              return (
-                <Dropdown.Item
-                  onClick={() => {
-                    if (this.props.onChange) this.props.onChange(league.name);
-                    this.setState({
-                      leagueName: league.name,
-                      logo: league.logo,
-                    });
-                    if (this.props.handleLeagueSelect) {
-                      this.props.handleLeagueSelect(league._id);
-                    }
-                  }}
-                  eventKey={league.name}
-                >
-                  <Image className="league-logo" src={league.logo} />{" "}
-                  {league.name}
-                </Dropdown.Item>
-              );
-            })}
+        <Dropdown.Menu
+          className="right-dropdown"
+          style={{ maxHeight: "200px", overflow: "auto" }}
+          as={this.CustomMenu}
+        >
+          {this.props.teams &&
+            this.props.teams
+              .filter((team) => team.league._id === this.props.leagueId)
+              .map((team) => {
+                return (
+                  <Dropdown.Item
+                    onClick={() => {
+                      this.setState({
+                        teamName: team.name,
+                        logo: team.logo,
+                      });
+                      if (this.props.handleTeamSelect) {
+                        this.props.handleTeamSelect(team._id);
+                      }
+                    }}
+                    eventKey={team.name}
+                  >
+                    <Image className="league-logo" src={team.logo} />{" "}
+                    {team.name}
+                  </Dropdown.Item>
+                );
+              })}
         </Dropdown.Menu>
       </Dropdown>
     );
   }
 }
 const mapStateToProps = (store) => {
-  return { leagues: store.teams.leagues };
+  return { teams: store.teams.teams };
 };
 
-export default connect(mapStateToProps, {})(LeagueDropdown);
+export default connect(mapStateToProps, {})(TeamsDropdown);

@@ -10,6 +10,10 @@ import signup_image from "../../assets/sign in.jpg";
 import validator from "validator";
 import TooltipError from "../Custom/TooltipError";
 import "./SignUp.css";
+import { Link, Redirect } from "react-router-dom";
+import FileUpload from "../FileUploader/FileUpload";
+import { connect } from "react-redux";
+import { signUp } from "../../actions";
 
 const renderField = ({
   input,
@@ -27,7 +31,6 @@ const renderField = ({
           {...input}
           type={type}
           placeholder={placeholder}
-          type="text"
         />
         {touched && error && (
           <TooltipError className="tooltip-pos" error_msg={error} />
@@ -38,45 +41,40 @@ const renderField = ({
 };
 
 class SignUp extends React.Component {
-  handleSubmit = ({
-    username,
-    password,
-    email,
-    firstName,
-    lastName,
-    birthDate,
-  }) => {
-    this.props.handleSignUp(
-      username,
-      password,
-      email,
-      firstName,
-      lastName,
-      birthDate
+  state = { img: null, imgObj: null };
+
+  handleSubmit = () => {
+    this.props.signUp(
+      this.props.signUpForm.values.email,
+      this.props.signUpForm.values.password,
+      this.state.imgObj
     );
   };
-
   responseSuccessGoogle = (response) => console.log(response);
   responseFailGoogle = (response) => console.log(response);
-
+  onImageSelected = (img) => {
+    this.setState({ img: URL.createObjectURL(img), imgObj: img });
+  };
   render() {
+    if (this.props.user.isLoggedIn) {
+      return <Redirect to="/" />;
+    }
+    const activeBtn =
+      this.props.signUpForm &&
+      !this.props.signUpForm.syncErrors &&
+      this.state.img;
     return (
-      <div>
-        <div className="back-home">
-          <FaHome /> Back to Home
-        </div>
+      <div className="container">
+        <Link className="custom-link" to="/">
+          <div className="back-home">
+            <FaHome /> Back to Home
+          </div>
+        </Link>
         <Image className="bk-overlay" src={signup_image} />
         <div className="dark-overlay" />
         <Image src={logo} className="logo" />
         <div className="my-form">
           <Form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
-            <Field
-              name="username"
-              type="text"
-              label="Username"
-              placeholder="Enter Username"
-              component={renderField}
-            />
             <Field
               name="email"
               type="email"
@@ -84,7 +82,6 @@ class SignUp extends React.Component {
               placeholder="Enter Email"
               component={renderField}
             />
-
             <Field
               name="password"
               type="password"
@@ -93,8 +90,24 @@ class SignUp extends React.Component {
               component={renderField}
             />
           </Form>
-          <div className="buttons">
-            <button className="custom-btn" type="submit">
+          <div style={{ marginTop: "20px" }} className="input-container">
+            <p className="label">Image</p>
+            <FileUpload
+              onImageSelected={this.onImageSelected}
+              style={{ color: "#777474", border: "1px solid #dd4b00" }}
+            />
+            {this.state.img && (
+              <Image className="preview-img" src={this.state.img} />
+            )}
+          </div>
+          <div className={`buttons`}>
+            <button
+              onClick={() => {
+                if (activeBtn) this.handleSubmit();
+              }}
+              className={`custom-btn  ${activeBtn ? "" : "disabled-btn"}`}
+              type="submit"
+            >
               Sign Up
             </button>
           </div>
@@ -106,9 +119,6 @@ class SignUp extends React.Component {
 
 const validate = (formValues) => {
   const errors = {};
-  if (!formValues.username) {
-    errors.username = "Invalid username";
-  }
   if (!formValues.password) {
     errors.password = "You must enter a password";
   }
@@ -121,7 +131,14 @@ const validate = (formValues) => {
   return errors;
 };
 
+const mapStateToProps = (store) => {
+  return {
+    signUpForm: store.form.signUpForm,
+    user: store.user,
+  };
+};
+
 export default reduxForm({
   form: "signUpForm",
   validate,
-})(SignUp);
+})(connect(mapStateToProps, { signUp })(SignUp));

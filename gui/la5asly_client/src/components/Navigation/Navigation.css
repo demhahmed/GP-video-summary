@@ -43,8 +43,12 @@
   font-size: 1rem;
 }
 
-.uploadlogo{
+.uploadlogo {
   height: 41px;
   margin-right: 5px;
   color: #dd4a00;
+}
+.avatar {
+  width: 44px;
+  height: 41px;
 }

@@ -20,4 +20,10 @@ module.exports = function (app) {
       target: "http://localhost:3001",
     })
   );
+  app.use(
+    "/logos/*",
+    createProxyMiddleware({
+      target: "http://localhost:3001",
+    })
+  );
 };

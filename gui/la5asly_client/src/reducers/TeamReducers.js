@@ -12,10 +12,11 @@ export default (state = initialState, action) => {
       const leagues = action.payload.map((team) => ({
         name: team.league.name,
         logo: team.league.logo,
+        _id: team.league._id,
       }));
       return {
         teams: action.payload,
-        leagues: _.uniqBy(leagues, "name"),
+        leagues: _.uniqBy(leagues, "_id"),
       };
     default:
       return state;

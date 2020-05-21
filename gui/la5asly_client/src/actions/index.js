@@ -3,9 +3,50 @@ import axios from "axios";
 
 export const fetchUser = () => async (dispatch) => {
   try {
+    dispatch({ type: types.WAIT_FETCH });
     let response = await axios.get("/api/current_user");
     dispatch({ type: types.FETCH_USER, payload: response.data });
   } catch (error) {}
+  dispatch({ type: types.CANCEL_WAIT_FETCH });
+};
+
+export const signUp = (email, password, file) => async (dispatch) => {
+  try {
+    dispatch({ type: types.WAIT_FETCH });
+    const formData = new FormData();
+    formData.append("avatar", file);
+    let response = await axios.post("/auth/local", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      params: {
+        email,
+        password,
+      },
+    });
+    dispatch({ type: types.FETCH_USER, payload: response.data });
+  } catch (error) {
+    showPopUp("This email is already registerd before.", dispatch);
+  }
+  dispatch({ type: types.CANCEL_WAIT_FETCH });
+};
+
+export const signIn = (email, password) => async (dispatch) => {
+  try {
+    dispatch({ type: types.WAIT_FETCH });
+    let response = await axios.post("/auth/local", { email, password });
+    dispatch({ type: types.FETCH_USER, payload: response.data });
+  } catch (error) {
+    showPopUp("Wrong email or password.", dispatch);
+  }
+  dispatch({ type: types.CANCEL_WAIT_FETCH });
+};
+
+export const logOut = () => async (dispatch) => {
+  try {
+    await axios.get("/api/logout");
+    dispatch({ type: types.LOG_OUT });
+  } catch (e) {}
 };
 
 export const fetchSummaries = (filterObject) => async (dispatch) => {

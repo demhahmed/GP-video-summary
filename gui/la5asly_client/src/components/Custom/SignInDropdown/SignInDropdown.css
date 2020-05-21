@@ -74,3 +74,13 @@
   right: 0;
   left: auto;
 }
+
+
+
+.disabled-btn,
+.disabled-btn:active,
+.disabled-btn:focus,
+.disabled-btn:hover {
+  background-color: gray;
+  cursor: not-allowed;
+}

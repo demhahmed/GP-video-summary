@@ -13,6 +13,9 @@ import { FaGoogle } from "react-icons/fa";
 import validator from "validator";
 import googleLogo from "../../../assets/google.svg";
 import "./SignInDropdown.css";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { signIn } from "../../../actions";
 
 const renderField = ({
   input,
@@ -30,7 +33,6 @@ const renderField = ({
           {...input}
           type={type}
           placeholder={placeholder}
-          type="text"
         />
       </div>
       {touched && error && <span className="error-msg">{error}</span>}
@@ -43,6 +45,11 @@ class SignInDropdown extends Component {
     value: "",
   };
 
+  handleSubmit = () => {
+    const { email, password } = this.props.signInForm.values;
+    this.props.signIn(email, password);
+  };
+
   CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <button onClick={(e) => onClick(e)} ref={ref} className="my-btn">
       {children}
@@ -50,9 +57,12 @@ class SignInDropdown extends Component {
   ));
 
   CustomMenu = React.forwardRef(({ className }, ref) => {
+    const activeBtn =
+      this.props.signInForm && !this.props.signInForm.syncErrors;
+    console.log(activeBtn);
     return (
       <div ref={ref} className={className}>
-        <Form autoComplete="off" onClick={(e) => e.preventDefault()}>
+        <Form onClick={(e) => e.preventDefault()}>
           <Field
             name="email"
             type="email"
@@ -70,15 +80,28 @@ class SignInDropdown extends Component {
         </Form>
         <Row>
           <Col xs={6}>
-            <button className="my-btn dropdown-mybtn">Sign Up</button>
+            <Link to="/signup" className="custom-link">
+              <button className="my-btn dropdown-mybtn">Sign Up</button>
+            </Link>
           </Col>
           <Col xs={6}>
-            <button className="my-btn dropdown-mybtn">Sign In</button>
+            <button
+              onClick={() => {
+                if (activeBtn) this.handleSubmit();
+              }}
+              className={`my-btn dropdown-mybtn ${
+                activeBtn ? "" : "disabled-btn"
+              }`}
+            >
+              Sign In
+            </button>
           </Col>
         </Row>
-        <button className="google-btn btn">
-          <FaGoogle /> Sign in with google
-        </button>
+        <a className="custom-link" href="/auth/google">
+          <button className="google-btn btn">
+            <FaGoogle /> Sign in with google
+          </button>
+        </a>
       </div>
     );
   });
@@ -100,8 +123,11 @@ class SignInDropdown extends Component {
 
 const validate = (formValues) => {
   const errors = {};
-  if (!formValues.password) {
-    errors.password = "You must enter a password";
+  if (
+    !formValues.password ||
+    (formValues.password && formValues.password.length < 8)
+  ) {
+    errors.password = "You must enter a password, at least 8 characters";
   }
   if (
     !formValues.email ||
@@ -111,7 +137,12 @@ const validate = (formValues) => {
   }
   return errors;
 };
+
+const mapStateToProps = (store) => {
+  return { signInForm: store.form.signInForm };
+};
+
 export default reduxForm({
-  form: "signIn",
+  form: "signInForm",
   validate,
-})(SignInDropdown);
+})(connect(mapStateToProps, { signIn })(SignInDropdown));
