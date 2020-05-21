@@ -97,7 +97,9 @@ class UploadMatch extends React.Component {
       file,
       versions
     );
-    this.setState({ redirect: true });
+    setTimeout(() => {
+      this.setState({ redirect: true });
+    }, 2000);
   };
 
   handleTeamSelect = (type, team) => {

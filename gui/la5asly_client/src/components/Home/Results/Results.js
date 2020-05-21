@@ -12,9 +12,9 @@ const getFilteredData = (store, ownProps) => {
     if (ownProps.filters.search) {
       filter =
         filter &&
-        (summary.homeTeam.name.includes(ownProps.filters.search) ||
-          summary.awayTeam.name.includes(ownProps.filters.search) ||
-          summary.leagueType.name.includes(ownProps.filters.search));
+        (summary.homeTeam.name.toLowerCase().includes(ownProps.filters.search.toLowerCase()) ||
+          summary.awayTeam.name.toLowerCase().includes(ownProps.filters.search.toLowerCase()) ||
+          summary.leagueType.name.toLowerCase().includes(ownProps.filters.search.toLowerCase()));
     }
     if (ownProps.filters.date) {
       const date = new Date(summary.createdAt);

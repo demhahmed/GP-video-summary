@@ -7,6 +7,7 @@ import "./SummaryCard.css";
 import { Link } from "react-router-dom";
 
 export default class SummaryCard extends Component {
+
   render() {
     return (
       <Link
@@ -20,6 +21,7 @@ export default class SummaryCard extends Component {
         >
           <Image
             className="thumbnail-image"
+            key={`/thumbnails/${this.props.thumbnail}`}
             src={`/thumbnails/${this.props.thumbnail}`}
           />
           <RiPlayCircleLine
