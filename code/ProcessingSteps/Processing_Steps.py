@@ -1,5 +1,5 @@
 from Audio.audio import get_peak_times
-from UTL.UTL import find_gt, blockPrint , enablePrint,  printProgressBar
+from UTL.UTL import find_gt, blockPrint, enablePrint,  printProgressBar
 import time
 import operator
 from moviepy.editor import VideoFileClip, concatenate
@@ -9,16 +9,13 @@ from GoalMouth.goalpostv4 import goalMouth
 import math
 from os.path import dirname, realpath, join
 from ShotBoundary.ShotBoundary import cut_detector
-from moviepy.editor import VideoFileClip, concatenate
 from ImageTools.ImageTools import ImageTools
 import cv2
 import numpy as np
 import gc
 from UTL.classes import shot
 
-
-
-def STEP_1_shots_processing(cap,SHOT_TYPES):
+def STEP_1_shots_processing(cap, SHOT_TYPES):
     model = ShotClassifier(model_type=1)
     goal_detector = GoalDetector()
     FPS = int(cap.get(cv2.CAP_PROP_FPS))
@@ -175,15 +172,17 @@ def STEP_1_shots_processing(cap,SHOT_TYPES):
 
     return shots
 
-def STEP_2_resolving_double_logos(shots,SHOT_TYPES):
+
+def STEP_2_resolving_double_logos(shots, SHOT_TYPES):
     i = 0
     while i <= len(shots)-2:
         if shots[i].type == SHOT_TYPES.LOGO and shots[i+1].type == SHOT_TYPES.LOGO:
             shots.pop(i+1)
             i -= 1
         i += 1
-    
-def STEP_3_audio_processing(shots,VIDEO_PATH):
+
+
+def STEP_3_audio_processing(shots, VIDEO_PATH):
     print("Analyzing Audio...")
     peak_times = get_peak_times(VIDEO_PATH, 92)
 
@@ -206,7 +205,8 @@ def STEP_3_audio_processing(shots,VIDEO_PATH):
                 shots[i].audio = True
                 break
 
-def STEP_4_processing_output_shots(shots,SHOT_TYPES):
+
+def STEP_4_processing_output_shots(shots, SHOT_TYPES):
     output_video_shots_1, output_video_shots_2 = [], []
     logo_count = 0
     for i in range(len(shots)):
@@ -227,7 +227,6 @@ def STEP_4_processing_output_shots(shots,SHOT_TYPES):
 
                 j -= 1
 
-
     output_video_shots_1.sort(key=lambda x: x.frame_number)
     # shots with high volume but not replayed
     for i in range(len(shots)):
@@ -236,9 +235,7 @@ def STEP_4_processing_output_shots(shots,SHOT_TYPES):
 
     return output_video_shots_1, output_video_shots_2
 
-
-
-def STEP_5_classifying_shot_sequence(output_video_shots_1,output_video_shots_2,SHOT_TYPES,EVENT_TYPES):
+def STEP_5_classifying_shot_sequence(output_video_shots_1, output_video_shots_2, SHOT_TYPES, EVENT_TYPES):
     shots_classes = []
     goal_detected, goal_post, logo_count = 0, 0, 0
 
@@ -274,7 +271,7 @@ def STEP_5_classifying_shot_sequence(output_video_shots_1,output_video_shots_2,S
     return shots_classes
 
 
-def STEP_6_processing_final_output(output_video_shots_1, output_video_shots_2,shots_classes):
+def STEP_6_processing_final_output(output_video_shots_1, output_video_shots_2, shots_classes):
     output_video_shots = output_video_shots_1 + output_video_shots_2
     output_video_shots.sort(key=lambda x: x.frame_number)
     final_video = []  # final video for render
@@ -292,7 +289,7 @@ def STEP_6_processing_final_output(output_video_shots_1, output_video_shots_2,sh
     return output_video_shots, final_video
 
 
-def STEP_7_file_output(shots_classes,EVENT_TYPES,video_name,shots,output_video_shots,output_video_shots_2,t1,t2):
+def STEP_7_file_output(shots_classes, EVENT_TYPES, video_name, shots, output_video_shots, output_video_shots_2, t1, t2):
     GOAL_count, ATTACK_count, OTHER_count = 0, 0, 0
 
     for shot_class in shots_classes:
@@ -328,13 +325,12 @@ def STEP_7_file_output(shots_classes,EVENT_TYPES,video_name,shots,output_video_s
     f.close()
 
 
-def STEP_8_rendering_video(final_video,VIDEO_PATH):
+def STEP_8_rendering_video(final_video, VIDEO_PATH):
     print("rendering video...")
     blockPrint()
     clip = VideoFileClip(VIDEO_PATH)
     final = concatenate([clip.subclip(max(int(t[0]), 0), min(int(t[1]), clip.duration))
-                        for t in final_video])
+                         for t in final_video])
 
     enablePrint()
     final.to_videofile('soccer_cuts.mp4', fps=24)  # low quality is the default
-
