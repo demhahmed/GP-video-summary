@@ -1,0 +1,33 @@
+- moamen 
+
+shot classification (explaination and flow chart - using deep learning and imege processing)
+goal detection (explaination and flow chart)
+one paragraph for testing shot classification
+one paragraph for testing goal detection 
+results table for shot classification
+results tabble for goal detection
+one paragaraph for challenges faced in shot classification
+one paragraph for challenges faced in goal detection
+final document organization i.e.  table of content etc 
+
+- maher 
+
+one paragraph for testing goal mouth
+results table for goal mouth 
+one paragraph for challenges faced in goal mouth 
+use cases diagrams
+
+- salama 
+
+one paragraph for testing the complete project
+one paragraph for challneges faced in summary 
+
+- talaat 
+
+Shot classification using Grass dominant ratio extraction
+Shot Classification using Face Detection 
+
+
+
+
+
