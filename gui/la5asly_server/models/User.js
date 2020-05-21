@@ -14,14 +14,18 @@ const userSchema = new Schema({
     type: String,
     minlength: 8,
   },
-  image: {
-    type: String,
-    default: "default"
-  },
   type: {
     type: String,
-    default: "normal"
-  }
+    default: "normal",
+  },
+  image: {
+    type: String,
+    default: "default",
+  },
+
+  feedbacks: [Schema.Types.ObjectId],
 });
 
-mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;

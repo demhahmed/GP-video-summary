@@ -1,13 +1,10 @@
 const fs = require("fs");
-const path = require("path");
-const http = require("https");
 const express = require("express");
 const mongoose = require("mongoose");
-const auth = require("../middleware/auth");
 const downloadFile = require("../utils/download");
 
-const Team = mongoose.model("Team");
-const League = mongoose.model("League");
+const Team = require("../models/Team");
+const League = require("../models/League");
 
 const router = new express.Router();
 

@@ -10,13 +10,6 @@ const keys = require("./config/keys");
 // setting up mongoose
 require("./db/mongoose");
 
-// Loading the mongoose models
-require("./models/User");
-require("./models/Summary");
-require("./models/Feedback");
-require("./models/League");
-require("./models/Team");
-
 // Binding Passport to our application.
 require("./services/passport");
 

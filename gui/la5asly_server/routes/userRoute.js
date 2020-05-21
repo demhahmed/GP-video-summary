@@ -1,7 +1,8 @@
 const fs = require("fs");
+const path = require("path");
 const express = require("express");
 const passport = require("passport");
-const sharp = require("sharp");
+const multer = require("multer");
 
 const auth = require("../middleware/auth");
 
@@ -28,12 +29,37 @@ router.get(
   }
 );
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "avatars/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, req.query.email);
+  },
+});
+
+const upload = multer({
+  storage,
+  fileFilter: function (req, file, cb) {
+    const allowed = [".jpg", ".jpeg", ".png"];
+    if (allowed.indexOf(path.extname(file.originalname)) === -1) {
+      return cb(new Error("only jpg, jpeg and png files are allowed"));
+    }
+    cb(null, true);
+  },
+});
+
 /**
  * This route handles the local authentication.
  */
-router.post("/auth/local", passport.authenticate("local"), (req, res) => {
-  res.redirect("/");
-});
+router.post(
+  "/auth/local",
+  upload.single("avatar"),
+  passport.authenticate("local"),
+  (req, res) => {
+    res.status(200).send();
+  }
+);
 
 /**
  * This route logs out the user and clear the cookie.
@@ -52,7 +78,8 @@ router.get("/api/current_user", auth, (req, res) => {
 
 router.get("/api/me/avatar", auth, async (req, res) => {
   try {
-    const img = fs.readFileSync(`avatars/${req.user.googleId}.png`)
+    let id = req.user.googleId ? req.user.googleId : req.user.email;
+    const img = fs.readFileSync(`avatars/${id}.png`);
     res.set("Content-Type", "image/png");
     res.status(200).send(img);
   } catch (error) {

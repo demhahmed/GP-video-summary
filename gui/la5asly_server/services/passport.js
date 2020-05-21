@@ -1,13 +1,13 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
-const mongoose = require("mongoose");
 const sharp = require("sharp");
 const fs = require("fs");
 
 const keys = require("../config/keys");
 const downloadFile = require("../utils/download");
-const User = mongoose.model("User");
+
+const User = require("../models/User");
 
 /*
  * inserts the userId in the cookie.
@@ -48,6 +48,7 @@ passport.use(
         }
         const user = await new User({
           googleId: profile.id,
+          fullname: profile._json.name,
         }).save();
         await downloadFile(profile._json.picture, "avatars", filename);
         const buffer = fs.readFileSync(`avatars/${profile.id}`);
@@ -66,8 +67,8 @@ passport.use(
  */
 passport.use(
   new LocalStrategy(
-    { usernameField: "email" },
-    async (email, password, done) => {
+    { usernameField: "email", passReqToCallback: true },
+    async (req, email, password, done) => {
       try {
         const existingUser = await User.findOne({ email });
         // if user does not exist.
@@ -76,10 +77,13 @@ passport.use(
           if (existingUser.password !== password) {
             return done(null, false);
           }
-          // Ok your password is ok gg wp ff 15.
+          // Ok your  password is ok gg wp ff 15.
           return done(null, existingUser);
         }
         const user = await new User({ email, password }).save();
+        const buffer = fs.readFileSync(`avatars/${email}`);
+        sharp(buffer).png().toFile(`avatars/${email}.png`);
+        fs.unlinkSync(`avatars/${email}`);
         done(null, user);
       } catch (error) {
         done(error, false);

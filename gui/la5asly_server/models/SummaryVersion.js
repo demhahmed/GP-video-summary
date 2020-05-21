@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
+
 const { Schema } = mongoose;
 
-const summaryVersion = new Schema({
+const Feedback = require("../models/Feedback");
+
+const summaryVersionSchema = new Schema({
   type: {
     type: String,
     required: true,
@@ -18,6 +21,9 @@ const summaryVersion = new Schema({
     type: Number,
     required: true,
   },
+  feedbacks: [Schema.Types.ObjectId],
 });
 
-module.exports = summaryVersion;
+const SummaryVersion = mongoose.model("SummaryVersion", summaryVersionSchema);
+
+module.exports = SummaryVersion;

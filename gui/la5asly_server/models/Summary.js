@@ -6,42 +6,43 @@ const SummaryVersion = require("./SummaryVersion");
 
 const summarySchema = new Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
     summaryPath: {
       type: String,
       trim: true,
       lowercase: true,
       required: true,
     },
-    leagueType: {
-      type: String,
-      required: true,
-    },
-    homeTeam: {
-      type: String,
-      required: true,
-    },
-    awayTeam: {
-      type: String,
-      required: true,
-    },
     thumbnail: {
       type: String, // url host.
       required: true,
+    },
+    leagueType: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "League",
+    },
+    homeTeam: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Team",
+    },
+    awayTeam: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Team",
     },
     user: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    versions: [SummaryVersion],
+    versions: [Schema.Types.ObjectId],
   },
   {
     timestamps: true,
   }
 );
 
-mongoose.model("Summary", summarySchema);
+const Summary = mongoose.model("Summary", summarySchema);
+
+module.exports = Summary;
