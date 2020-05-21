@@ -70,17 +70,25 @@ class UploadMatch extends React.Component {
     leagueId: null,
     versions: [],
     file: null,
+    fileError: null,
   };
 
   onFileSelected = (file) => {
-    this.setState({ file });
+    if (file.name.slice(file.name.length - 4, file.name.length) !== ".mp4") {
+      this.setState({ fileError: true });
+    } else {
+      this.setState({ file, fileError: false });
+    }
   };
 
   handleLeagueSelect = (leagueId) => {
     this.setState({ leagueId });
   };
   handleSubmit = () => {
-    const { home, away, leagueId, versions, file } = this.state;
+    const { home, away, leagueId, versions, file, fileError } = this.state;
+    const activeBtn =
+      home && away && leagueId && versions.length > 0 && file && !fileError;
+    if (!activeBtn) return;
     this.props.summarize(
       this.props.user._id,
       leagueId,
@@ -89,6 +97,7 @@ class UploadMatch extends React.Component {
       file,
       versions
     );
+    this.setState({ redirect: true });
   };
 
   handleTeamSelect = (type, team) => {
@@ -109,6 +118,9 @@ class UploadMatch extends React.Component {
   };
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    }
     if (this.props.globalReducer.wait) {
       return <Loading />;
     }
@@ -124,8 +136,9 @@ class UploadMatch extends React.Component {
       }, 2000);
       return <Redirect to="/" />;
     }
-    const { home, away, leagueId, versions, file } = this.state;
-    const activeBtn = home && away && leagueId && versions.length > 0 && file;
+    const { home, away, leagueId, versions, file, fileError } = this.state;
+    const activeBtn =
+      home && away && leagueId && versions.length > 0 && file && !fileError;
 
     return (
       <div className="container">
@@ -141,6 +154,14 @@ class UploadMatch extends React.Component {
           <div className="search-path">
             <FileUpload onFileSelected={this.onFileSelected} />
           </div>
+          {this.state.fileError && (
+            <span
+              style={{ marginBottom: "20px", display: "inline-block" }}
+              className="text-danger"
+            >
+              you have to select .mp4 file
+            </span>
+          )}
           <p>League</p>
           <div className="league-drop-down">
             <LeagueDropdown

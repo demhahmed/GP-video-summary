@@ -77,7 +77,7 @@ class LeagueDropdown extends Component {
               return (
                 <Dropdown.Item
                   onClick={() => {
-                    if (this.props.onChange) this.props.onChange(league.name);
+                    if (this.props.onChange) this.props.onChange(league._id);
                     this.setState({
                       leagueName: league.name,
                       logo: league.logo,

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Form, FormControl, Button, Row, Col } from "react-bootstrap";
 
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaBackspace } from "react-icons/fa";
 import LeagueDropdown from "../../Custom/LeagueDropdown/LeagueDropdown";
 import { DateTimePicker } from "react-widgets";
 import momentLocaliser from "react-widgets-moment";
@@ -50,7 +50,7 @@ const renderDateTimePicker = ({
         onChange={onChange}
         format="DD MMM YYYY"
         showTime={true}
-        value={!value ? new Date() : new Date(value)}
+        value={!value ? null : new Date(value)}
       />
       {touched && error ? <span>{error}</span> : false}
     </div>
@@ -75,12 +75,39 @@ class HomeFilterForm extends Component {
                 <Field
                   name="date"
                   showTime={false}
-                  defaultValue={Date.now()}
                   component={renderDateTimePicker}
                 />
               </Col>
               <Col xs={6}>
                 <Field name="league" component={renderDropdown} />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6}>
+                {this.props.filter && (
+                  <Button
+                    onClick={this.props.onClearFiltersClick}
+                    block
+                    style={{ marginTop: "20px" }}
+                    variant="danger"
+                  >
+                    <FaBackspace /> Clear Filters
+                  </Button>
+                )}
+              </Col>
+              <Col xs={6}>
+                {this.props.filterForm && this.props.filterForm.values && (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      this.props.onSearchClick();
+                    }}
+                    className="my-btn"
+                    style={{ marginTop: "20px", width: "100%" }}
+                  >
+                    <FaSearch /> Search
+                  </button>
+                )}
               </Col>
             </Row>
           </div>
@@ -90,6 +117,12 @@ class HomeFilterForm extends Component {
   }
 }
 
+const mapStateToProps = (store) => {
+  return {
+    filterForm: store.form.FilterForm,
+  };
+};
+
 export default reduxForm({
   form: "FilterForm",
-})(HomeFilterForm);
+})(connect(mapStateToProps, {})(HomeFilterForm));

@@ -6,6 +6,33 @@ import { Row, Col, Pagination } from "react-bootstrap";
 import SummaryCard from "../../SummaryCard";
 import Loading from "../../Loading";
 
+const getFilteredData = (store, ownProps) => {
+  return store.summaries.filter((summary) => {
+    let filter = true;
+    if (ownProps.filters.search) {
+      filter =
+        filter &&
+        (summary.homeTeam.name.includes(ownProps.filters.search) ||
+          summary.awayTeam.name.includes(ownProps.filters.search) ||
+          summary.leagueType.name.includes(ownProps.filters.search));
+    }
+    if (ownProps.filters.date) {
+      const date = new Date(summary.createdAt);
+      const filterDate = new Date(ownProps.filters.date);
+      filter =
+        filter &&
+        date.getDay() === filterDate.getDay() &&
+        date.getMonth() === filterDate.getMonth() &&
+        date.getFullYear() === filterDate.getFullYear();
+    }
+    if (ownProps.filters.league) {
+      console.log(summary.leagueType._id === ownProps.filters.league)
+      filter = filter && summary.leagueType._id === ownProps.filters.league;
+    }
+    return filter;
+  });
+};
+
 class Results extends Component {
   state = {
     page: 1,
@@ -38,6 +65,7 @@ class Results extends Component {
     if (items.length === 1) return [];
     return items;
   };
+
   render() {
     return (
       <div>
@@ -71,9 +99,9 @@ class Results extends Component {
   }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (store, ownProps) => {
   return {
-    summaries: store.summaries,
+    summaries: getFilteredData(store, ownProps),
   };
 };
 

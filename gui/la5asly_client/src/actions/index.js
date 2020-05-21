@@ -128,6 +128,7 @@ export const summarize = (
   }
 };
 
+
 export const showNotification = (message) => {
   return {
     type: types.SHOW_NOTIFICATION,
