@@ -1,7 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, version } from "react";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import { Row, Col, Card, Image, ProgressBar } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Card,
+  Image,
+  ProgressBar,
+  Pagination,
+} from "react-bootstrap";
 import moment from "moment";
 import { fetchSummaries, sendFeedback } from "../../actions";
 import "react-input-range/lib/css/index.css";
@@ -12,9 +19,12 @@ import brokenHeart from "../../assets/broken heart.svg";
 import love from "../../assets/love-and-romance.svg";
 import InputRange from "react-input-range";
 import { RiFeedbackLine } from "react-icons/ri";
+import Loading from "../Loading";
 class SummaryDetails extends Component {
   state = {
     value: 2,
+    v_idx: 0,
+    wait: false,
   };
 
   async componentWillMount() {
@@ -22,10 +32,10 @@ class SummaryDetails extends Component {
   }
 
   calculateHappieness = (idx) => {
-    const length = this.props.summaries[idx].versions[0].feedbacks.length;
+    const length = this.props.summaries[idx].versions[this.state.v_idx].feedbacks.length;
     let value = 0;
     if (length === 0) return 0;
-    this.props.summaries[idx].versions[0].feedbacks.forEach((feedback) => {
+    this.props.summaries[idx].versions[this.state.v_idx].feedbacks.forEach((feedback) => {
       value += feedback.feedback;
     });
     return (value / length / 5) * 100;
@@ -34,7 +44,7 @@ class SummaryDetails extends Component {
   sendFeedback = (idx) => {
     this.props.sendFeedback(
       this.props.match.params.id,
-      this.props.summaries[idx].versions[0]._id,
+      this.props.summaries[idx].versions[this.state.v_idx]._id,
       this.props.user._id,
       this.state.value
     );
@@ -48,115 +58,173 @@ class SummaryDetails extends Component {
       return <Redirect to="/" />;
     }
     const value = this.calculateHappieness(idx);
+    if (this.state.wait) {
+      setTimeout(() => {
+        this.setState({ wait: false });
+      }, 2000);
+    }
+    const video_path = this.props.summaries[idx].summaryPath;
+    const version_path =
+      video_path.slice(0, video_path.length - 4) +
+      "_" +
+      this.props.summaries[idx].versions[this.state.v_idx].type +
+      ".mp4";
     return (
       <div className="container">
-        <Image className="bk-overlay" src={homeImage} />
-        <div className="dark-overlay" />
-        <div style={{ padding: "40px 0" }}>
-          {idx !== -1 && (
-            <Row>
-              <Col xs={10}>
-                <ReactPlayer
-                  className="player"
-                  url={`/summaries/${this.props.summaries[idx].summaryPath}`}
-                  playing={false}
-                  controls
-                />
+        {this.state.wait && (
+          <div>
+            <Image className="bk-overlay" src={homeImage} />
+            <div className="dark-overlay" />
+            <Loading />
+          </div>
+        )}
+        {!this.state.wait && (
+          <div>
+            <Image className="bk-overlay" src={homeImage} />
+            <div className="dark-overlay" />
+            <div style={{ padding: "40px 0" }}>
+              {idx !== -1 && (
                 <Row>
-                  <Col style={{ marginTop: "12px" }} xs={6}>
-                    <p>what users think about this summary</p>
-                    <div className="progress-container">
-                      <Image className="borken-heart" src={brokenHeart} />
-                      <ProgressBar className="people-progress" now={value} />
-                      <p
-                        style={{
-                          position: "absolute",
-                          top: "-3px",
-                          fontSize: "15px",
-                          left: "172px",
-                        }}
-                      >
-                        {value}%
-                      </p>
-                      <Image className="love" src={love} />
+                  <Col xs={10}>
+                    <div style={{ display: "relative" }}>
+                      <Pagination>
+                        {this.props.summaries[idx].versions.map(
+                          (version, idx) => {
+                            return (
+                              <Pagination.Item
+                                key={idx}
+                                onClick={() => {
+                                  this.setState({ wait: true, v_idx: idx });
+                                }}
+                                active={idx === this.state.v_idx}
+                              >
+                                {version.type}
+                              </Pagination.Item>
+                            );
+                          }
+                        )}
+                      </Pagination>
+                      <ReactPlayer
+                        className="player"
+                        url={`/summaries/${version_path}`}
+                        playing={false}
+                        controls
+                      />
                     </div>
-                  </Col>
-                  {this.props.user.isLoggedIn &&
-                    this.props.summaries[idx].versions[0].feedbacks.filter(
-                      (feedback) => feedback.user._id === this.props.user._id
-                    ).length === 0 && (
+                    <Row>
                       <Col style={{ marginTop: "12px" }} xs={6}>
-                        <p>Send Feedback!</p>
+                        <p>what users think about this summary</p>
                         <div className="progress-container">
-                          <InputRange
-                            maxValue={5}
-                            minValue={0}
-                            value={this.state.value}
-                            onChange={(value) => this.setState({ value })}
+                          <Image className="borken-heart" src={brokenHeart} />
+                          <ProgressBar
+                            className="people-progress"
+                            now={value}
                           />
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              this.sendFeedback(idx);
+                          <p
+                            style={{
+                              position: "absolute",
+                              top: "-3px",
+                              fontSize: "15px",
+                              left: "172px",
                             }}
-                            className="my-btn feedback"
                           >
-                            <RiFeedbackLine style={{ fontSize: "20px" }} /> Send
-                          </button>
+                            {value}%
+                          </p>
+                          <Image className="love" src={love} />
                         </div>
                       </Col>
-                    )}
+                      {this.props.user.isLoggedIn &&
+                        this.props.summaries[idx].versions[
+                          this.state.v_idx
+                        ].feedbacks.filter(
+                          (feedback) =>
+                            feedback.user._id === this.props.user._id
+                        ).length === 0 && (
+                          <Col style={{ marginTop: "12px" }} xs={6}>
+                            <p>Send Feedback!</p>
+                            <div className="progress-container">
+                              <InputRange
+                                maxValue={5}
+                                minValue={0}
+                                value={this.state.value}
+                                onChange={(value) => this.setState({ value })}
+                              />
+                              <button
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  this.sendFeedback(idx);
+                                }}
+                                className="my-btn feedback"
+                              >
+                                <RiFeedbackLine style={{ fontSize: "20px" }} />{" "}
+                                Send
+                              </button>
+                            </div>
+                          </Col>
+                        )}
+                    </Row>
+                  </Col>
+                  <Col xs={2}>
+                    <Row>
+                      <Col xs={6}>
+                        <p style={{ fontSize: "22px" }} className="text-center">
+                          Home
+                        </p>
+                      </Col>
+                      <Col xs={6}>
+                        <p style={{ fontSize: "22px" }} className="text-center">
+                          Away
+                        </p>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col xs={6}>
+                        <Image
+                          className="details-logo"
+                          src={this.props.summaries[idx].homeTeam.logo}
+                        />
+                      </Col>
+                      <Col xs={6}>
+                        <Image
+                          className="details-logo"
+                          src={this.props.summaries[idx].awayTeam.logo}
+                        />
+                      </Col>
+                    </Row>
+                    <div className="text-center details-section">
+                      <p className="details-label">Goals</p>
+                      <p className="details-result">
+                        {
+                          this.props.summaries[idx].versions[this.state.v_idx]
+                            .goals
+                        }
+                      </p>
+                    </div>
+                    <div className="text-center details-section">
+                      <p className="details-label">Chances</p>
+                      <p className="details-result">
+                        {
+                          this.props.summaries[idx].versions[this.state.v_idx]
+                            .chances
+                        }
+                      </p>
+                    </div>
+                    <div className="text-center details-section">
+                      <p className="details-label">Length</p>
+                      <p className="details-result">
+                        {
+                          this.props.summaries[idx].versions[this.state.v_idx]
+                            .length
+                        }{" "}
+                        min
+                      </p>
+                    </div>
+                  </Col>
                 </Row>
-              </Col>
-              <Col xs={2}>
-                <Row>
-                  <Col xs={6}>
-                    <p style={{ fontSize: "22px" }} className="text-center">
-                      Home
-                    </p>
-                  </Col>
-                  <Col xs={6}>
-                    <p style={{ fontSize: "22px" }} className="text-center">
-                      Away
-                    </p>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col xs={6}>
-                    <Image
-                      className="details-logo"
-                      src={this.props.summaries[idx].homeTeam.logo}
-                    />
-                  </Col>
-                  <Col xs={6}>
-                    <Image
-                      className="details-logo"
-                      src={this.props.summaries[idx].awayTeam.logo}
-                    />
-                  </Col>
-                </Row>
-                <div className="text-center details-section">
-                  <p className="details-label">Goals</p>
-                  <p className="details-result">
-                    {this.props.summaries[idx].versions[0].goals}
-                  </p>
-                </div>
-                <div className="text-center details-section">
-                  <p className="details-label">Chances</p>
-                  <p className="details-result">
-                    {this.props.summaries[idx].versions[0].chances}
-                  </p>
-                </div>
-                <div className="text-center details-section">
-                  <p className="details-label">Length</p>
-                  <p className="details-result">
-                    {this.props.summaries[idx].versions[0].length} min
-                  </p>
-                </div>
-              </Col>
-            </Row>
-          )}
-        </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
