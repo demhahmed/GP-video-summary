@@ -3,7 +3,7 @@ import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import { Row, Col, Card, Image, ProgressBar } from "react-bootstrap";
 import moment from "moment";
-import { fetchSummaries } from "../../actions";
+import { fetchSummaries, sendFeedback } from "../../actions";
 import "react-input-range/lib/css/index.css";
 import "./SummaryDetails.css";
 import { Redirect } from "react-router-dom";
@@ -21,10 +21,33 @@ class SummaryDetails extends Component {
     this.props.fetchSummaries();
   }
 
+  calculateHappieness = (idx) => {
+    const length = this.props.summaries[idx].versions[0].feedbacks.length;
+    let value = 0;
+    if (length === 0) return 0;
+    this.props.summaries[idx].versions[0].feedbacks.forEach((feedback) => {
+      value += feedback.feedback;
+    });
+    return (value / length / 5) * 100;
+  };
+
+  sendFeedback = (idx) => {
+    this.props.sendFeedback(
+      this.props.match.params.id,
+      this.props.summaries[idx].versions[0]._id,
+      this.props.user._id,
+      this.state.value
+    );
+  };
+
   render() {
     const idx = this.props.summaries
       .map((summary) => summary._id)
       .indexOf(this.props.match.params.id);
+    if (idx === -1) {
+      return <Redirect to="/" />;
+    }
+    const value = this.calculateHappieness(idx);
     return (
       <div className="container">
         <Image className="bk-overlay" src={homeImage} />
@@ -44,24 +67,45 @@ class SummaryDetails extends Component {
                     <p>what users think about this summary</p>
                     <div className="progress-container">
                       <Image className="borken-heart" src={brokenHeart} />
-                      <ProgressBar className="people-progress" now={60} />
+                      <ProgressBar className="people-progress" now={value} />
+                      <p
+                        style={{
+                          position: "absolute",
+                          top: "-3px",
+                          fontSize: "15px",
+                          left: "172px",
+                        }}
+                      >
+                        {value}%
+                      </p>
                       <Image className="love" src={love} />
                     </div>
                   </Col>
-                  <Col style={{ marginTop: "12px" }} xs={6}>
-                    <p>Send Feedback!</p>
-                    <div className="progress-container">
-                      <InputRange
-                        maxValue={5}
-                        minValue={0}
-                        value={this.state.value}
-                        onChange={(value) => this.setState({ value })}
-                      />
-                      <button className="my-btn feedback">
-                        <RiFeedbackLine style={{ fontSize: "20px" }} /> Send
-                      </button>
-                    </div>
-                  </Col>
+                  {this.props.user.isLoggedIn &&
+                    this.props.summaries[idx].versions[0].feedbacks.filter(
+                      (feedback) => feedback.user._id === this.props.user._id
+                    ).length === 0 && (
+                      <Col style={{ marginTop: "12px" }} xs={6}>
+                        <p>Send Feedback!</p>
+                        <div className="progress-container">
+                          <InputRange
+                            maxValue={5}
+                            minValue={0}
+                            value={this.state.value}
+                            onChange={(value) => this.setState({ value })}
+                          />
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              this.sendFeedback(idx);
+                            }}
+                            className="my-btn feedback"
+                          >
+                            <RiFeedbackLine style={{ fontSize: "20px" }} /> Send
+                          </button>
+                        </div>
+                      </Col>
+                    )}
                 </Row>
               </Col>
               <Col xs={2}>
@@ -93,15 +137,21 @@ class SummaryDetails extends Component {
                 </Row>
                 <div className="text-center details-section">
                   <p className="details-label">Goals</p>
-                  <p className="details-result">{this.props.summaries[idx].versions[0].goals}</p>
+                  <p className="details-result">
+                    {this.props.summaries[idx].versions[0].goals}
+                  </p>
                 </div>
                 <div className="text-center details-section">
                   <p className="details-label">Chances</p>
-                  <p className="details-result">{this.props.summaries[idx].versions[0].chances}</p>
+                  <p className="details-result">
+                    {this.props.summaries[idx].versions[0].chances}
+                  </p>
                 </div>
                 <div className="text-center details-section">
                   <p className="details-label">Length</p>
-                  <p className="details-result">{this.props.summaries[idx].versions[0].length} min</p>
+                  <p className="details-result">
+                    {this.props.summaries[idx].versions[0].length} min
+                  </p>
                 </div>
               </Col>
             </Row>
@@ -113,7 +163,9 @@ class SummaryDetails extends Component {
 }
 
 const mapStateToProps = (store) => {
-  return { summaries: store.summaries };
+  return { summaries: store.summaries, user: store.user };
 };
 
-export default connect(mapStateToProps, { fetchSummaries })(SummaryDetails);
+export default connect(mapStateToProps, { fetchSummaries, sendFeedback })(
+  SummaryDetails
+);

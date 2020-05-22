@@ -132,6 +132,7 @@ class Home extends Component {
                 </Row>
                 {notTodaySummaries.length > 12 && (
                   <button
+                    onClick={() => this.setState({ filter: true })}
                     style={{ display: "block", margin: "20px auto" }}
                     className="my-btn"
                   >

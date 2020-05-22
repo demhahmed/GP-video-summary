@@ -22,14 +22,6 @@ const userSchema = new Schema({
     type: String,
     default: "default",
   },
-
-  feedbacks: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Feedback",
-      autopopulate: true,
-    },
-  ],
 });
 
 userSchema.plugin(require("mongoose-autopopulate"));

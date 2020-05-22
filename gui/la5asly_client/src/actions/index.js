@@ -81,6 +81,22 @@ export const fetchSummaryDetails = (filterObject) => async (dispatch) => {
   }
 };
 
+export const sendFeedback = (
+  summary_id,
+  version_id,
+  user_id,
+  feedback
+) => async (dispatch) => {
+  try {
+    await axios.post("/api/add_feedback", {
+      summary_id,
+      version_id,
+      user_id,
+      feedback,
+    });
+    await dispatch(fetchSummaries());
+  } catch (error) {}
+};
 
 export const fetchTeams = () => async (dispatch) => {
   try {
@@ -127,7 +143,6 @@ export const summarize = (
     handleError(error, dispatch);
   }
 };
-
 
 export const showNotification = (message) => {
   return {

@@ -6,6 +6,9 @@ const multer = require("multer");
 
 const auth = require("../middleware/auth");
 
+const Feedback = require("../models/Feedback");
+const Summary = require("../models/Summary");
+
 const router = new express.Router();
 
 /**
@@ -84,6 +87,31 @@ router.get("/api/me/avatar", auth, async (req, res) => {
     res.status(200).send(img);
   } catch (error) {
     res.status(404).send();
+  }
+});
+
+router.post("/api/add_feedback", async (req, res) => {
+  try {
+    let summary = await Summary.findOne({ _id: req.body.summary_id });
+    let summaryVersion = [];
+    for (version of summary.versions) {
+      if (version._id.toString() === req.body.version_id) {
+        summaryVersion = version;
+        break;
+      }
+    }
+    if (summaryVersion.length === 0) {
+      return res.status(400).send();
+    }
+    let feedback = await new Feedback({
+      user: req.body.user_id,
+      feedback: req.body.feedback,
+    }).save();
+    summaryVersion.feedbacks.push(feedback);
+    await summaryVersion.save();
+    res.status(201).send(feedback);
+  } catch (error) {
+    res.status(400).send();
   }
 });
 
