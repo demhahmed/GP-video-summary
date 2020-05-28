@@ -2,7 +2,7 @@ from Audio.audio import get_peak_times
 from UTL.UTL import find_gt, blockPrint, enablePrint,  printProgressBar
 import time
 import operator
-from moviepy.editor import VideoFileClip, concatenate
+from moviepy.editor import VideoFileClip, concatenate_videoclips
 from ShotClassifier.ShotClassifier import ShotClassifier
 from GoalDetector.GoalDetector import GoalDetector
 from GoalMouth.goalpostv4 import goalMouth
@@ -14,6 +14,9 @@ import cv2
 import numpy as np
 import gc
 from UTL.classes import shot
+import subprocess
+import glob
+
 
 def STEP_1_shots_processing(cap, SHOT_TYPES):
     model = ShotClassifier(model_type=1)
@@ -65,8 +68,13 @@ def STEP_1_shots_processing(cap, SHOT_TYPES):
 
             frame_number = frame_numbers[i]
             frame_time = frame_times[i]
+            if frame_number == 17270:
+                print("e4ta3'al ?")
 
             # detecting cut between the current 2 frame
+
+            # last_cut_frame_number => to delete shot < 20 frames
+
             if (cut_detector(frame1, frame2) and abs(last_cut_frame_number - frame_number) >= 20):
 
                 no_shot_frames = 0
@@ -79,7 +87,7 @@ def STEP_1_shots_processing(cap, SHOT_TYPES):
                 no_shot_frames = len(frames[start:i+1])
 
                 # appending the first and last 5 frames and 10 random frames inbetween
-                frames_to_classify += frames[start:i+1] if no_shot_frames < 20 else frames[start:start+5] + \
+                frames_to_classify += frames[start:i+1] if no_shot_frames <= 20 else frames[start:start+5] + \
                     frames[start + 5: i-4: math.ceil(
                         len(frames[start+5:i-4])/10)] + frames[i - 4:i+1]
 
@@ -93,7 +101,7 @@ def STEP_1_shots_processing(cap, SHOT_TYPES):
                         mouth = goalMouth(frames[i-20:i], type)
 
                 # appending all shot information
-                    shots.append(shot(frame_number=frame_numbers[i],
+                    shots.append(shot(frame_number=frame_number,
                                       shot_start=round(frame_times[start], 2),
                                       shot_end=round((frame_times[i]), 2),
                                       type=type,
@@ -101,34 +109,34 @@ def STEP_1_shots_processing(cap, SHOT_TYPES):
                                           frames[int(max(start - 2, 0))], frames[i-2]),
                                       has_goal_mouth=mouth))
 
-                    last_cut_frame_number = frame_numbers[i]
+                    last_cut_frame_number = frame_number
 
                 else:
                     types = type.split("+")
                     if types[0] == SHOT_TYPES.LOGO:
-                        shots.append(shot(frame_number=last_cut+25+(offset),
+                        shots.append(shot(frame_number=last_cut_frame_number+25,
                                           shot_start=round(
                                               frame_times[start], 2),
                                           shot_end=round(
-                                              (((last_cut+25)/FPS)), 2),
+                                              frame_times[start] + (25/FPS), 2),
                                           type=SHOT_TYPES.LOGO))
 
                         if types[1] not in [SHOT_TYPES.LOGO, SHOT_TYPES.CLOSE_OUT, SHOT_TYPES.CLOSE]:
                             mouth = goalMouth(frames[i-20:i], types[1])
 
-                        shots.append(shot(frame_number=frame_number+(offset),
+                        shots.append(shot(frame_number=frame_number,
                                           shot_start=round(
-                                              ((last_cut+25)/FPS), 2),
-                                          shot_end=round((frame_times[i]), 2),
+                                              frame_times[start] + (25/FPS), 2),
+                                          shot_end=round(frame_time, 2),
                                           type=types[1],
                                           has_goal_mouth=mouth))
-                        last_cut_frame_number = frame_number+(offset)
+                        last_cut_frame_number = frame_number
 
                     else:
                         if types[0] not in [SHOT_TYPES.LOGO, SHOT_TYPES.CLOSE_OUT, SHOT_TYPES.CLOSE]:
                             mouth = goalMouth(frames[i-25:i-5], types[0])
 
-                        shots.append(shot(frame_number=frame_number-25+(offset),
+                        shots.append(shot(frame_number=frame_number-25,
                                           shot_start=round(
                                               frame_times[start], 2),
                                           shot_end=round(
@@ -136,15 +144,16 @@ def STEP_1_shots_processing(cap, SHOT_TYPES):
                                           type=types[0],
                                           has_goal_mouth=mouth))
 
-                        shots.append(shot(frame_number=frame_number+(offset),
+                        shots.append(shot(frame_number=frame_number,
                                           shot_start=round(
                                               ((frame_time-(25/FPS))), 2),
-                                          shot_end=round((frame_time), 2),
+                                          shot_end=round(frame_time, 2),
                                           type=SHOT_TYPES.LOGO))
-                        last_cut_frame_number = frame_number+(offset)
 
-                last_cut = frame_number
-                start = i+1
+                        last_cut_frame_number = frame_number
+
+                last_cut = i
+                start = i + 1
 
         patch += 1
 
@@ -209,11 +218,18 @@ def STEP_3_audio_processing(shots, VIDEO_PATH):
 def STEP_4_processing_output_shots(shots, SHOT_TYPES):
     output_video_shots_1, output_video_shots_2 = [], []
     logo_count = 0
+    time_after_first_logo = 0
     for i in range(len(shots)):
         if shots[i].type == SHOT_TYPES.LOGO:
             logo_count += 1
+        if logo_count == 1:
+            time_after_first_logo += shots[i].shot_end - shots[i].shot_start
+            if time_after_first_logo > 60:
+                logo_count = 0
+                time_after_first_logo = 0
 
         if logo_count == 2:
+            time_after_first_logo = 0
             j = i
             while(1):
                 output_video_shots_1.append(shots[j])
@@ -231,9 +247,12 @@ def STEP_4_processing_output_shots(shots, SHOT_TYPES):
     # shots with high volume but not replayed
     for i in range(len(shots)):
         if shots[i].audio and shots[i] not in output_video_shots_1:
+            if shots[i].type == SHOT_TYPES.WIDE and shots[i].shot_end - shots[i].shot_start > 10:
+                shots[i].shot_start = shots[i].shot_end - 10
             output_video_shots_2.append(shots[i])
 
     return output_video_shots_1, output_video_shots_2
+
 
 def STEP_5_classifying_shot_sequence(output_video_shots_1, output_video_shots_2, SHOT_TYPES, EVENT_TYPES):
     shots_classes = []
@@ -271,13 +290,19 @@ def STEP_5_classifying_shot_sequence(output_video_shots_1, output_video_shots_2,
     return shots_classes
 
 
-def STEP_6_processing_final_output(output_video_shots_1, output_video_shots_2, shots_classes):
+def STEP_6_processing_final_output(output_video_shots_1, output_video_shots_2, shots_classes, SHOT_TYPES):
     output_video_shots = output_video_shots_1 + output_video_shots_2
     output_video_shots.sort(key=lambda x: x.frame_number)
     final_video = []  # final video for render
     for i in range(len(output_video_shots)):
-        final_video.append(
-            (output_video_shots[i].shot_start, output_video_shots[i].shot_end))
+        time_between_shots = output_video_shots[i].shot_end - \
+            output_video_shots[i].shot_start
+        if output_video_shots[i].type == SHOT_TYPES.WIDE and time_between_shots > 10:
+            final_video.append(
+                (output_video_shots[i].shot_end - 10, output_video_shots[i].shot_end))
+        else:
+            final_video.append(
+                (output_video_shots[i].shot_start, output_video_shots[i].shot_end))
 
     for i in range(len(output_video_shots)):
         output_video_shots[i].shot_start = time.strftime(
@@ -321,16 +346,42 @@ def STEP_7_file_output(shots_classes, EVENT_TYPES, video_name, shots, output_vid
     f.write("\n\nGOALS: {0} | ATTACKS: {1} | OTHER: {2} ".format(str(GOAL_count),
                                                                  str(ATTACK_count), str(OTHER_count)))
 
+    f.write("\n\nSHOT CLASSES\n")
+    for tup in shots_classes:
+        f.write(f"#{tup[0]} start: {tup[1]}, end: {tup[2]}, class: {tup[3]}\n")
+
     f.write("\n\nrunning time: {0}".format(str(t2-t1)))
     f.close()
 
 
-def STEP_8_rendering_video(final_video, VIDEO_PATH):
+def STEP_8_rendering_video(final_video, VIDEO_PATH, video_name):
     print("rendering video...")
-    blockPrint()
-    clip = VideoFileClip(VIDEO_PATH)
-    final = concatenate([clip.subclip(max(int(t[0]), 0), min(int(t[1]), clip.duration))
-                         for t in final_video])
+    optimized = []
+    for start, end in final_video:
+        if len(optimized) > 0:
+            if abs(int(start) - optimized[-1][1]) <= 10:
+                optimized[-1][1] = int(end)
+            else:
+                optimized.append([int(start), int(end)])
+        else:
+            optimized.append([int(start), int(end)])
+    cnt = 1
+    folder_name = str(int(time.time()))
+    subprocess.run(["mkdir", folder_name])
 
-    enablePrint()
-    final.to_videofile('soccer_cuts.mp4', fps=24)  # low quality is the default
+    for start, end in optimized:
+        subprocess.run(["ffmpeg", "-ss", str(start), "-i", VIDEO_PATH,
+                        "-c", "copy", "-t", str(end - start), f"{folder_name}/{cnt}.mp4"])
+        cnt += 1
+    filenames = glob.glob(f"{folder_name}/*.mp4")
+    filenames.sort(key=lambda filename: int(
+        filename.split(".")[0].split("/")[1]))
+    with open(f"{folder_name}.txt", mode="w") as file:
+        for path in filenames:
+            file.write(f"file {path}\n")
+    subprocess.run(["ffmpeg", "-f", "concat", "-safe", "0", "-i",
+                    f"{folder_name}.txt", "-c", "copy", f"{folder_name}/ffmpeg_out.mp4"])
+    for path in filenames:
+        subprocess.run(["rm", path])
+    subprocess.run(["rm", f"{folder_name}.txt"])
+    print("done")

@@ -8,9 +8,8 @@ import cv2
 
 def main():
     # CONSTANTS _________________________________________________________
-    video_name = "test3"
-    VIDEO_PATH = "{0}{1}{2}".format(
-        'C:/Users\\salama\\Desktop\\', video_name, '.mp4')
+    video_name = "shf_united_vs_burnley_2"
+    VIDEO_PATH = "shf_united_vs_burnley_2.mp4"
     cap = cv2.VideoCapture(VIDEO_PATH)
     if cap.isOpened() == False:
         print('err reading video')
@@ -41,7 +40,7 @@ def main():
         output_video_shots_1, output_video_shots_2, SHOT_TYPES, EVENT_TYPES)
     # Final output ______________________________________________________________
     output_video_shots, final_video = STEP_6_processing_final_output(
-        output_video_shots_1, output_video_shots_2, shots_classes)
+        output_video_shots_1, output_video_shots_2, shots_classes, SHOT_TYPES)
 
     t2 = time.time()
 
@@ -50,7 +49,7 @@ def main():
                        shots, output_video_shots, output_video_shots_2, t1, t2)
 
     # rendering video  _______________________________________________________
-    # STEP_8_rendering_video(final_video,VIDEO_PATH)
+    STEP_8_rendering_video(final_video,VIDEO_PATH, video_name)
 
 
 main()
