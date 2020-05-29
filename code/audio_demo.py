@@ -23,6 +23,19 @@ def main():
     ############################## audio processing ##################################
     print("Analyzing Audio...")
     peak_times = get_peak_times(VIDEO_PATH, int(sys.argv[1]))
+    
+    result = db.summaries.find_one({"_id": ObjectId(summary_id)})
+    for i in range(len(result.versions)):
+        if versions[i].type == "detailed":
+            versions[i].chances = len(peak_times) 
+    
+    print("result saved")
+    print(result)
+    db.summaries.save(result)
+
+
+
+
     print(peak_times)
     ############################## video info ##################################
     FPS = int(cap.get(cv2.CAP_PROP_FPS))
@@ -106,6 +119,8 @@ def main():
 
         if out:
             break
+
+    
 
     t2 = time.time()
     print(t2-t1)

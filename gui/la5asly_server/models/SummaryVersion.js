@@ -11,15 +11,12 @@ const summaryVersionSchema = new Schema({
   },
   goals: {
     type: Number,
-    required: true,
   },
   chances: {
     type: Number,
-    required: true,
   },
-  length: {
+  others: {
     type: Number,
-    required: true,
   },
   feedbacks: [
     {

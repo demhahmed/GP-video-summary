@@ -7,7 +7,7 @@ import SummaryCard from "../../SummaryCard";
 import Loading from "../../Loading";
 
 const getFilteredData = (store, ownProps) => {
-  return store.summaries.filter((summary) => {
+  const filtered = store.summaries.filter((summary) => {
     let filter = true;
     if (ownProps.filters.search) {
       filter =
@@ -31,6 +31,9 @@ const getFilteredData = (store, ownProps) => {
     }
     return filter;
   });
+
+  filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+  return filtered;
 };
 
 class Results extends Component {
@@ -88,6 +91,8 @@ class Results extends Component {
                     awayTeam={summary.awayTeam.logo}
                     thumbnail={summary.thumbnail}
                     summaryId={summary._id}
+                    progress={summary.progress}
+                    complete={summary.complete}
                   />
                 </Col>
               ))}

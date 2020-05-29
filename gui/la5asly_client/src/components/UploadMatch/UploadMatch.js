@@ -19,6 +19,9 @@ import LeagueDropdown from "../Custom/LeagueDropdown/LeagueDropdown";
 import TeamsDropdown from "../Custom/TeamsDropdown";
 import { SelectList } from "react-widgets";
 import { FaUpload } from "react-icons/fa";
+import { WAIT_FETCH, CANCEL_WAIT_FETCH } from "../../actions/types";
+
+
 momentLocaliser(moment);
 
 const renderField = ({
@@ -97,9 +100,12 @@ class UploadMatch extends React.Component {
       file,
       versions
     );
+    
+    this.props.dispatch({ type: WAIT_FETCH });
     setTimeout(() => {
+      this.props.dispatch({type: CANCEL_WAIT_FETCH})
       this.setState({ redirect: true });
-    }, 2000);
+    }, 5000);
   };
 
   handleTeamSelect = (type, team) => {
@@ -110,7 +116,7 @@ class UploadMatch extends React.Component {
     let idx = this.state.versions.indexOf(version);
     if (idx !== -1) {
       this.setState({
-        versions: this.state.versions.filter((version) => version !== version),
+        versions: this.state.versions.filter((arr_version) => arr_version !== version),
       });
     } else {
       this.setState({
@@ -122,9 +128,6 @@ class UploadMatch extends React.Component {
   render() {
     if (this.state.redirect) {
       return <Redirect to="/" />;
-    }
-    if (this.props.globalReducer.wait) {
-      return <Loading />;
     }
     if (
       !this.props.user.isLoggedIn ||
@@ -141,12 +144,15 @@ class UploadMatch extends React.Component {
     const { home, away, leagueId, versions, file, fileError } = this.state;
     const activeBtn =
       home && away && leagueId && versions.length > 0 && file && !fileError;
-
+    const selectedLeague = this.props.leagues.filter(
+      (league) => league._id === this.state.leagueId
+    );
     return (
       <div className="container">
         <div className="my-form">
           <Image className="bk-overlay" src={uploadImage} />
           <div className="dark-overlay" />
+            {this.props.globalReducer.wait && (<Loading />)}  
           <section>
             <div className="home-header">
               <span>Upload</span>
@@ -201,15 +207,22 @@ class UploadMatch extends React.Component {
           </section>
           <section>
             <p style={{ paddingTop: "45px" }}>Select Version</p>
-            <button
-              style={{ width: "100px" }}
-              onClick={() => this.handleVersionSelect("detailed")}
-              className={`my-btn ${
-                this.state.versions.indexOf("detailed") === -1 ? "disabled" : ""
-              }`}
-            >
-              Detailed
-            </button>
+            {selectedLeague &&
+              selectedLeague.length > 0 &&
+              selectedLeague[0].name === "Premier League" && (
+                <button
+                  style={{ width: "100px" }}
+                  onClick={() => this.handleVersionSelect("detailed")}
+                  className={`my-btn ${
+                    this.state.versions.indexOf("detailed") === -1
+                      ? "disabled"
+                      : ""
+                  }`}
+                >
+                  Detailed
+                </button>
+              )}
+
             <button
               style={{ width: "100px" }}
               onClick={() => this.handleVersionSelect("audio")}

@@ -20,25 +20,33 @@ const summarySchema = new Schema(
       type: Schema.Types.ObjectId,
       required: true,
       ref: "League",
-      autopopulate: true
+      autopopulate: true,
     },
     homeTeam: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Team",
-      autopopulate: true
+      autopopulate: true,
     },
     awayTeam: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "Team",
-      autopopulate: true
+      autopopulate: true,
     },
     user: {
       type: Schema.Types.ObjectId,
       required: true,
       ref: "User",
-      autopopulate: true
+      autopopulate: true,
+    },
+    complete: {
+      type: Boolean,
+      default: false,
+    },
+    progress: {
+      type: Number,
+      default: 0,
     },
     versions: [
       {

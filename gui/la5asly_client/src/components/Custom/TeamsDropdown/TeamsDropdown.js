@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Dropdown, Image } from "react-bootstrap";
 import { FaCaretUp, FaCaretDown } from "react-icons/fa";
 import { connect } from "react-redux";
-
+import _ from 'lodash';
 class TeamsDropdown extends Component {
   state = {
     down: true,
@@ -56,6 +56,10 @@ class TeamsDropdown extends Component {
     </div>
   ));
   render() {
+    let sortedTeams = this.props.teams.filter(
+      (team) => team.league._id === this.props.leagueId
+    );
+    sortedTeams = _.sortBy(sortedTeams, 'name')
     return (
       <Dropdown className={this.props.className}>
         <Dropdown.Toggle as={this.CustomToggle} id="dropdown-custom-components">
@@ -74,28 +78,25 @@ class TeamsDropdown extends Component {
           style={{ maxHeight: "200px", overflow: "auto" }}
           as={this.CustomMenu}
         >
-          {this.props.teams &&
-            this.props.teams
-              .filter((team) => team.league._id === this.props.leagueId)
-              .map((team) => {
-                return (
-                  <Dropdown.Item
-                    onClick={() => {
-                      this.setState({
-                        teamName: team.name,
-                        logo: team.logo,
-                      });
-                      if (this.props.handleTeamSelect) {
-                        this.props.handleTeamSelect(team._id);
-                      }
-                    }}
-                    eventKey={team.name}
-                  >
-                    <Image className="league-logo" src={team.logo} />{" "}
-                    {team.name}
-                  </Dropdown.Item>
-                );
-              })}
+          {sortedTeams &&
+            sortedTeams.map((team) => {
+              return (
+                <Dropdown.Item
+                  onClick={() => {
+                    this.setState({
+                      teamName: team.name,
+                      logo: team.logo,
+                    });
+                    if (this.props.handleTeamSelect) {
+                      this.props.handleTeamSelect(team._id);
+                    }
+                  }}
+                  eventKey={team.name}
+                >
+                  <Image className="league-logo" src={team.logo} /> {team.name}
+                </Dropdown.Item>
+              );
+            })}
         </Dropdown.Menu>
       </Dropdown>
     );

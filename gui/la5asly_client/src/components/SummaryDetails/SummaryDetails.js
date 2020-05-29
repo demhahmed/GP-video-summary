@@ -32,12 +32,15 @@ class SummaryDetails extends Component {
   }
 
   calculateHappieness = (idx) => {
-    const length = this.props.summaries[idx].versions[this.state.v_idx].feedbacks.length;
+    const length = this.props.summaries[idx].versions[this.state.v_idx]
+      .feedbacks.length;
     let value = 0;
     if (length === 0) return 0;
-    this.props.summaries[idx].versions[this.state.v_idx].feedbacks.forEach((feedback) => {
-      value += feedback.feedback;
-    });
+    this.props.summaries[idx].versions[this.state.v_idx].feedbacks.forEach(
+      (feedback) => {
+        value += feedback.feedback;
+      }
+    );
     return (value / length / 5) * 100;
   };
 
@@ -87,23 +90,26 @@ class SummaryDetails extends Component {
                 <Row>
                   <Col xs={10}>
                     <div style={{ display: "relative" }}>
-                      <Pagination>
-                        {this.props.summaries[idx].versions.map(
-                          (version, idx) => {
-                            return (
-                              <Pagination.Item
-                                key={idx}
-                                onClick={() => {
-                                  this.setState({ wait: true, v_idx: idx });
-                                }}
-                                active={idx === this.state.v_idx}
-                              >
-                                {version.type}
-                              </Pagination.Item>
-                            );
-                          }
-                        )}
-                      </Pagination>
+                      {this.props.summaries[idx].versions.length > 1 && (
+                        <Pagination>
+                          {this.props.summaries[idx].versions.map(
+                            (version, idx) => {
+                              return (
+                                <Pagination.Item
+                                  key={idx}
+                                  onClick={() => {
+                                    this.setState({ wait: true, v_idx: idx });
+                                  }}
+                                  active={idx === this.state.v_idx}
+                                >
+                                  {version.type}
+                                </Pagination.Item>
+                              );
+                            }
+                          )}
+                        </Pagination>
+                      )}
+
                       <ReactPlayer
                         className="player"
                         url={`/summaries/${version_path}`}
@@ -134,6 +140,7 @@ class SummaryDetails extends Component {
                         </div>
                       </Col>
                       {this.props.user.isLoggedIn &&
+                        this.props.user.type !== "admin" &&
                         this.props.summaries[idx].versions[
                           this.state.v_idx
                         ].feedbacks.filter(
@@ -191,15 +198,18 @@ class SummaryDetails extends Component {
                         />
                       </Col>
                     </Row>
-                    <div className="text-center details-section">
-                      <p className="details-label">Goals</p>
-                      <p className="details-result">
-                        {
-                          this.props.summaries[idx].versions[this.state.v_idx]
-                            .goals
-                        }
-                      </p>
-                    </div>
+                    {this.props.summaries[idx].versions[this.state.v_idx]
+                      .type === "detailed" && (
+                      <div className="text-center details-section">
+                        <p className="details-label">Goals</p>
+                        <p className="details-result">
+                          {
+                            this.props.summaries[idx].versions[this.state.v_idx]
+                              .goals
+                          }
+                        </p>
+                      </div>
+                    )}
                     <div className="text-center details-section">
                       <p className="details-label">Chances</p>
                       <p className="details-result">
@@ -209,16 +219,18 @@ class SummaryDetails extends Component {
                         }
                       </p>
                     </div>
-                    <div className="text-center details-section">
-                      <p className="details-label">Length</p>
-                      <p className="details-result">
-                        {
-                          this.props.summaries[idx].versions[this.state.v_idx]
-                            .length
-                        }{" "}
-                        min
-                      </p>
-                    </div>
+                    {this.props.summaries[idx].versions[this.state.v_idx]
+                      .type === "detailed" && (
+                      <div className="text-center details-section">
+                        <p className="details-label">others</p>
+                        <p className="details-result">
+                          {
+                            this.props.summaries[idx].versions[this.state.v_idx]
+                              .others
+                          }
+                        </p>
+                      </div>
+                    )}
                   </Col>
                 </Row>
               )}

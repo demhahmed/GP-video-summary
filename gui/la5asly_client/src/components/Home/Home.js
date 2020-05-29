@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Image, Row, Col, Button } from "react-bootstrap";
-import { showNotification, hideNotification } from "../../actions";
+import {
+  showNotification,
+  hideNotification,
+  fetchSummaries,
+} from "../../actions";
 
 import homeImage from "../../assets/home.jpg";
 
@@ -16,6 +20,7 @@ class Home extends Component {
   state = {
     filter: false,
     filters: {},
+    interval: null,
   };
   onSearchClick = () => {
     const { date, search, league } = this.props.filterForm.values;
@@ -25,6 +30,19 @@ class Home extends Component {
   onClearFiltersClick = () => {
     this.setState({ filter: false });
   };
+
+  componentDidMount() {
+    this.setState({
+      interval: setInterval(() => {
+        this.props.fetchSummaries();
+      }, 10000),
+    });
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.interval);
+  }
+
   render() {
     const todaySummaries = this.props.summaries.filter((summary) => {
       const date = new Date(summary.createdAt);
@@ -35,6 +53,7 @@ class Home extends Component {
         date.getFullYear() === today.getFullYear()
       );
     });
+    todaySummaries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     const notTodaySummaries = this.props.summaries.filter((summary) => {
       const date = new Date(summary.createdAt);
       const today = new Date();
@@ -44,6 +63,7 @@ class Home extends Component {
         date.getFullYear() === today.getFullYear()
       );
     });
+    notTodaySummaries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     return (
       <div className="container">
         <Image className="bk-overlay" src={homeImage} />
@@ -72,6 +92,8 @@ class Home extends Component {
                         awayTeam={todaySummaries[0].awayTeam.logo}
                         thumbnail={todaySummaries[0].thumbnail}
                         summaryId={todaySummaries[0]._id}
+                        complete={todaySummaries[0].complete}
+                        progress={todaySummaries[0].progress}
                       />
                     </Col>
                     <Col xs={6}>
@@ -86,6 +108,8 @@ class Home extends Component {
                                 awayTeam={summary.awayTeam.logo}
                                 thumbnail={summary.thumbnail}
                                 summaryId={summary._id}
+                                complete={summary.complete}
+                                progress={summary.progress}
                               />
                             </Col>
                           ))}
@@ -126,7 +150,9 @@ class Home extends Component {
                           awayTeam={summary.awayTeam.logo}
                           thumbnail={summary.thumbnail}
                           summaryId={summary._id}
-                        />
+                          complete={summary.complete}
+                          progress={summary.progress}
+                          />
                       </Col>
                     ))}
                 </Row>
@@ -164,6 +190,8 @@ const mapStateToProps = (store) => {
   };
 };
 
-export default connect(mapStateToProps, { showNotification, hideNotification })(
-  Home
-);
+export default connect(mapStateToProps, {
+  showNotification,
+  hideNotification,
+  fetchSummaries,
+})(Home);

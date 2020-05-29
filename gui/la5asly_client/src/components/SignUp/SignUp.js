@@ -13,7 +13,7 @@ import "./SignUp.css";
 import { Link, Redirect } from "react-router-dom";
 import FileUpload from "../FileUploader/FileUpload";
 import { connect } from "react-redux";
-import { signUp } from "../../actions";
+import { signUp, fetchUser } from "../../actions";
 
 const renderField = ({
   input,
@@ -57,6 +57,7 @@ class SignUp extends React.Component {
   };
   render() {
     if (this.props.user.isLoggedIn) {
+      this.props.fetchUser();
       return <Redirect to="/" />;
     }
     const activeBtn =
@@ -141,4 +142,4 @@ const mapStateToProps = (store) => {
 export default reduxForm({
   form: "signUpForm",
   validate,
-})(connect(mapStateToProps, { signUp })(SignUp));
+})(connect(mapStateToProps, { signUp, fetchUser })(SignUp));

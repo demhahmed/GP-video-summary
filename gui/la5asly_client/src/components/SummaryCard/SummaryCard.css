@@ -106,3 +106,48 @@ height: 75px;
   height: 40px;
   width: 40px;
 }
+
+.not-complete {
+  cursor: not-allowed;
+  z-index: 10;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.unclickable {
+  pointer-events: none;
+}
+
+.dark-overlay-card {
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #232121e6 0% 0% no-repeat padding-box;
+  opacity: 0.5;
+  position: absolute;
+  z-index: 5;
+  opacity: 0.88;
+}
+
+.progress-card {
+  top: 48%;
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  z-index: 10;
+  width: 80%;
+  height: 20px;
+}
+
+.progress-card-label {
+  position: absolute;
+  top: -3px;
+  font-size: 13px;
+  color: #363636;
+  left: 48%;
+  font-weight: bold;
+}

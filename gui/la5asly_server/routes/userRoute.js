@@ -8,6 +8,7 @@ const auth = require("../middleware/auth");
 
 const Feedback = require("../models/Feedback");
 const Summary = require("../models/Summary");
+const User = require("../models/User");
 
 const router = new express.Router();
 
@@ -60,7 +61,7 @@ router.post(
   upload.single("avatar"),
   passport.authenticate("local"),
   (req, res) => {
-    res.status(200).send();
+    res.redirect("/");
   }
 );
 
@@ -90,19 +91,21 @@ router.get("/api/me/avatar", auth, async (req, res) => {
   }
 });
 
-router.post("/api/add_feedback", async (req, res) => {
+router.post("/api/add_feedback", auth, async (req, res) => {
   try {
     let summary = await Summary.findOne({ _id: req.body.summary_id });
-    let summaryVersion = [];
+    let summaryVersion = null;
     for (version of summary.versions) {
       if (version._id.toString() === req.body.version_id) {
         summaryVersion = version;
         break;
       }
     }
-    if (summaryVersion.length === 0) {
-      return res.status(400).send();
+    if (!summaryVersion) {
+      return res.status(400).send("ko7n");
     }
+    const user = await User.findOne({_id: req.body.user_id});
+    if(user.type === "admin") res.status(403).send("Admin Cannot send feedbacks");
     let feedback = await new Feedback({
       user: req.body.user_id,
       feedback: req.body.feedback,
