@@ -71,6 +71,9 @@ passport.use(
     async (req, email, password, done) => {
       try {
         const existingUser = await User.findOne({ email });
+        if(req.query.signup && existingUser){ 
+          return done(null, false)
+        }
         // if user does not exist.
         if (existingUser) {
           // checks if the user enters the correct password.

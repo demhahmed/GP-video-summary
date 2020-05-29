@@ -47,7 +47,8 @@ class SignUp extends React.Component {
     this.props.signUp(
       this.props.signUpForm.values.email,
       this.props.signUpForm.values.password,
-      this.state.imgObj
+      this.state.imgObj,
+      "signup"
     );
   };
   responseSuccessGoogle = (response) => console.log(response);

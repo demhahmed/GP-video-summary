@@ -20,7 +20,7 @@ export const fetchUser = () => async (dispatch) => {
   } catch (error) {}
 };
 
-export const signUp = (email, password, file) => async (dispatch) => {
+export const signUp = (email, password, file, signup) => async (dispatch) => {
   try {
     dispatch({ type: types.WAIT_FETCH });
     const formData = new FormData();
@@ -32,6 +32,7 @@ export const signUp = (email, password, file) => async (dispatch) => {
       params: {
         email,
         password,
+        signup,
       },
     });
     dispatch({ type: types.FETCH_USER, payload: response.data });
@@ -45,7 +46,8 @@ export const signIn = (email, password) => async (dispatch) => {
   try {
     dispatch({ type: types.WAIT_FETCH });
     let response = await axios.post("/auth/local", { email, password });
-    dispatch({ type: types.FETCH_USER, payload: response.data });
+    let curr_user_response = await axios.get("/api/current_user");
+    dispatch({ type: types.FETCH_USER, payload: curr_user_response.data });
   } catch (error) {
     showPopUp("Wrong email or password.", dispatch);
   }
