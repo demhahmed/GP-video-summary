@@ -5,6 +5,7 @@ const downloadFile = require("../utils/download");
 
 const Team = require("../models/Team");
 const League = require("../models/League");
+const Summary = require("../models/Summary");
 
 const router = new express.Router();
 
@@ -106,6 +107,41 @@ router.post("/api/host_logos", async (req, res) => {
   }
 });
 
+function randomDate(start, end) {
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
+}
 
+router.post("/hi", async (req, res) => {
+  const startDate = new Date("2020-06-10");
+  const endDate = new Date("2020-06-17");
+  const curr_summaries = [];
+  const result = await Summary.find({});
+  for (let i = 0; i < result.length; ++i) {
+    curr_summaries.push(result[i]);
+  }
+  const my_promises = [];
+  for (let i = 0; i < 100; i++) {
+    const this_summary =
+      curr_summaries[Math.floor(Math.random() * curr_summaries.length)];
+    my_promises.push(
+      new Summary({
+        complete: true,
+        progress: 100,
+        versions: this_summary.versions,
+        user: this_summary.user._id,
+        leagueType: this_summary.leagueType._id,
+        homeTeam: this_summary.homeTeam._id,
+        awayTeam: this_summary.awayTeam._id,
+        summaryPath: this_summary.summaryPath,
+        thumbnail: this_summary.thumbnail,
+        createdAt: randomDate(startDate, endDate),
+      }).save()
+    );
+  }
+  await Promise.all(my_promises);
+  res.send("hi");
+});
 
 module.exports = router;

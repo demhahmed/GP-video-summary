@@ -62,9 +62,13 @@ router.post("/api/summarize", upload.single("video"), async (req, res) => {
       }).save();
       summaryVersions.push(saved._id);
     }
-
+    const {date} = req.query;
+    delete req.query.date;
+    console.log(`date${date}`);
+    console.log(`query ${req.query}`);
     const newSummary = new Summary({
       ...req.query,
+      createdAt: date,
       summaryPath: req.file.filename,
       thumbnail: `thumbnail_${no_ext_filename}.jpg`,
       versions: summaryVersions,

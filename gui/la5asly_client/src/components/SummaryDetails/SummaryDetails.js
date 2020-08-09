@@ -64,7 +64,7 @@ class SummaryDetails extends Component {
     if (this.state.wait) {
       setTimeout(() => {
         this.setState({ wait: false });
-      }, 2000);
+      }, 1000);
     }
     const video_path = this.props.summaries[idx].summaryPath;
     const version_path =

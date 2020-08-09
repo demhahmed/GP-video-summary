@@ -55,7 +55,7 @@ class Results extends Component {
             this.setState({ wait: true }, () => {
               setTimeout(() => {
                 this.setState({ page: number, wait: false });
-              }, 2000);
+              }, 1000);
             });
           }}
           key={number}

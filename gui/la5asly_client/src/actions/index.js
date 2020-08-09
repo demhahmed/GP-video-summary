@@ -115,7 +115,8 @@ export const summarize = (
   homeTeam,
   awayTeam,
   file,
-  versions
+  versions,
+  date
 ) => async (dispatch) => {
   // Example of filter object { username: "Moamen", leagueType: "PREMIER_LEAGUE" }
   let versions_str = "";
@@ -134,6 +135,7 @@ export const summarize = (
         homeTeam,
         awayTeam,
         versions: versions_str,
+        date
       },
     });
     dispatch({ type: types.ADD_SUMMARY, payload: response.data });

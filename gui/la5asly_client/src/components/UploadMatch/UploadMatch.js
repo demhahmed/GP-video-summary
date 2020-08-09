@@ -17,10 +17,9 @@ import FileUpload from "../FileUploader/FileUpload";
 import uploadImage from "../../assets/upload.jpg";
 import LeagueDropdown from "../Custom/LeagueDropdown/LeagueDropdown";
 import TeamsDropdown from "../Custom/TeamsDropdown";
-import { SelectList } from "react-widgets";
+import { SelectList, DateTimePicker } from "react-widgets";
 import { FaUpload } from "react-icons/fa";
 import { WAIT_FETCH, CANCEL_WAIT_FETCH } from "../../actions/types";
-
 
 momentLocaliser(moment);
 
@@ -66,6 +65,24 @@ const renderMultiselect = ({
   );
 };
 
+const renderDateTimePicker = ({
+  input: { onChange, value },
+  meta: { touched, error },
+  showTime,
+}) => {
+  return (
+    <div>
+      <DateTimePicker
+        onChange={onChange}
+        format="DD MMM YYYY"
+        showTime={true}
+        value={!value ? null : new Date(value)}
+      />
+      {touched && error ? <span>{error}</span> : false}
+    </div>
+  );
+};
+
 class UploadMatch extends React.Component {
   state = {
     home: null,
@@ -75,7 +92,7 @@ class UploadMatch extends React.Component {
     file: null,
     fileError: null,
   };
-
+  
   onFileSelected = (file) => {
     if (file.name.slice(file.name.length - 4, file.name.length) !== ".mp4") {
       this.setState({ fileError: true });
@@ -89,23 +106,26 @@ class UploadMatch extends React.Component {
   };
   handleSubmit = () => {
     const { home, away, leagueId, versions, file, fileError } = this.state;
+    const { date } = this.props.uploadMatchForm.values;
     const activeBtn =
       home && away && leagueId && versions.length > 0 && file && !fileError;
     if (!activeBtn) return;
+    debugger
     this.props.summarize(
       this.props.user._id,
       leagueId,
       home,
       away,
       file,
-      versions
+      versions,
+      date
     );
-    
+
     this.props.dispatch({ type: WAIT_FETCH });
     setTimeout(() => {
-      this.props.dispatch({type: CANCEL_WAIT_FETCH})
+      this.props.dispatch({ type: CANCEL_WAIT_FETCH });
       this.setState({ redirect: true });
-    }, 5000);
+    }, 3000);
   };
 
   handleTeamSelect = (type, team) => {
@@ -116,7 +136,9 @@ class UploadMatch extends React.Component {
     let idx = this.state.versions.indexOf(version);
     if (idx !== -1) {
       this.setState({
-        versions: this.state.versions.filter((arr_version) => arr_version !== version),
+        versions: this.state.versions.filter(
+          (arr_version) => arr_version !== version
+        ),
       });
     } else {
       this.setState({
@@ -152,7 +174,7 @@ class UploadMatch extends React.Component {
         <div className="my-form">
           <Image className="bk-overlay" src={uploadImage} />
           <div className="dark-overlay" />
-            {this.props.globalReducer.wait && (<Loading />)}  
+          {this.props.globalReducer.wait && <Loading />}
           <section>
             <div className="home-header">
               <span>Upload</span>
@@ -177,7 +199,7 @@ class UploadMatch extends React.Component {
               className="smaller-dropdown"
             />
           </div>
-          <section style={{ marginTop: "30px" }}>
+          <section style={{ marginTop: "30px", marginBottom:"65px" }}>
             {this.props.leagues && this.state.leagueId && (
               <Row style={{ marginBottom: "20px" }}>
                 <Col xs={4}>
@@ -204,6 +226,16 @@ class UploadMatch extends React.Component {
                 </Col>
               </Row>
             )}
+          </section>
+          <section>
+            <div style={{ width: "350px" }}>
+            <p>Date of Match</p>
+              <Field
+                name="date"
+                showTime={false}
+                component={renderDateTimePicker}
+              />
+            </div>
           </section>
           <section>
             <p style={{ paddingTop: "45px" }}>Select Version</p>
@@ -252,6 +284,9 @@ const validate = (formValues) => {
   const errors = {};
   if (!formValues.title) {
     errors.title = "You must enter a title";
+  }
+  if (!formValues.date) {
+    errors.date = "You must enter a date";
   }
   if (!formValues.leagueType) {
     errors.leagueType = "You must enter a leagueType";
