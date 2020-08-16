@@ -13,11 +13,11 @@ def volume(array):
 def get_peak_times(path , perct):
     clip = VideoFileClip(path)
     fps = clip.audio.fps
-    volumes = [volume(cut(i, clip, fps)) for i in range(0, int(clip.audio.duration - 2))]
-    averaged_volumes = np.array([sum(volumes[i:i + 10]) / 10 for i in range(len(volumes) - 10)])
-    increases = np.diff(averaged_volumes)[:-1] >= 0
-    decreases = np.diff(averaged_volumes)[1:] <= 0
-    peaks_times = (increases * decreases).nonzero()[0]
-    peaks_vols = averaged_volumes[peaks_times]
-    peaks_times = peaks_times[peaks_vols > np.percentile(peaks_vols, perct)]
+    vol_intensities = [volume(cut(i, clip, fps)) for i in range(0, int(clip.audio.duration - 2))]
+    vol_averages = np.array([sum(vol_intensities[i:i + 10]) / 10 for i in range(len(vol_intensities) - 10)])
+    increments = np.diff(vol_averages)[:-1] >= 0
+    decrements = np.diff(vol_averages)[1:] <= 0
+    spikes_times = (increments * decrements).nonzero()[0]
+    spikes_vols = vol_averages[spikes_times]
+    spikes_times = spikes_times[spikes_vols > np.percentile(spikes_vols, perct)]
     return peaks_times
