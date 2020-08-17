@@ -20,4 +20,4 @@ def get_peak_times(path , perct):
     spikes_times = (increments * decrements).nonzero()[0]
     spikes_vols = vol_averages[spikes_times]
     spikes_times = spikes_times[spikes_vols > np.percentile(spikes_vols, perct)]
-    return peaks_times
+    return spikes_times
